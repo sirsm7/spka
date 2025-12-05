@@ -3,37 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Master</title>
+    <title>Belajar AI bersama SirSM - Modul Lengkap</title>
     
-    <!-- Kod Favicon -->
+    <!-- Favicon & Logo -->
     <link rel="icon" type="image/png" href="SirSM.png">
 
+    <!-- Pustaka Luar (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Konfigurasi Tailwind -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Lexend', 'sans-serif'],
+                    fontFamily: { sans: ['Lexend', 'sans-serif'] },
+                    colors: { 
+                        brand: { 
+                            50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' 
+                        } 
                     },
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    },
-                    animation: {
-                        'bounce-slow': 'bounce 3s infinite',
-                    }
+                    animation: { 'bounce-slow': 'bounce 3s infinite' }
                 }
             }
         }
@@ -44,500 +36,587 @@
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
         
-        /* Quiz Styles */
-        .quiz-option { transition: all 0.2s ease; }
-        .quiz-option:hover { transform: translateX(5px); border-color: #3b82f6; }
-        .quiz-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; }
-        .quiz-wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
-        
-        /* Tab Styles */
+        /* Gaya Butang Tab */
         .tab-active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-inactive { background-color: white; color: #475569; border-color: #e2e8f0; }
         .tab-inactive:hover { background-color: #f8fafc; color: #2563eb; }
+        
+        /* Animasi Transisi */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
 
-    <!-- Navbar -->
-    <nav class="bg-white/90 backdrop-blur-md fixed w-full z-50 border-b border-slate-200 shadow-sm">
-        <div class="container mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <img src="SirSM.png" alt="Logo SirSM" class="w-10 h-10 rounded-full shadow-md border border-slate-100 object-cover">
-                <span class="font-bold text-xl tracking-tight text-slate-800">Sir<span class="text-brand-600">SM</span>.AI</span>
+    <!-- =========================================
+         NAVIGASI UTAMA
+    ========================================== -->
+    <nav class="bg-white/95 backdrop-blur-md fixed w-full z-50 border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="SirSM.png" alt="Logo SirSM" class="w-10 h-10 rounded-full shadow-md border-2 border-white object-cover">
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg leading-none text-slate-800 tracking-tight">Sir<span class="text-brand-600">SM</span>.AI</span>
+                    <span class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Unit Sumber Teknologi Pendidikan</span>
+                </div>
             </div>
-            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
-                <a href="#concept" class="hover:text-brand-600 transition">Konsep S.P.K.A</a>
-                <a href="#generator" class="hover:text-brand-600 transition">Mesin AI</a>
-                <a href="#examples" class="hover:text-brand-600 transition">Bank Prompt</a>
+            
+            <!-- Menu Desktop -->
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="#concept" class="hover:text-brand-600 transition py-2 border-b-2 border-transparent hover:border-brand-600">Konsep S.P.K.A</a>
+                <a href="#generator" class="hover:text-brand-600 transition py-2 border-b-2 border-transparent hover:border-brand-600">Mesin Prompt</a>
+                <a href="#examples" class="hover:text-brand-600 transition py-2 border-b-2 border-transparent hover:border-brand-600">Bank Prompt</a>
             </div>
-            <a href="#generator" class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 group">
-                Mula <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+
+            <!-- Butang Mula -->
+            <a href="#generator" class="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 group hover:-translate-y-0.5">
+                Mula Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
             </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="pt-32 pb-20 px-4 relative overflow-hidden">
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-purple-100 rounded-full blur-3xl opacity-50"></div>
+    <!-- =========================================
+         HERO SECTION (PENGENALAN)
+    ========================================== -->
+    <header class="pt-36 pb-24 px-4 relative overflow-hidden bg-white">
+        <!-- Latar Belakang Dekoratif -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-purple-50 rounded-full blur-3xl opacity-60"></div>
         
         <div class="container mx-auto text-center max-w-4xl relative z-10">
-            <div class="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm mb-6 animate-bounce-slow">
+            <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full px-4 py-1.5 shadow-sm mb-8 animate-bounce-slow cursor-default">
                 <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Dikuasakan oleh SirSM USTP</span>
+                <span class="text-xs font-bold uppercase tracking-wide text-slate-600">Modul Latihan PPD Alor Gajah</span>
             </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">
-                Kuasai AI Seperti <br><span class="gradient-text">0.1% Pakar</span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight text-slate-900">
+                Kuasai Kecerdasan Buatan <br>Sebagai <span class="text-brand-600">0.1% Pakar</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Panduan interaktif PPD Alor Gajah. Jana arahan (prompt) berkualiti tinggi dan bina sistem digital ringkas untuk memudahkan kerja anda.
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Panduan langkah demi langkah untuk membina arahan (prompt) yang tepat, mengelakkan halusinasi AI, dan menghasilkan kerja berkualiti tinggi dalam masa saat.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#concept" class="bg-white text-slate-700 border border-slate-200 px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
-                    <i class="fa-solid fa-book-open"></i> Faham Konsep
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#concept" class="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-book-open text-brand-500"></i> Faham Konsep Asas
                 </a>
-                <a href="#examples" class="bg-brand-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-brand-700 transition shadow-xl shadow-brand-600/30 flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group"></i> Lihat Contoh
+                <a href="#examples" class="bg-brand-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-brand-700 transition shadow-xl shadow-brand-600/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-layer-group"></i> Lihat Contoh Sektor
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Konsep S.P.K.A Section -->
-    <section id="concept" class="py-20 bg-white border-y border-slate-100">
+    <!-- =========================================
+         BAHAGIAN 1: KONSEP S.P.K.A (INFORMASI PENUH)
+    ========================================== -->
+    <section id="concept" class="py-24 bg-white border-y border-slate-100 scroll-mt-20">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
+            <div class="text-center mb-16">
                 <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-50 px-3 py-1 rounded-full">Falsafah AI</span>
-                <h2 class="text-3xl font-bold text-slate-900 mt-3">Kenapa Perlu Guna S.P.K.A?</h2>
-                <p class="text-slate-500 mt-4 max-w-3xl mx-auto text-lg">
-                    AI umpama <strong>"Anak Genius 5 Tahun"</strong>. Tanpa panduan 4 langkah ini, dia akan "berhalusinasi" atau memberi jawapan terlalu umum.
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Mengapa Perlu Guna S.P.K.A?</h2>
+                <p class="text-slate-500 max-w-3xl mx-auto text-lg leading-relaxed">
+                    AI umpama <strong>"Anak Genius 5 Tahun"</strong> yang mempunyai semua maklumat dunia tetapi tiada pengalaman hidup (common sense). Tanpa struktur arahan yang jelas, ia akan meneka dan mungkin memberi jawapan yang salah (halusinasi).
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
-                <!-- Analogy Card -->
-                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 h-full">
-                    <h3 class="font-bold text-xl mb-6 flex items-center gap-2">
-                        <span class="bg-brand-100 text-brand-600 p-2 rounded-lg"><i class="fa-solid fa-utensils"></i></span> 
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start max-w-6xl mx-auto">
+                <!-- Analogi Visual -->
+                <div class="bg-slate-50 p-8 md:p-10 rounded-3xl border border-slate-200 h-full relative overflow-hidden group hover:shadow-lg transition duration-300">
+                    <div class="absolute top-0 right-0 bg-brand-100 w-24 h-24 rounded-bl-full -mr-4 -mt-4 opacity-50 transition group-hover:scale-110"></div>
+                    
+                    <h3 class="font-bold text-2xl mb-8 flex items-center gap-3 text-slate-800">
+                        <span class="bg-white text-brand-600 w-12 h-12 rounded-xl flex items-center justify-center shadow-sm text-xl"><i class="fa-solid fa-utensils"></i></span> 
                         Analogi Memesan Makanan
                     </h3>
                     
-                    <div class="space-y-6">
-                        <div class="relative pl-6 border-l-4 border-red-300">
-                            <h4 class="font-bold text-red-500 text-sm uppercase mb-1">Arahan Biasa (Gagal)</h4>
-                            <p class="italic text-slate-600 font-medium">"Masakkan saya nasi."</p>
-                            <p class="text-xs text-slate-500 mt-2"><strong>Risiko:</strong> Tukang masak mungkin bagi nasi mentah, nasi impit, atau nasi goreng cili padi yang anda tak boleh makan. Dia terpaksa meneka.</p>
+                    <div class="space-y-8">
+                        <div class="relative pl-8 border-l-4 border-red-300">
+                            <h4 class="font-bold text-red-500 text-sm uppercase mb-2 tracking-wide">❌ Arahan Biasa (Gagal)</h4>
+                            <p class="italic text-slate-700 font-medium text-lg mb-2">"Masakkan saya nasi."</p>
+                            <p class="text-sm text-slate-500 leading-relaxed bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
+                                <strong>Risiko:</strong> Tukang masak terpaksa meneka. Anda mungkin dapat nasi mentah, nasi impit, atau nasi goreng cili padi yang terlalu pedas untuk anda.
+                            </p>
                         </div>
 
-                        <div class="relative pl-6 border-l-4 border-green-400">
-                            <h4 class="font-bold text-green-600 text-sm uppercase mb-1">Arahan S.P.K.A (Berjaya)</h4>
-                            <p class="italic text-slate-700 font-medium text-sm leading-relaxed">
-                                "Saya pelanggan yang lapar <strong class="text-blue-600">(S)</strong>. Anda Chef Hotel 5 Bintang <strong class="text-purple-600">(P)</strong>. Saya mahu makan tengah hari yang pedas <strong class="text-amber-600">(K)</strong>. Masakkan Nasi Goreng Kampung ada ikan bilis garing <strong class="text-green-600">(A)</strong>."
-                            </p>
-                            <p class="text-xs text-slate-500 mt-2"><strong>Hasil:</strong> Tepat, berkualiti tinggi, dan memenuhi selera.</p>
+                        <div class="relative pl-8 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-600 text-sm uppercase mb-2 tracking-wide">✅ Arahan S.P.K.A (Berjaya)</h4>
+                            <div class="bg-white p-4 rounded-xl border border-green-100 shadow-sm">
+                                <p class="text-slate-700 font-medium text-base leading-loose">
+                                    "Saya pelanggan yang sangat lapar <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-bold mx-1">S</span>. 
+                                    Anda Chef Hotel 5 Bintang <span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold mx-1">P</span>. 
+                                    Saya mahu makan tengah hari yang pedas dan menyelerakan <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs font-bold mx-1">K</span>. 
+                                    Masakkan Nasi Goreng Kampung ada ikan bilis garing <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold mx-1">A</span>."
+                                </p>
+                            </div>
+                            <p class="text-sm text-slate-500 mt-3 pl-1"><strong>Hasil:</strong> Tepat, berkualiti tinggi, dan memenuhi selera spesifik anda.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Detailed Breakdown -->
-                <div class="space-y-4">
-                    <div class="flex gap-4 p-5 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white group">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">S</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Siapa Saya (Identity)</h4>
-                            <p class="text-sm text-slate-600 mt-1 font-medium">Fungsi: Menetapkan Laras Bahasa.</p>
-                            <p class="text-xs text-slate-500 mt-1">Jika anda kata "Saya Murid", AI guna bahasa mudah. Jika "Saya Pegawai PPD", AI guna bahasa rasmi.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-5 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white group">
-                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">P</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Peranan AI (Persona)</h4>
-                            <p class="text-sm text-slate-600 mt-1 font-medium">Fungsi: Mengaktifkan Database Spesifik.</p>
-                            <p class="text-xs text-slate-500 mt-1">"0.1% Pakar" memaksa AI mengabaikan jawapan 'biasa-biasa' dan menggali maklumat mendalam.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-5 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white group">
-                        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">K</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Konteks (Context)</h4>
-                            <p class="text-sm text-slate-600 mt-1 font-medium">Fungsi: Membataskan Halusinasi.</p>
-                            <p class="text-xs text-slate-500 mt-1">Tanpa konteks, AI mereka cerita. Konteks memberi 'pagar' supaya AI fokus pada masalah sebenar.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 p-5 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white group">
-                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0 group-hover:bg-green-600 group-hover:text-white transition">A</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800">Arahan (Action)</h4>
-                            <p class="text-sm text-slate-600 mt-1 font-medium">Fungsi: Menentukan Format Output.</p>
-                            <p class="text-xs text-slate-500 mt-1">Nyatakan format output: Jadual, Surat Rasmi, Kod HTML, atau Poin Ringkas.</p>
-                        </div>
-                    </div>
+                <!-- Penjelasan Terperinci (Diisi oleh JS) -->
+                <div id="spka-list-container" class="space-y-5">
+                    <!-- Cards will be injected here -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Generator Section (S.P.K.A with Detailed Guide) -->
-    <section id="generator" class="py-20 bg-slate-900 text-white relative">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+    <!-- =========================================
+         BAHAGIAN 2: MESIN PROMPT (TOOLS)
+    ========================================== -->
+    <section id="generator" class="py-24 bg-slate-900 text-white relative scroll-mt-20">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-3">Mesin Prompt S.P.K.A</h2>
-                <p class="text-slate-400">Jana arahan prompt sendiri. Mesin ini menggabungkan input anda, jadi sila isi dengan tepat.</p>
+                <span class="bg-slate-800 text-blue-400 font-bold tracking-wider text-xs uppercase px-3 py-1 rounded-full border border-slate-700">Alat Bantuan</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 mt-4">Mesin Pembina Prompt</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+                    Isi butiran di bawah. Sistem akan menyusun ayat arahan yang lengkap dan profesional secara automatik untuk anda salin.
+                </p>
             </div>
 
-            <div class="max-w-4xl mx-auto bg-white text-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl">
+            <div class="max-w-5xl mx-auto bg-white text-slate-800 rounded-3xl p-8 md:p-12 shadow-2xl shadow-black/50">
                 
-                <!-- Guide Header -->
-                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 mb-8 flex gap-4 items-start shadow-sm">
-                    <i class="fa-solid fa-lightbulb text-blue-600 mt-1 text-lg"></i>
+                <!-- Panduan Pengguna -->
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-10 flex gap-5 items-start">
+                    <div class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-1 shadow-md">
+                        <i class="fa-solid fa-info text-lg"></i>
+                    </div>
                     <div>
-                        <p class="font-bold text-blue-800 mb-1">Panduan Pengguna:</p>
+                        <h4 class="font-bold text-blue-900 text-lg mb-2">Cara Menggunakan Mesin Ini</h4>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Mesin ini <strong>bukan AI</strong>, ia hanya penyusun ayat (template builder). 
-                            Kualiti prompt bergantung sepenuhnya kepada input yang anda masukkan di bawah. 
-                            Sila rujuk panduan kecil di bawah setiap kotak input.
+                            Mesin ini <strong>bukan AI</strong> (ia tidak berfikir). Ia adalah alat penyusun struktur. Kualiti prompt akhir bergantung sepenuhnya kepada input yang anda masukkan. Sila baca panduan kecil di bawah setiap kotak input untuk memastikan anda memberi maklumat yang cukup untuk AI bekerja nanti.
                         </p>
                     </div>
                 </div>
 
-                <!-- Input Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <!-- S Input -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- Input S -->
                     <div>
                         <label class="flex items-center gap-2 text-sm font-bold uppercase text-slate-700 mb-2">
-                            <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs">S</span> Siapa Anda
+                            <span class="bg-blue-600 text-white w-6 h-6 flex items-center justify-center rounded-md text-xs">S</span> 
+                            Siapa Anda (Identity)
                         </label>
-                        <p class="text-xs text-slate-500 mb-2 italic">Nyatakan jawatan. Ini menentukan sama ada AI jawab formal atau santai.</p>
-                        <input type="text" id="inputS" placeholder="Cth: Saya Pegawai PPD Sektor Perancangan..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 outline-none transition hover:bg-white focus:bg-white shadow-sm">
+                        <p class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100">
+                            <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Nyatakan peranan anda. Ini menentukan sama ada AI menjawab dengan gaya formal (pegawai) atau santai (pelajar).
+                        </p>
+                        <input type="text" id="inputS" placeholder="Contoh: Saya seorang Pegawai PPD Sektor Perancangan..." class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-brand-600 focus:ring-4 focus:ring-brand-100 outline-none transition font-medium text-slate-700 placeholder-slate-400">
                     </div>
                     
-                    <!-- P Input -->
+                    <!-- Input P -->
                     <div>
                         <label class="flex items-center gap-2 text-sm font-bold uppercase text-slate-700 mb-2">
-                            <span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs">P</span> Peranan AI
+                            <span class="bg-purple-600 text-white w-6 h-6 flex items-center justify-center rounded-md text-xs">P</span> 
+                            Peranan AI (Persona)
                         </label>
-                        <p class="text-xs text-slate-500 mb-2 italic">Wajib guna "0.1% Pakar" + Bidang Spesifik untuk jawapan berkualiti.</p>
-                        <input type="text" id="inputP" placeholder="Cth: Bertindak sebagai 0.1% Pakar Analisis Data..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 outline-none transition hover:bg-white focus:bg-white shadow-sm">
+                        <p class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100">
+                            <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Wajib gunakan kata kunci <strong>"Bertindak sebagai 0.1% Pakar..."</strong> diikuti bidang spesifik.
+                        </p>
+                        <input type="text" id="inputP" placeholder="Contoh: Bertindak sebagai 0.1% Pakar Analisis Data Pendidikan..." class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-brand-600 focus:ring-4 focus:ring-brand-100 outline-none transition font-medium text-slate-700 placeholder-slate-400">
                     </div>
                 </div>
 
-                <!-- K Input -->
-                <div class="mb-6">
-                    <label class="flex items-center gap-2 text-sm font-bold uppercase text-slate-700 mb-2">
-                        <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs">K</span> Konteks (Latar Belakang)
-                    </label>
-                    <p class="text-xs text-slate-500 mb-2 italic">Ceritakan masalah, sasaran audiens, atau data yang ada. Tanpa ini, AI akan meneka.</p>
-                    <textarea id="inputK" rows="3" placeholder="Cth: Saya ada data kehadiran murid yang merosot 10% pada bulan puasa. Murid kelihatan letih..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 outline-none transition hover:bg-white focus:bg-white shadow-sm"></textarea>
-                </div>
-
-                <!-- A Input -->
+                <!-- Input K -->
                 <div class="mb-8">
                     <label class="flex items-center gap-2 text-sm font-bold uppercase text-slate-700 mb-2">
-                        <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">A</span> Arahan (Format Output)
+                        <span class="bg-amber-500 text-white w-6 h-6 flex items-center justify-center rounded-md text-xs">K</span> 
+                        Konteks (Latar Belakang Situasi)
                     </label>
-                    <p class="text-xs text-slate-500 mb-2 italic">Apa hasil akhir? Jadual? Surat? Kod? Senarai poin? Nyatakan dengan jelas.</p>
-                    <textarea id="inputA" rows="3" placeholder="Cth: Senaraikan 5 cadangan program intervensi dalam bentuk jadual yang ada lajur: Nama Program, Objektif, dan Kos..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 outline-none transition hover:bg-white focus:bg-white shadow-sm"></textarea>
+                    <p class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Ceritakan masalah, data, atau sasaran audiens. Tanpa ini, AI akan "meneka" dan berhalusinasi.
+                    </p>
+                    <textarea id="inputK" rows="3" placeholder="Contoh: Saya mempunyai data kehadiran murid yang merosot sebanyak 10% pada bulan Ramadhan. Murid kelihatan letih dan kurang motivasi..." class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-brand-600 focus:ring-4 focus:ring-brand-100 outline-none transition font-medium text-slate-700 placeholder-slate-400"></textarea>
                 </div>
 
-                <button onclick="generatePrompt()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-lg transform hover:-translate-y-1">
-                    <i class="fa-solid fa-bolt"></i> Gabung & Jana Prompt
+                <!-- Input A -->
+                <div class="mb-10">
+                    <label class="flex items-center gap-2 text-sm font-bold uppercase text-slate-700 mb-2">
+                        <span class="bg-green-600 text-white w-6 h-6 flex items-center justify-center rounded-md text-xs">A</span> 
+                        Arahan (Format Output)
+                    </label>
+                    <p class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded border border-slate-100">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Apa hasil akhir yang anda mahu? Jadual? Surat? Kod? Nyatakan format dengan jelas.
+                    </p>
+                    <textarea id="inputA" rows="3" placeholder="Contoh: Senaraikan 5 cadangan program intervensi dalam bentuk JADUAL yang mengandungi lajur: Nama Program, Objektif, dan Kos Anggaran..." class="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-brand-600 focus:ring-4 focus:ring-brand-100 outline-none transition font-medium text-slate-700 placeholder-slate-400"></textarea>
+                </div>
+
+                <button onclick="generatePrompt()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-2xl transition shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 text-lg group">
+                    <i class="fa-solid fa-bolt text-yellow-400 group-hover:animate-pulse"></i> Gabung & Jana Prompt Lengkap
                 </button>
 
-                <div id="resultArea" class="hidden mt-8 pt-8 border-t border-slate-100 animate-fade-in">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase">Hasil Gabungan Prompt:</span>
+                <!-- Hasil -->
+                <div id="resultArea" class="hidden mt-10 pt-10 border-t border-slate-100 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-green-500"></i> Hasil Prompt S.P.K.A
+                        </span>
+                        <span class="text-xs text-slate-400 italic">Sedia untuk disalin ke Gemini/ChatGPT</span>
                     </div>
-                    <textarea id="finalPrompt" readonly class="w-full p-5 bg-brand-50 border border-brand-100 rounded-xl text-slate-700 font-mono text-sm h-48 focus:outline-none mb-4 shadow-inner resize-none"></textarea>
-                    <button onclick="copyToClipboard('finalPrompt')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
-                        <i class="fa-regular fa-copy"></i> Salin Teks Prompt
+                    <div class="relative group">
+                        <textarea id="finalPrompt" readonly class="w-full p-6 bg-slate-50 border border-slate-200 rounded-2xl text-slate-700 font-mono text-sm leading-relaxed h-64 focus:outline-none resize-none shadow-inner"></textarea>
+                        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition">
+                            <span class="bg-black/70 text-white text-xs px-2 py-1 rounded">Read Only</span>
+                        </div>
+                    </div>
+                    <button onclick="copyToClipboard('finalPrompt')" class="mt-4 w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-brand-500/30">
+                        <i class="fa-regular fa-copy fa-lg"></i> Salin Teks Prompt
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sector Examples (MAJOR UPDATE) -->
-    <section id="examples" class="py-20 bg-slate-50">
+    <!-- =========================================
+         BAHAGIAN 3: BANK PROMPT (CONTOH SEKTOR)
+    ========================================== -->
+    <section id="examples" class="py-24 bg-slate-50 scroll-mt-20">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4 text-slate-900">Bank Prompt Mengikut Sektor</h2>
-            <p class="text-center text-slate-500 mb-10">Setiap sektor ada 3 contoh prompt. Pilih yang sesuai.</p>
+            <div class="text-center mb-12">
+                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-100 px-3 py-1 rounded-full">Rujukan Pantas</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Bank Prompt Mengikut Sektor</h2>
+                <p class="text-slate-500 mb-10 max-w-2xl mx-auto">
+                    Koleksi contoh prompt yang telah diuji keberkesanannya. Setiap sektor mempunyai 3 jenis prompt termasuk satu prompt khas untuk menjana sistem/aplikasi.
+                </p>
+            </div>
             
-            <!-- Tabs -->
-            <div class="flex flex-wrap justify-center gap-3 mb-10 max-w-4xl mx-auto">
-                <button onclick="switchTab('perancangan')" class="tab-btn tab-active px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Perancangan</button>
-                <button onclick="switchTab('pembelajaran')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pembelajaran</button>
-                <button onclick="switchTab('murid')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pembangunan Murid</button>
-                <button onclick="switchTab('sekolah')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pengurusan Sekolah</button>
-                <button onclick="switchTab('akp')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">AKP</button>
+            <!-- Dynamic Tabs Container -->
+            <div id="tabs-container" class="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
+                <!-- Tabs generated by JS -->
             </div>
 
-            <!-- Content Area (Grid 3 Prompts) -->
-            <div class="max-w-6xl mx-auto">
-                
-                <!-- SEKTOR PERANCANGAN -->
-                <div id="perancangan" class="sector-content grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                    <!-- Prompt 1: Analisis Data -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center text-blue-600 mb-4"><i class="fa-solid fa-chart-line"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Analisis Strategik</h4>
-                        <p class="text-xs text-slate-500 mb-4">Menganalisis data mentah untuk mencari punca isu dan cadangan intervensi.</p>
-                        <button onclick="showPrompt('perancangan_1')" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="perancangan_1" class="hidden">[SIAPA SAYA]\nSaya Pegawai Perancangan PPD.\n\n[PERANAN AI]\nBertindak sebagai Data Scientist Pendidikan.\n\n[KONTEKS]\nData kehadiran murid sekolah luar bandar merosot 15% pada hari Khamis (Kokurikulum).\n\n[ARAHAN]\nBerikan analisis 3 punca kemungkinan dan cadangkan 3 program intervensi kos rendah tetapi berimpak tinggi.</div>
-                    </div>
-                    <!-- Prompt 2: OPPM -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center text-purple-600 mb-4"><i class="fa-solid fa-table"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Bina OPPM</h4>
-                        <p class="text-xs text-slate-500 mb-4">Menghasilkan rangka One Page Project Manager untuk program daerah.</p>
-                        <button onclick="showPrompt('perancangan_2')" class="w-full border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="perancangan_2" class="hidden">[SIAPA SAYA]\nSaya Pegawai Perancangan.\n\n[PERANAN AI]\nPakar Pengurusan Projek (PMP).\n\n[KONTEKS]\nProgram STEM Daerah akan berjalan selama 6 bulan.\n\n[ARAHAN]\nBina kandungan teks untuk OPPM yang merangkumi: Objektif, 10 Tugasan Utama, Tarikh Sasaran, Kos, dan Penanggungjawab.</div>
-                    </div>
-                    <!-- Prompt 3: SYSTEM (Dashboard) -->
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-700 hover:transform hover:-translate-y-1 transition relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-bl-lg">SISTEM</div>
-                        <div class="bg-white/20 w-10 h-10 rounded-lg flex items-center justify-center text-white mb-4"><i class="fa-solid fa-code"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Sistem Dashboard KPI</h4>
-                        <p class="text-xs text-slate-400 mb-4">Jana kod HTML untuk kalkulator unjuran pencapaian sekolah.</p>
-                        <button onclick="showPrompt('perancangan_3')" class="w-full bg-white text-slate-900 hover:bg-slate-200 py-2 rounded-lg text-sm font-bold transition">Jana Kod Sistem</button>
-                        <div id="perancangan_3" class="hidden">[SIAPA SAYA]\nSaya Pegawai PPD.\n\n[PERANAN AI]\nSenior Web Developer.\n\n[KONTEKS]\nSaya perlukan alat mudah untuk sekolah kira unjuran KPI.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal yang mengandungi 'Dashboard Interaktif'. Pengguna masukkan nilai TOV dan ETR, sistem akan jana graf bar mudah dan kira peratus lonjakan. Gunakan reka bentuk moden.]</div>
-                    </div>
-                </div>
-
-                <!-- SEKTOR PEMBELAJARAN -->
-                <div id="pembelajaran" class="sector-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                    <!-- Prompt 1: Inovasi RPH -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center text-blue-600 mb-4"><i class="fa-solid fa-book-open"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Inovasi RPH</h4>
-                        <p class="text-xs text-slate-500 mb-4">Idea set induksi dan aktiviti PAK-21 yang menarik.</p>
-                        <button onclick="showPrompt('pemb_1')" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="pemb_1" class="hidden">[SIAPA SAYA]\nSaya SISC+.\n\n[PERANAN AI]\nPakar Pedagogi Abad Ke-21.\n\n[KONTEKS]\nTopik: Sains Tahun 4 (Fotosintesis). Murid bosan cara lama.\n\n[ARAHAN]\nCadangkan 3 aktiviti 'Hands-on' menggunakan bahan kitar semula yang boleh dibuat dalam kelas.]</div>
-                    </div>
-                    <!-- Prompt 2: Modul Intervensi -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center text-purple-600 mb-4"><i class="fa-solid fa-user-check"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Modul Intervensi</h4>
-                        <p class="text-xs text-slate-500 mb-4">Strategi memulihkan murid lemah TP1-TP2.</p>
-                        <button onclick="showPrompt('pemb_2')" class="w-full border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="pemb_2" class="hidden">[SIAPA SAYA]\nSaya Guru Pemulihan.\n\n[PERANAN AI]\nPakar Psikologi Pendidikan.\n\n[KONTEKS]\nMurid tidak hafal sifir 6-9.\n\n[ARAHAN]\nRangkakan modul intervensi 4 minggu menggunakan teknik gamifikasi digital dan bukan digital.]</div>
-                    </div>
-                    <!-- Prompt 3: SYSTEM (Quiz) -->
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-700 hover:transform hover:-translate-y-1 transition relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-bl-lg">SISTEM</div>
-                        <div class="bg-white/20 w-10 h-10 rounded-lg flex items-center justify-center text-white mb-4"><i class="fa-solid fa-gamepad"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Web Kuiz Interaktif</h4>
-                        <p class="text-xs text-slate-400 mb-4">Jana kod HTML untuk kuiz latihan tubi murid.</p>
-                        <button onclick="showPrompt('pemb_3')" class="w-full bg-white text-slate-900 hover:bg-slate-200 py-2 rounded-lg text-sm font-bold transition">Jana Kod Sistem</button>
-                        <div id="pemb_3" class="hidden">[SIAPA SAYA]\nSaya Guru ICT.\n\n[PERANAN AI]\nGame Developer.\n\n[KONTEKS]\nSaya mahu kuiz congak mudah untuk murid Tahap 1.\n\n[ARAHAN]\nHasilkan kod HTML tunggal untuk 'Kuiz Matematik Angkasa'. Ada 5 soalan tambah tolak, bunyi efek jika betul, dan markah akhir. Design mestilah ceria.]</div>
-                    </div>
-                </div>
-
-                <!-- SEKTOR MURID -->
-                <div id="murid" class="sector-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                    <!-- Prompt 1: Modul Motivasi -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center text-blue-600 mb-4"><i class="fa-solid fa-fire"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Program Motivasi</h4>
-                        <p class="text-xs text-slate-500 mb-4">Modul program sahsiah yang segar untuk Gen Z.</p>
-                        <button onclick="showPrompt('murid_1')" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="murid_1" class="hidden">[SIAPA SAYA]\nSaya Pegawai HEM.\n\n[PERANAN AI]\nPakar Motivasi Remaja.\n\n[KONTEKS]\nProgram 'Jom Sekolah' untuk murid ponteng tegar.\n\n[ARAHAN]\nBerikan tentatif program setengah hari konsep 'Explorace'. Berikan nama aktiviti yang 'Catchy' dan tidak membosankan.]</div>
-                    </div>
-                    <!-- Prompt 2: Skrip Kaunseling -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center text-purple-600 mb-4"><i class="fa-solid fa-comments"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Skrip Kaunseling</h4>
-                        <p class="text-xs text-slate-500 mb-4">Skrip empati untuk menangani isu sensitif.</p>
-                        <button onclick="showPrompt('murid_2')" class="w-full border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="murid_2" class="hidden">[SIAPA SAYA]\nSaya Guru Kaunseling.\n\n[PERANAN AI]\nPakar Terapi Keluarga.\n\n[KONTEKS]\nMenangani ibu bapa yang marah anak didenda.\n\n[ARAHAN]\nSediakan skrip perbualan telefon yang tenang, profesional dan memujuk untuk meredakan keadaan.]</div>
-                    </div>
-                    <!-- Prompt 3: SYSTEM (Personality Test) -->
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-700 hover:transform hover:-translate-y-1 transition relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-bl-lg">SISTEM</div>
-                        <div class="bg-white/20 w-10 h-10 rounded-lg flex items-center justify-center text-white mb-4"><i class="fa-solid fa-heart"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Ujian Personaliti Web</h4>
-                        <p class="text-xs text-slate-400 mb-4">Sistem HTML untuk murid semak minat kerjaya.</p>
-                        <button onclick="showPrompt('murid_3')" class="w-full bg-white text-slate-900 hover:bg-slate-200 py-2 rounded-lg text-sm font-bold transition">Jana Kod Sistem</button>
-                        <div id="murid_3" class="hidden">[SIAPA SAYA]\nSaya Kaunselor.\n\n[PERANAN AI]\nWeb Developer.\n\n[KONTEKS]\nMurid Tingkatan 3 keliru pilih aliran.\n\n[ARAHAN]\nHasilkan kod HTML penuh untuk 'Ujian Minat Kerjaya Mini'. Ada 10 soalan Ya/Tidak. Akhirnya paparkan cadangan aliran (Sains/Sastera/TVET) berdasarkan jawapan.]</div>
-                    </div>
-                </div>
-
-                <!-- SEKTOR SEKOLAH -->
-                <div id="sekolah" class="sector-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                    <!-- Prompt 1: Memo Rasmi -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center text-blue-600 mb-4"><i class="fa-solid fa-file-signature"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Memo Rasmi</h4>
-                        <p class="text-xs text-slate-500 mb-4">Penulisan surat pentadbiran yang gramatis dan tepat.</p>
-                        <button onclick="showPrompt('sekolah_1')" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="sekolah_1" class="hidden">[SIAPA SAYA]\nSaya Pegawai Pengurusan Sekolah.\n\n[PERANAN AI]\nPakar Bahasa Melayu Tinggi & Pentadbiran.\n\n[KONTEKS]\nMemo teguran lembut tentang etika pemakaian guru.\n\n[ARAHAN]\nDrafkan memo dalaman rasmi yang tegas tetapi sopan, memetik pekeliling sedia ada.]</div>
-                    </div>
-                    <!-- Prompt 2: Teks Ucapan -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center text-purple-600 mb-4"><i class="fa-solid fa-microphone"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Teks Ucapan</h4>
-                        <p class="text-xs text-slate-500 mb-4">Teks ucapan perasmi yang berprotokol.</p>
-                        <button onclick="showPrompt('sekolah_2')" class="w-full border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="sekolah_2" class="hidden">[SIAPA SAYA]\nSaya Pegawai PPD.\n\n[PERANAN AI]\nPenulis Ucapan Profesional.\n\n[KONTEKS]\nPerasmian Mesyuarat Agung PIBG.\n\n[ARAHAN]\nSediakan teks ucapan 5 minit. Masukkan pantun pembuka, isu semasa pendidikan digital, dan harapan untuk kerjasama ibu bapa.]</div>
-                    </div>
-                    <!-- Prompt 3: SYSTEM (Cuti Rehat Calculator) -->
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-700 hover:transform hover:-translate-y-1 transition relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-bl-lg">SISTEM</div>
-                        <div class="bg-white/20 w-10 h-10 rounded-lg flex items-center justify-center text-white mb-4"><i class="fa-solid fa-calendar-check"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Kalkulator CRK</h4>
-                        <p class="text-xs text-slate-400 mb-4">Sistem HTML semak baki Cuti Rehat Khas.</p>
-                        <button onclick="showPrompt('sekolah_3')" class="w-full bg-white text-slate-900 hover:bg-slate-200 py-2 rounded-lg text-sm font-bold transition">Jana Kod Sistem</button>
-                        <div id="sekolah_3" class="hidden">[SIAPA SAYA]\nSaya Kerani Sekolah.\n\n[PERANAN AI]\nWeb Developer.\n\n[KONTEKS]\nGuru selalu tanya baki CRK (Cuti Rehat Khas).\n\n[ARAHAN]\nHasilkan satu fail HTML mudah. Pengguna masukkan jumlah cuti diambil, sistem kira baki dari kelayakan 15 hari. Paparkan amaran jika baki bawah 3 hari.]</div>
-                    </div>
-                </div>
-
-                <!-- SEKTOR AKP -->
-                <div id="akp" class="sector-content hidden grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                    <!-- Prompt 1: Minit Mesyuarat -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-blue-100 w-10 h-10 rounded-lg flex items-center justify-center text-blue-600 mb-4"><i class="fa-solid fa-file-contract"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Minit Mesyuarat</h4>
-                        <p class="text-xs text-slate-500 mb-4">Format minit mesyuarat kerajaan yang standard.</p>
-                        <button onclick="showPrompt('akp_1')" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="akp_1" class="hidden">[SIAPA SAYA]\nSaya Setiausaha Pejabat.\n\n[PERANAN AI]\nPakar Dokumentasi Kerajaan.\n\n[KONTEKS]\nNota ringkas: Pengerusi minta aset lupus, kewangan baki RM200, program 15hb ditunda.\n\n[ARAHAN]\nTukarkan nota ini menjadi Minit Mesyuarat penuh dengan format: Perutusan Pengerusi, Perkara Berbangkit, dan Hal-hal Lain. Gunakan ayat pasif.]</div>
-                    </div>
-                    <!-- Prompt 2: Surat Panggilan -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition">
-                        <div class="bg-purple-100 w-10 h-10 rounded-lg flex items-center justify-center text-purple-600 mb-4"><i class="fa-solid fa-envelope"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Surat Panggilan</h4>
-                        <p class="text-xs text-slate-500 mb-4">Surat jemputan rasmi dengan butiran lengkap.</p>
-                        <button onclick="showPrompt('akp_2')" class="w-full border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 rounded-lg text-sm font-bold transition">Lihat & Salin</button>
-                        <div id="akp_2" class="hidden">[SIAPA SAYA]\nSaya AKP Unit Pentadbiran.\n\n[PERANAN AI]\nPenulis Surat Rasmi.\n\n[KONTEKS]\nMesyuarat Kewangan Bil 1/2025. Tarikh: 20/2, Masa: 9 pagi, Tempat: Bilik Wawasan.\n\n[ARAHAN]\nSediakan surat panggilan mesyuarat rasmi kepada semua Ketua Unit. Sertakan agenda tentatif.]</div>
-                    </div>
-                    <!-- Prompt 3: SYSTEM (Stok Calculator) -->
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg border border-slate-700 hover:transform hover:-translate-y-1 transition relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-red-600 text-xs font-bold px-2 py-1 rounded-bl-lg">SISTEM</div>
-                        <div class="bg-white/20 w-10 h-10 rounded-lg flex items-center justify-center text-white mb-4"><i class="fa-solid fa-box-open"></i></div>
-                        <h4 class="font-bold text-lg mb-2">Sistem Stok Pejabat</h4>
-                        <p class="text-xs text-slate-400 mb-4">Kod HTML untuk rekod keluar masuk barang.</p>
-                        <button onclick="showPrompt('akp_3')" class="w-full bg-white text-slate-900 hover:bg-slate-200 py-2 rounded-lg text-sm font-bold transition">Jana Kod Sistem</button>
-                        <div id="akp_3" class="hidden">[SIAPA SAYA]\nSaya Pegawai Aset.\n\n[PERANAN AI]\nSoftware Engineer.\n\n[KONTEKS]\nSaya perlukan sistem mudah rekod stok kertas A4.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal 'Sistem e-Stok'. Pengguna boleh tambah stok (IN) dan tolak stok (OUT). Paparkan baki terkini secara automatik. Gunakan LocalStorage supaya data tak hilang bila refresh.]</div>
-                    </div>
-                </div>
-
+            <!-- Dynamic Content Container -->
+            <div id="content-container" class="max-w-7xl mx-auto min-h-[400px]">
+                <!-- Cards generated by JS -->
             </div>
         </div>
     </section>
 
-    <!-- Keywords Section -->
-    <section class="py-20 bg-slate-50 border-t border-slate-200">
+    <!-- =========================================
+         BAHAGIAN 4: KATA KUNCI POWER
+    ========================================== -->
+    <section class="py-24 bg-white border-t border-slate-200">
          <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-10 text-slate-900">Kata Kunci <span class="text-brand-600">"Power"</span> (Dwibahasa)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                
-                <!-- 1. Step by step -->
-                <div onclick="copyText('Jelaskan langkah demi langkah (Think step-by-step)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Step-by-step</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Langkah demi langkah"</div>
-                    <p class="text-xs text-slate-600 mb-3">Untuk matematik & logik.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Kira bajet program ini langkah demi langkah supaya tiada kesilapan."</p>
-                    </div>
-                </div>
-
-                <!-- 2. ELI5 -->
-                <div onclick="copyText('Jelaskan seperti saya berumur 5 tahun (Explain Like I\'m 5)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">ELI5</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Macam budak 5 tahun"</div>
-                    <p class="text-xs text-slate-600 mb-3">Permudahkan topik susah.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Terangkan teknologi Blockchain seperti saya berumur 5 tahun."</p>
-                    </div>
-                </div>
-
-                <!-- 3. Format Jadual -->
-                <div onclick="copyText('Sediakan dalam format Jadual (Table format)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Format Jadual</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Table format"</div>
-                    <p class="text-xs text-slate-600 mb-3">Banding data dengan kemas.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Bandingkan tugas Guru Data dan Guru ICT dalam format jadual."</p>
-                    </div>
-                </div>
-
-                <!-- 4. Kod Siap Tampal -->
-                <div onclick="copyText('Hasilkan kod penuh siap tampal (Full runnable code)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Kod Siap Tampal</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Full runnable code"</div>
-                    <p class="text-xs text-slate-600 mb-3">Untuk HTML/Excel/Python.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Bina borang kehadiran HTML. Hasilkan kod penuh siap tampal."</p>
-                    </div>
-                </div>
-
-                <!-- 5. Kritik Kendiri -->
-                <div onclick="copyText('Kritik hasil kerja anda sendiri sebelum beri jawapan (Critique your own work)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Kritik Kendiri</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Critique your own work"</div>
-                    <p class="text-xs text-slate-600 mb-3">Elak AI cuai. Semak dulu.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Semak jawapan anda tadi, cari kesalahan logik dan betulkan."</p>
-                    </div>
-                </div>
-
-                <!-- 6. Guna Analogi -->
-                <div onclick="copyText('Gunakan analogi untuk menerangkan konsep ini (Use an analogy)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Guna Analogi</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Use an analogy"</div>
-                    <p class="text-xs text-slate-600 mb-3">Kaitkan dengan benda biasa.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Terangkan fungsi CPU komputer menggunakan analogi dapur restoran."</p>
-                    </div>
-                </div>
-
-                <!-- 7. Pengkritik Tegas -->
-                <div onclick="copyText('Bertindak sebagai Pengkritik Tegas (Act as Devil\'s Advocate)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Pengkritik Tegas</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Devil's Advocate"</div>
-                    <p class="text-xs text-slate-600 mb-3">Cari kelemahan idea kita.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Bertindak sebagai pengkritik tegas, senaraikan 5 kelemahan kertas kerja ini."</p>
-                    </div>
-                </div>
-
-                <!-- 8. Kekalkan Format -->
-                <div onclick="copyText('Kekalkan format asal (Maintain original formatting)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
-                    <div class="font-bold text-brand-600 mb-1">Kekalkan Format</div>
-                    <div class="text-xs text-slate-400 italic mb-2">"Maintain formatting"</div>
-                    <p class="text-xs text-slate-600 mb-3">Ringkaskan tanpa hilang struktur.</p>
-                    <div class="bg-slate-50 p-2 rounded border border-slate-100">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Contoh Prompt:</span>
-                        <p class="text-xs text-slate-700 italic">"Ringkaskan teks ini tetapi kekalkan format 'bullet points' asal."</p>
-                    </div>
-                </div>
-
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Kata Kunci <span class="text-brand-600">"Power"</span> (Dwibahasa)</h2>
+                <p class="text-slate-500">
+                    Gunakan istilah teknikal ini dalam prompt anda untuk memanipulasi cara AI berfikir dan menghasilkan jawapan yang lebih tepat.
+                </p>
+            </div>
+            <div id="keywords-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Keywords generated by JS -->
             </div>
          </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-10 text-center border-t border-slate-800">
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+    <footer class="bg-slate-900 text-slate-400 py-16 text-center border-t border-slate-800">
         <div class="container mx-auto px-4">
-            <img src="SirSM.png" class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-slate-700 shadow-lg object-cover">
-            <p class="mb-2 font-medium text-slate-300">Dibangunkan khas oleh <strong>SirSM</strong></p>
-            <p class="text-sm">Unit Sumber Teknologi Pendidikan (USTP) PPD Alor Gajah</p>
-            <p class="mt-6 text-xs text-slate-600">&copy; <span id="currentYear"></span>. Hak Cipta Terpelihara.</p>
+            <img src="SirSM.png" class="w-24 h-24 rounded-full mx-auto mb-6 border-4 border-slate-800 shadow-2xl object-cover hover:scale-105 transition duration-500">
+            <p class="mb-3 text-lg font-bold text-white tracking-wide">Dibangunkan khas oleh SirSM</p>
+            <p class="text-sm uppercase tracking-widest text-slate-500 mb-8">Unit Sumber Teknologi Pendidikan (USTP) PPD Alor Gajah</p>
+            <div class="w-16 h-1 bg-brand-600 mx-auto rounded-full mb-8"></div>
+            <p class="text-xs text-slate-600">&copy; <span id="currentYear"></span> Hak Cipta Terpelihara.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- =========================================
+         LOGIK JAVASCRIPT
+    ========================================== -->
     <script>
         document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-        // GENERATOR LOGIC
+        /* -----------------------------------------------------
+           DATA STORE: SUMBER KONTEN LENGKAP
+        ------------------------------------------------------ */
+
+        // 1. DATA PENERANGAN SPKA (LENGKAP)
+        const spkaData = [
+            { 
+                code: 'S', title: 'Siapa Saya (Identity)', 
+                desc: 'Fungsi: Menetapkan Laras Bahasa & Tahap Komunikasi.', 
+                detail: 'Bahagian ini penting supaya AI tahu dengan siapa ia bercakap. Jika anda menulis "Saya seorang Murid Tahun 1", AI akan menggunakan ayat tunggal yang mudah. Jika anda menulis "Saya seorang Pegawai PPD", AI akan menggunakan laras bahasa rasmi kerajaan, istilah pentadbiran, dan struktur ayat yang kompleks. Tanpa "S", AI akan menggunakan nada "default" yang mungkin terlalu umum.', 
+                color: 'blue', icon: 'S' 
+            },
+            { 
+                code: 'P', title: 'Peranan AI (Persona)', 
+                desc: 'Fungsi: Mengaktifkan Pangkalan Data Spesifik.', 
+                detail: 'Ini adalah kunci kualiti. Apabila anda menetapkan "Bertindak sebagai 0.1% Pakar Psikologi", AI akan mengabaikan maklumat umum dan hanya mengambil maklumat daripada jurnal akademik, teori psikologi, dan amalan terbaik industri. Tanpa "P", AI akan memberi jawapan seperti carian Google biasa. Sentiasa gunakan "0.1% Pakar" untuk memaksa standard tertinggi.', 
+                color: 'purple', icon: 'P' 
+            },
+            { 
+                code: 'K', title: 'Konteks (Context)', 
+                desc: 'Fungsi: Membataskan Halusinasi & Memberi Fokus.', 
+                detail: 'AI tidak boleh membaca fikiran anda. Tanpa konteks, ia akan "menggoreng" atau mereka cerita. Anda wajib berikan latar belakang: Apakah masalahnya? Siapa sasaran audiens? Berapa bajet? Data apa yang ada? Semakin banyak konteks yang diberi, semakin mustahil untuk AI membuat kesilapan fakta.', 
+                color: 'amber', icon: 'K' 
+            },
+            { 
+                code: 'A', title: 'Arahan (Action)', 
+                desc: 'Fungsi: Menentukan Format Output Akhir.', 
+                detail: 'Jangan biarkan AI menentukan format. Anda yang perlu kawal. Adakah anda mahu jawapan dalam bentuk Jadual? Surat Rasmi dengan format kerajaan? Kod HTML yang boleh disalin? Atau senarai poin ringkas? Arahan yang spesifik akan menjimatkan masa anda daripada perlu mengedit semula hasil kerja AI.', 
+                color: 'green', icon: 'A' 
+            }
+        ];
+
+        // 2. DATA SEKTOR & PROMPT (LENGKAP DENGAN SISTEM)
+        const sectorsData = {
+            'perancangan': [
+                { 
+                    title: 'Analisis Strategik (Data)', 
+                    icon: 'fa-chart-line', 
+                    desc: 'Menganalisis data mentah untuk mencari punca isu dan cadangan intervensi taktikal.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai Sektor Perancangan PPD yang menguruskan data prestasi sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Data Scientist Pendidikan dan Perancang Strategik.\n\n[KONTEKS]\nSaya mempunyai data kehadiran murid sekolah luar bandar yang merosot sebanyak 15% khususnya pada hari Khamis (Hari Kokurikulum). Data juga menunjukkan 40% murid ini datang dari keluarga B40.\n\n[ARAHAN]\nSila buat analisis punca kemungkinan (Root Cause Analysis) dan cadangkan 3 program intervensi yang kos rendah tetapi berimpak tinggi. Bentangkan jawapan dalam format: Isu, Punca, dan Cadangan Penyelesaian.' 
+                },
+                { 
+                    title: 'Bina OPPM Projek', 
+                    icon: 'fa-table', 
+                    desc: 'Menghasilkan rangka kandungan lengkap untuk One Page Project Manager.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai Perancangan yang mengetuai projek khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pengurusan Projek (PMP Certified).\n\n[KONTEKS]\nProgram "STEM Untuk Semua" akan dijalankan di peringkat daerah selama 6 bulan bermula Januari hingga Jun. Objektif utama adalah meningkatkan minat murid dalam Sains.\n\n[ARAHAN]\nBina kandungan teks lengkap untuk dimasukkan ke dalam OPPM. Sila senaraikan: 1. Objektif Projek, 2. Senarai 10 Tugasan Utama (Milestones), 3. Tarikh Sasaran bagi setiap tugas, 4. Anggaran Kos, dan 5. Pegawai Bertanggungjawab.' 
+                },
+                { 
+                    title: 'Sistem Dashboard KPI', 
+                    icon: 'fa-code', 
+                    desc: 'Menjana kod HTML untuk kalkulator unjuran pencapaian sekolah (TOV/ETR).', 
+                    type: 'system', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mahukan alat digital mudah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Senior Web Developer & UI/UX Designer.\n\n[KONTEKS]\nSaya perlukan satu alat mudah untuk sekolah mengira unjuran KPI mereka tanpa perlu membuka Excel yang berat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal yang mengandungi "Dashboard Unjuran KPI".\nCiri-ciri sistem:\n1. Input untuk TOV (Take Off Value) dan ETR (Expected Target Result).\n2. Butang "Kira Lonjakan".\n3. Paparan graf bar mudah menggunakan CSS (tanpa library berat) yang membandingkan TOV dan ETR.\n4. Kiraan automatik peratus peningkatan.\n5. Reka bentuk mestilah moden, bersih, dan profesional.' 
+                }
+            ],
+            'pembelajaran': [
+                { 
+                    title: 'Inovasi RPH PAK-21', 
+                    icon: 'fa-book-open', 
+                    desc: 'Mencipta set induksi dan aktiviti pembelajaran yang kreatif.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai SISC+ yang membimbing guru di sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pedagogi Abad Ke-21 dan Psikologi Kanak-kanak.\n\n[KONTEKS]\nTopik pengajaran adalah Sains Tahun 4 (Proses Fotosintesis). Masalah utama ialah murid berasa bosan dengan kaedah syarahan guru.\n\n[ARAHAN]\nCadangkan 3 aktiviti pembelajaran "Hands-on" yang menggunakan bahan kitar semula. Setiap aktiviti mesti mempunyai elemen kolaboratif (kerja kumpulan) dan pergerakan fizikal. Sediakan juga satu idea set induksi "Wow Factor" untuk memulakan kelas.' 
+                },
+                { 
+                    title: 'Modul Intervensi TP1-TP2', 
+                    icon: 'fa-user-check', 
+                    desc: 'Strategi memulihkan murid lemah dengan pendekatan terbeza.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Guru Pemulihan Khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pendidikan Khas dan Psikologi Pendidikan.\n\n[KONTEKS]\nSaya ada 5 orang murid yang masih tidak menghafal sifir 6 hingga 9 walaupun sudah Tahun 5. Mereka mempunyai gaya pembelajaran kinestetik (suka bergerak).\n\n[ARAHAN]\nRangkakan satu modul intervensi intensif selama 4 minggu. Modul ini mesti menggunakan teknik "Gamifikasi Fizikal" (permainan sebenar, bukan digital). Berikan jadual aktiviti minggu demi minggu berserta cara penilaian kejayaan.' 
+                },
+                { 
+                    title: 'Web Kuiz Interaktif', 
+                    icon: 'fa-gamepad', 
+                    desc: 'Menjana kod HTML untuk kuiz latihan tubi murid yang menyeronokkan.', 
+                    type: 'system', 
+                    content: '[SIAPA SAYA]\nSaya Guru ICT dan Matematik.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Game Developer dan Web Designer.\n\n[KONTEKS]\nSaya mahu murid Tahap 1 berlatih mencongak (tambah dan tolak) dengan cara yang seronok di makmal komputer.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Kuiz Matematik Angkasa".\nCiri-ciri:\n1. Latar belakang bertema angkasa lepas.\n2. Soalan matematik mudah (tambah/tolak) yang dijana secara rawak.\n3. Sistem markah: +10 jika betul, -5 jika salah.\n4. Bunyi efek (gunakan URL audio percuma) apabila menjawab.\n5. Paparan "Game Over" dan markah akhir selepas 10 soalan.' 
+                }
+            ],
+            'murid': [
+                { 
+                    title: 'Program Motivasi Gen-Z', 
+                    icon: 'fa-fire', 
+                    desc: 'Modul sahsiah yang segar dan tidak membosankan untuk remaja.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai Hal Ehwal Murid (HEM).\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Motivasi Remaja dan Pembangunan Modal Insan.\n\n[KONTEKS]\nSekolah ingin mengadakan program "Jom Sekolah" untuk menangani isu ponteng tegar. Sasaran adalah murid Tingkatan 3 & 4 (Gen Z) yang anti-ceramah dan cepat bosan.\n\n[ARAHAN]\nBerikan tentatif program setengah hari yang berkonsepkan "Explorace" dan "Team Bonding". Senaraikan 5 stesen aktiviti yang memerlukan penyelesaian masalah berkumpulan. Berikan nama aktiviti yang "Catchy" dan relevan dengan jiwa muda.' 
+                },
+                { 
+                    title: 'Skrip Kaunseling Empati', 
+                    icon: 'fa-comments', 
+                    desc: 'Skrip perbualan profesional untuk menangani isu sensitif.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Guru Bimbingan dan Kaunseling.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Terapi Keluarga dan Komunikasi Krisis.\n\n[KONTEKS]\nSeorang ibu bapa datang ke sekolah dalam keadaan marah kerana anaknya didenda (rotan) oleh guru disiplin. Situasi tegang.\n\n[ARAHAN]\nSediakan skrip dialog langkah demi langkah untuk saya (Kaunselor) bagi menenangkan ibu bapa tersebut. Gunakan teknik "Active Listening" dan "Empathy validation". Skrip mesti sopan, profesional, tetapi tegas dalam mempertahankan prosedur sekolah.' 
+                },
+                { 
+                    title: 'Ujian Personaliti Web', 
+                    icon: 'fa-heart', 
+                    desc: 'Sistem HTML untuk murid menyemak kecenderungan minat kerjaya.', 
+                    type: 'system', 
+                    content: '[SIAPA SAYA]\nSaya Kaunselor Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nMurid Tingkatan 3 sering keliru untuk memilih aliran (Sains/Sastera/TVET). Saya perlukan alat saringan awal yang pantas.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Ujian Minat Kerjaya Mini".\nCiri-ciri:\n1. Mengandungi 10 soalan Ya/Tidak mengenai minat (Cth: Suka baiki barang? Suka melukis?).\n2. Logik mudah di belakang tabir untuk mengira skor.\n3. Paparan keputusan akhir yang mencadangkan aliran (Sains / Akaun / TVET) berdasarkan jawapan terbanyak.\n4. Reka bentuk yang mesra pengguna.' 
+                }
+            ],
+            'sekolah': [
+                { 
+                    title: 'Penulisan Memo Rasmi', 
+                    icon: 'fa-file-signature', 
+                    desc: 'Menghasilkan surat pentadbiran yang gramatis, tegas dan berhemah.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai Sektor Pengurusan Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Bahasa Melayu Tinggi dan Pentadbiran Awam.\n\n[KONTEKS]\nTerdapat aduan mengenai segelintir guru yang tidak mematuhi etika pemakaian penjawat awam semasa bertugas. PPD perlu mengeluarkan peringatan.\n\n[ARAHAN]\nDrafkan satu memo dalaman rasmi yang bertajuk "PERINGATAN PEMATUHAN ETIKA BERPAKAIAN". Nada memo mestilah tegas tetapi menyantuni. Sila petik rujukan pekeliling ikhtisas yang berkaitan sebagai sandaran kuasa.' 
+                },
+                { 
+                    title: 'Teks Ucapan Protokol', 
+                    icon: 'fa-microphone', 
+                    desc: 'Teks ucapan perasmi yang lengkap dengan pantun dan protokol.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mewakili Tuan PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Ucapan Profesional Diraja/Kerajaan.\n\n[KONTEKS]\nMajlis Perasmian Mesyuarat Agung PIBG di sebuah sekolah luar bandar. Audiens terdiri daripada ibu bapa kampung dan guru-guru.\n\n[ARAHAN]\nSediakan teks ucapan perasmian sepanjang 5 minit bacaan. Struktur ucapan:\n1. Kata aluan protokol.\n2. Pantun pembuka yang indah.\n3. Isi utama: Pentingnya kerjasama ibu bapa dalam era pendidikan digital.\n4. Penutup dengan harapan dan pantun akhir.' 
+                },
+                { 
+                    title: 'Kalkulator Cuti (CRK)', 
+                    icon: 'fa-calendar-check', 
+                    desc: 'Sistem HTML untuk menyemak baki kelayakan Cuti Rehat Khas.', 
+                    type: 'system', 
+                    content: '[SIAPA SAYA]\nSaya Pembantu Tadbir (Kerani) Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nGuru-guru sering bertanya baki Cuti Rehat Khas (CRK) mereka dan saya sukar untuk mengira setiap kali.\n\n[ARAHAN]\nHasilkan satu fail HTML mudah bertajuk "Kalkulator CRK Guru".\nFungsi:\n1. Paparkan kelayakan tahunan tetap (Contoh: 15 hari).\n2. Ruang input untuk guru masukkan jumlah cuti yang telah diambil.\n3. Butang "Semak Baki".\n4. Paparan baki terkini.\n5. Jika baki bawah 3 hari, keluarkan amaran teks berwarna merah "Baki Kritikal!".' 
+                }
+            ],
+            'akp': [
+                { 
+                    title: 'Minit Mesyuarat', 
+                    icon: 'fa-file-contract', 
+                    desc: 'Format minit mesyuarat kerajaan yang standard dan tepat.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya Setiausaha Pejabat di PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Dokumentasi Rasmi Kerajaan.\n\n[KONTEKS]\nSaya ada nota ringkas dari mesyuarat pagi tadi:\n- Pengerusi marah sebab aset lama belum lupus.\n- Kewangan baki tinggal RM200 sahaja.\n- Program lawatan 15hb ditunda ke bulan depan.\n\n[ARAHAN]\nTukarkan nota ringkas ini menjadi Minit Mesyuarat penuh yang profesional. Gunakan format: Perutusan Pengerusi, Perkara Berbangkit, Pembentangan Kertas Kerja, dan Hal-hal Lain. Pastikan ayat adalah ayat pasif dan gramatis (Contoh: "Mesyuarat mengambil maklum...").' 
+                },
+                { 
+                    title: 'Surat Panggilan Rasmi', 
+                    icon: 'fa-envelope', 
+                    desc: 'Menjana surat jemputan mesyuarat dengan butiran lengkap.', 
+                    type: 'normal', 
+                    content: '[SIAPA SAYA]\nSaya AKP Unit Pentadbiran.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Surat Rasmi.\n\n[KONTEKS]\nSatu mesyuarat tergempar Jawatankuasa Kewangan Bil 1/2025 perlu diadakan. Tarikh: 20 Februari, Masa: 9.00 pagi, Tempat: Bilik Wawasan.\n\n[ARAHAN]\nSediakan surat panggilan mesyuarat rasmi kepada semua Ketua Unit. Surat mesti mengandungi agenda tentatif mesyuarat dan arahan supaya membawa laporan perbelanjaan terkini.' 
+                },
+                { 
+                    title: 'Sistem Stok Pejabat', 
+                    icon: 'fa-box-open', 
+                    desc: 'Sistem HTML mudah untuk merekod keluar masuk barang stor.', 
+                    type: 'system', 
+                    content: '[SIAPA SAYA]\nSaya Pegawai Aset & Stor.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Software Engineer.\n\n[KONTEKS]\nSaya perlukan sistem sangat mudah untuk rekod stok kertas A4 di pejabat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal "Sistem e-Stok Pejabat".\nFungsi:\n1. Paparan jumlah baki stok semasa.\n2. Butang "Stok Masuk (IN)" untuk tambah jumlah.\n3. Butang "Stok Keluar (OUT)" untuk tolak jumlah.\n4. Senarai log sejarah transaksi di bahagian bawah (Masa & Jumlah).\n5. Gunakan LocalStorage supaya data tidak hilang apabila browser ditutup.' 
+                }
+            ]
+        };
+
+        // 3. DATA KATA KUNCI POWER (8 ITEM LENGKAP)
+        const keywordsData = [
+            { 
+                title: 'Step-by-step', sub: 'Think step-by-step', 
+                desc: 'Memaksa AI berfikir secara urutan logik. Sangat penting untuk soalan Matematik, Coding, atau perancangan strategi.', 
+                example: 'Kira implikasi kewangan projek ini langkah demi langkah supaya tiada kesilapan pengiraan.' 
+            },
+            { 
+                title: 'ELI5', sub: 'Explain Like I\'m 5', 
+                desc: 'Minta AI terangkan topik yang sangat kompleks (seperti Blockchain atau AI) menggunakan bahasa budak tadika.', 
+                example: 'Terangkan teknologi Cloud Computing seperti saya berumur 5 tahun.' 
+            },
+            { 
+                title: 'Format Jadual', sub: 'Present in Table format', 
+                desc: 'Menukar perenggan teks yang serabut kepada jadual yang kemas untuk perbandingan data.', 
+                example: 'Bandingkan perbezaan tugas Guru Data dan Guru ICT dalam format jadual.' 
+            },
+            { 
+                title: 'Kod Siap Tampal', sub: 'Full runnable code', 
+                desc: 'Mengelakkan AI memberi kod sekerat-sekerat. Wajib guna untuk tugasan HTML, Excel Formula, atau Python.', 
+                example: 'Bina borang kehadiran HTML. Hasilkan kod penuh siap tampal dan sedia digunakan.' 
+            },
+            { 
+                title: 'Kritik Kendiri', sub: 'Critique your own work', 
+                desc: 'Menyuruh AI menyemak semula jawapannya sendiri sebelum diberikan kepada anda. Mengurangkan risiko fakta salah.', 
+                example: 'Selepas buat draf surat ini, kritik hasil kerja anda sendiri dan cari kesalahan tatabahasa.' 
+            },
+            { 
+                title: 'Guna Analogi', sub: 'Use an analogy', 
+                desc: 'Meminta AI mengaitkan konsep baru dengan benda yang kita sudah biasa (seperti dapur, kereta, sukan).', 
+                example: 'Terangkan fungsi CPU komputer menggunakan analogi dapur restoran.' 
+            },
+            { 
+                title: 'Pengkritik Tegas', sub: 'Act as Devil\'s Advocate', 
+                desc: 'Meminta AI mencari kelemahan, lubang, atau risiko dalam idea/kertas kerja kita.', 
+                example: 'Bertindak sebagai pengkritik tegas, senaraikan 5 kelemahan dalam kertas kerja cadangan saya ini.' 
+            },
+            { 
+                title: 'Kekalkan Format', sub: 'Maintain original formatting', 
+                desc: 'Penting apabila anda mahu AI meringkaskan teks tetapi jangan ubah struktur (seperti bullet points).', 
+                example: 'Ringkaskan teks laporan ini tetapi kekalkan format bullet points asal.' 
+            }
+        ];
+
+        /* -----------------------------------------------------
+           RENDERING LOGIC
+        ------------------------------------------------------ */
+
+        // Render SPKA List
+        const spkaContainer = document.getElementById('spka-list-container');
+        spkaData.forEach(item => {
+            spkaContainer.innerHTML += `
+                <div class="flex gap-5 p-6 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition bg-white group hover:border-${item.color}-200 cursor-default">
+                    <div class="w-14 h-14 bg-${item.color}-100 text-${item.color}-600 rounded-xl flex items-center justify-center font-bold text-2xl flex-shrink-0 transition group-hover:bg-${item.color}-600 group-hover:text-white shadow-sm">${item.icon}</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-800 mb-1 group-hover:text-${item.color}-700 transition">${item.title}</h4>
+                        <p class="text-xs font-bold uppercase tracking-wider text-${item.color}-600 mb-2">${item.desc}</p>
+                        <p class="text-sm text-slate-500 leading-relaxed">${item.detail}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Render Keywords
+        const kwContainer = document.getElementById('keywords-container');
+        keywordsData.forEach(kw => {
+            kwContainer.innerHTML += `
+                <div onclick="copyText('${kw.title} (${kw.sub})')" class="p-6 border border-slate-200 rounded-2xl hover:border-brand-500 hover:shadow-xl transition cursor-pointer group bg-white h-full flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="font-bold text-brand-700 text-lg group-hover:text-brand-600">${kw.title}</div>
+                            <i class="fa-regular fa-copy text-slate-300 group-hover:text-brand-500"></i>
+                        </div>
+                        <div class="text-xs font-mono text-slate-400 mb-3 bg-slate-50 p-1 rounded inline-block">"${kw.sub}"</div>
+                        <p class="text-sm text-slate-600 mb-4 leading-relaxed">${kw.desc}</p>
+                    </div>
+                    <div class="bg-brand-50 p-3 rounded-lg border border-brand-100 group-hover:bg-brand-600 group-hover:border-brand-600 transition">
+                        <span class="text-[10px] font-bold text-brand-400 uppercase block mb-1 group-hover:text-brand-200">Contoh Prompt:</span>
+                        <p class="text-xs text-brand-900 italic font-medium group-hover:text-white">"${kw.example}"</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Render Sector Tabs & Content
+        function initSectors() {
+            const tabsContainer = document.getElementById('tabs-container');
+            const contentContainer = document.getElementById('content-container');
+            
+            // Generate Tabs
+            Object.keys(sectorsData).forEach((key, index) => {
+                const label = key === 'akp' ? 'AKP (Sokongan)' : key.charAt(0).toUpperCase() + key.slice(1).replace('murid', 'Pembangunan Murid').replace('sekolah', 'Pengurusan Sekolah');
+                const activeClass = index === 0 ? 'tab-active ring-2 ring-offset-2 ring-brand-500' : 'tab-inactive hover:bg-slate-50';
+                tabsContainer.innerHTML += `<button onclick="switchTab('${key}')" class="tab-btn ${activeClass} px-6 py-3 rounded-full border text-sm font-bold transition shadow-sm capitalize tracking-wide" id="btn-${key}">${label}</button>`;
+            });
+
+            // Generate Content Blocks
+            Object.entries(sectorsData).forEach(([key, prompts], index) => {
+                const hiddenClass = index === 0 ? '' : 'hidden';
+                let cardsHtml = '';
+                
+                prompts.forEach(p => {
+                    if (p.type === 'system') {
+                        // System Card Design (Dark Theme)
+                        cardsHtml += `
+                        <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-xl border border-slate-700 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 bg-gradient-to-l from-red-600 to-orange-600 text-xs font-bold px-4 py-1.5 rounded-bl-2xl shadow-lg z-10">SISTEM KHAS</div>
+                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition"></div>
+                            
+                            <div class="bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 border border-white/10 shadow-inner"><i class="fa-solid ${p.icon} text-2xl"></i></div>
+                            
+                            <h4 class="font-bold text-xl mb-2 text-white group-hover:text-brand-300 transition">${p.title}</h4>
+                            <p class="text-sm text-slate-400 mb-6 leading-relaxed min-h-[60px]">${p.desc}</p>
+                            
+                            <button onclick="showPrompt('${encodeURIComponent(p.content)}')" class="w-full bg-white text-slate-900 hover:bg-brand-500 hover:text-white py-3.5 rounded-xl text-sm font-bold transition shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-code"></i> Jana Kod Sistem
+                            </button>
+                        </div>`;
+                    } else {
+                        // Normal Card Design (Light Theme)
+                        cardsHtml += `
+                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-xl hover:border-brand-200 transition duration-300 group flex flex-col h-full">
+                            <div class="bg-brand-50 w-14 h-14 rounded-2xl flex items-center justify-center text-brand-600 mb-6 border border-brand-100 group-hover:scale-110 transition"><i class="fa-solid ${p.icon} text-2xl"></i></div>
+                            
+                            <h4 class="font-bold text-xl mb-2 text-slate-800 group-hover:text-brand-600 transition">${p.title}</h4>
+                            <p class="text-sm text-slate-500 mb-6 leading-relaxed flex-grow">${p.desc}</p>
+                            
+                            <button onclick="showPrompt('${encodeURIComponent(p.content)}')" class="w-full border-2 border-brand-100 text-brand-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-eye"></i> Lihat & Salin
+                            </button>
+                        </div>`;
+                    }
+                });
+
+                contentContainer.innerHTML += `<div id="${key}" class="sector-content grid grid-cols-1 md:grid-cols-3 gap-8 animate-fade-in ${hiddenClass}">${cardsHtml}</div>`;
+            });
+        }
+
+        // --- INTERACTION LOGIC ---
+
         function generatePrompt() {
             const s = document.getElementById('inputS').value.trim();
             const p = document.getElementById('inputP').value.trim();
@@ -548,7 +627,8 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Maklumat Tidak Lengkap',
-                    text: 'Sila isi kesemua ruangan S.P.K.A untuk hasil terbaik!',
+                    text: 'Sila isi kesemua ruangan S.P.K.A untuk memastikan prompt yang dijana berkualiti tinggi.',
+                    confirmButtonText: 'Baik, saya isi',
                     confirmButtonColor: '#2563eb'
                 });
                 return; 
@@ -562,53 +642,91 @@
             
             Swal.fire({
                 icon: 'success',
-                title: 'Prompt Dijana!',
-                text: 'Sila salin prompt di bawah.',
-                timer: 1500,
+                title: 'Prompt Berjaya Dijana!',
+                text: 'Sila salin prompt di bawah dan tampal ke dalam AI (Gemini/ChatGPT).',
+                timer: 2000,
                 showConfirmButton: false
             });
         }
 
-        // COPY LOGIC
         function copyToClipboard(id) {
-            const el = document.getElementById(id); el.select(); el.setSelectionRange(0, 99999);
+            const el = document.getElementById(id); 
+            el.select(); 
+            el.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(el.value).then(() => {
-                Swal.fire({ icon: 'success', title: 'Berjaya!', text: 'Teks prompt telah disalin.', timer: 1500, showConfirmButton: false });
+                Swal.fire({ 
+                    icon: 'success', 
+                    title: 'Berjaya Disalin!', 
+                    text: 'Anda kini boleh menampal teks ini.', 
+                    timer: 1500, 
+                    showConfirmButton: false 
+                });
             });
         }
 
         function copyText(text) { 
             navigator.clipboard.writeText(text).then(() => {
-                Swal.fire({ icon: 'success', title: 'Kata Kunci Disalin!', text: text, timer: 1500, showConfirmButton: false });
+                Swal.fire({ 
+                    icon: 'success', 
+                    title: 'Kata Kunci Disalin!', 
+                    html: `<span class="text-brand-600 font-mono text-sm">${text}</span>`, 
+                    timer: 1500, 
+                    showConfirmButton: false 
+                });
             }); 
         }
 
-        // SECTOR TAB LOGIC
         function switchTab(id) {
             document.querySelectorAll('.sector-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); });
-            event.target.classList.remove('tab-inactive'); event.target.classList.add('tab-active');
+            document.querySelectorAll('.tab-btn').forEach(btn => { 
+                btn.classList.remove('tab-active'); 
+                btn.classList.remove('ring-2');
+                btn.classList.remove('ring-offset-2');
+                btn.classList.remove('ring-brand-500');
+                btn.classList.add('tab-inactive'); 
+            });
+            const activeBtn = document.getElementById('btn-' + id);
+            activeBtn.classList.remove('tab-inactive');
+            activeBtn.classList.add('tab-active');
+            activeBtn.classList.add('ring-2');
+            activeBtn.classList.add('ring-offset-2');
+            activeBtn.classList.add('ring-brand-500');
         }
 
-        // SHOW PROMPT POPUP
-        function showPrompt(id) {
-            const content = document.getElementById(id).innerText;
+        function showPrompt(encodedContent) {
+            const content = decodeURIComponent(encodedContent);
             Swal.fire({
-                title: 'Prompt Penuh',
-                html: `<textarea readonly class="w-full h-48 p-3 border rounded font-mono text-sm bg-slate-50 text-left">${content}</textarea>`,
+                title: '<span class="text-lg font-bold">Prompt Penuh S.P.K.A</span>',
+                html: `<div class="relative"><textarea readonly class="w-full h-64 p-4 border-2 border-slate-200 rounded-xl font-mono text-xs md:text-sm bg-slate-50 text-left focus:outline-none text-slate-700 leading-relaxed resize-none">${content}</textarea></div>`,
                 showCancelButton: true,
-                confirmButtonText: 'Salin Prompt',
+                confirmButtonText: '<i class="fa-regular fa-copy mr-2"></i> Salin Prompt',
                 cancelButtonText: 'Tutup',
                 confirmButtonColor: '#2563eb',
+                cancelButtonColor: '#94a3b8',
+                width: '600px',
+                padding: '2em',
+                customClass: {
+                    popup: 'rounded-3xl'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     navigator.clipboard.writeText(content).then(() => {
-                        Swal.fire({ icon: 'success', title: 'Disalin!', timer: 1000, showConfirmButton: false });
+                        Swal.fire({ 
+                            icon: 'success', 
+                            title: 'Disalin!', 
+                            text: 'Sedia untuk digunakan.', 
+                            timer: 1000, 
+                            showConfirmButton: false 
+                        });
                     });
                 }
             });
         }
+
+        // Initialize Data Driven Content
+        initSectors();
+
     </script>
 </body>
 </html>
