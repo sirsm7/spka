@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Lengkap & Kuiz</title>
+    <title>Belajar AI bersama SirSM - Modul Lengkap</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Lexend', 'sans-serif'], // Font baru diaplikasikan
+                        sans: ['Lexend', 'sans-serif'],
                     },
                     colors: {
                         brand: {
@@ -27,7 +27,6 @@
                     },
                     animation: {
                         'bounce-slow': 'bounce 3s infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -42,42 +41,34 @@
         }
         .blob {
             position: absolute;
-            filter: blur(50px);
+            filter: blur(60px);
             z-index: -1;
-            opacity: 0.5;
+            opacity: 0.4;
             animation: move 10s infinite alternate;
         }
         @keyframes move {
             from { transform: translate(0, 0) scale(1); }
             to { transform: translate(20px, -20px) scale(1.1); }
         }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        .quiz-option {
-            transition: all 0.2s ease;
-        }
-        .quiz-option:hover {
-            transform: translateX(5px);
-            border-color: #3b82f6;
-        }
-        .quiz-correct {
-            background-color: #dcfce7 !important;
-            border-color: #22c55e !important;
-            color: #15803d !important;
-        }
-        .quiz-wrong {
-            background-color: #fee2e2 !important;
-            border-color: #ef4444 !important;
-            color: #b91c1c !important;
-        }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        
+        /* Quiz Styles */
+        .quiz-option { transition: all 0.2s ease; }
+        .quiz-option:hover { transform: translateX(5px); border-color: #3b82f6; }
+        .quiz-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; }
+        .quiz-wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+        
+        /* Tab Styles */
+        .tab-active { background-color: #2563eb; color: white; border-color: #2563eb; }
+        .tab-inactive { background-color: white; color: #475569; border-color: #e2e8f0; }
+        .tab-inactive:hover { background-color: #f8fafc; color: #2563eb; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
 
+    <!-- Navbar -->
     <nav class="bg-white/90 backdrop-blur-md fixed w-full z-50 border-b border-slate-200 shadow-sm">
         <div class="container mx-auto px-4 h-16 flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -87,16 +78,17 @@
                 <span class="font-bold text-xl tracking-tight text-slate-800">Sir<span class="text-brand-600">SM</span>.AI</span>
             </div>
             <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
-                <a href="#formula" class="hover:text-brand-600 transition">Konsep</a>
+                <a href="#concept" class="hover:text-brand-600 transition">Konsep S.P.K.A</a>
                 <a href="#generator" class="hover:text-brand-600 transition">Generator</a>
-                <a href="#quiz-section" class="hover:text-brand-600 transition">Uji Minda</a>
+                <a href="#examples" class="hover:text-brand-600 transition">Contoh</a>
             </div>
             <a href="#generator" class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 group">
-                Mula Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                Mula <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
             </a>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <header class="pt-32 pb-20 px-4 relative overflow-hidden">
         <div class="blob bg-blue-300 w-96 h-96 rounded-full top-0 right-0 mix-blend-multiply"></div>
         <div class="blob bg-purple-300 w-96 h-96 rounded-full bottom-0 left-0 mix-blend-multiply animation-delay-2000"></div>
@@ -113,16 +105,87 @@
                 Panduan interaktif membina <em>prompt</em> berkualiti tinggi menggunakan formula S.P.K.A. Elakkan halusinasi AI, dapatkan hasil kerja yang tepat.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="#generator" class="bg-brand-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-brand-700 transition shadow-xl shadow-brand-600/30 flex items-center gap-2 transform hover:-translate-y-1">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Cuba Generator
+                <a href="#concept" class="bg-white text-slate-700 border border-slate-200 px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Faham Konsep
                 </a>
-                <a href="#quiz-section" class="bg-white text-slate-700 border border-slate-200 px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition flex items-center gap-2 transform hover:-translate-y-1 shadow-sm">
-                    <i class="fa-solid fa-graduation-cap"></i> Ambil Kuiz
+                <a href="#generator" class="bg-brand-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-brand-700 transition shadow-xl shadow-brand-600/30 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Cuba Generator
                 </a>
             </div>
         </div>
     </header>
 
+    <!-- NEW: Konsep S.P.K.A Section -->
+    <section id="concept" class="py-20 bg-white border-y border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-50 px-3 py-1 rounded-full">Teori Asas</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-3">Kenapa Perlu Guna S.P.K.A?</h2>
+                <p class="text-slate-500 mt-4 max-w-3xl mx-auto text-lg">
+                    AI seperti Gemini umpama <strong>"Anak Genius 5 Tahun"</strong>. Dia sangat pandai (ada semua maklumat), tetapi dia tiada pengalaman hidup (common sense).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+                <!-- Analogy -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-xl mb-4"><i class="fa-solid fa-utensils text-brand-600 mr-2"></i>Analogi Memesan Makanan</h3>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Bayangkan anda suruh tukang masak: <br>
+                        <span class="italic text-red-500">"Masakkan saya nasi."</span> (Arahan Lemah)
+                    </p>
+                    <p class="text-slate-600 leading-relaxed">
+                        Hasilnya mungkin nasi putih kosong, nasi goreng, atau nasi mentah. <strong>Tukang masak terpaksa meneka.</strong>
+                    </p>
+                    <div class="my-4 border-t border-slate-200"></div>
+                    <p class="text-slate-600 leading-relaxed mb-2">
+                        Tapi jika anda guna <strong>S.P.K.A</strong>:
+                    </p>
+                    <p class="font-medium text-green-700 bg-green-50 p-3 rounded-lg border border-green-200">
+                        "Saya pelanggan lapar (S). Anda Chef Hotel 5 Bintang (P). Saya mahu makan tengah hari yang pedas (K). Masakkan Nasi Goreng Kampung ada ikan bilis garing (A)."
+                    </p>
+                    <p class="text-slate-600 mt-3 text-sm">Hasilnya pasti tepat dan menyelerakan!</p>
+                </div>
+
+                <!-- Breakdown Cards -->
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">S</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Siapa Saya (Who Am I)</h4>
+                            <p class="text-sm text-slate-500 mt-1">Menentukan <strong>laras bahasa</strong>. Jika anda murid, AI cakap mudah. Jika anda Pegawai PPD, AI cakap formal.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4 p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">P</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Peranan AI (Persona)</h4>
+                            <p class="text-sm text-slate-500 mt-1">Kunci <strong>kualiti</strong>. "Bertindak sebagai 0.1% Pakar" memaksa AI akses data tahap tinggi, bukan data umum.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">K</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Konteks (Context)</h4>
+                            <p class="text-sm text-slate-500 mt-1">Elak <strong>halusinasi</strong>. Beri latar belakang masalah supaya AI tidak mereka-reka cerita yang salah.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">A</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">Arahan (Action)</h4>
+                            <p class="text-sm text-slate-500 mt-1">Tentukan <strong>format</strong>. Nak jadual? Kod? Surat? Nyatakan dengan jelas apa hasil akhir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generator Section -->
     <section id="generator" class="py-20 bg-slate-900 text-white relative">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div class="container mx-auto px-4 relative z-10">
@@ -131,142 +194,62 @@
                 <p class="text-slate-400">Isi borang ini untuk menjana arahan AI bertaraf profesional.</p>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-8 items-start max-w-6xl mx-auto">
-                <div class="lg:w-1/3 space-y-4">
-                    <div class="bg-white/10 p-5 rounded-xl border border-white/10 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-blue-500 flex items-center justify-center font-bold">S</div>
-                            <h3 class="font-bold text-blue-300">Siapa Saya</h3>
-                        </div>
-                        <p class="text-sm text-slate-300 leading-relaxed">Kenalkan diri (Cth: Guru Sains) supaya AI tahu laras bahasa yang sesuai.</p>
+            <div class="max-w-4xl mx-auto bg-white text-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl shadow-black/20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2">S - Siapa Anda (Identity)</label>
+                        <input type="text" id="inputS" placeholder="Cth: Pegawai Kaunseling / Guru Data" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
                     </div>
-                    <div class="bg-white/10 p-5 rounded-xl border border-white/10 backdrop-blur-sm ring-1 ring-purple-500/50">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-purple-500 flex items-center justify-center font-bold">P</div>
-                            <h3 class="font-bold text-purple-300">Peranan AI</h3>
-                        </div>
-                        <p class="text-sm text-slate-300 leading-relaxed">Wajib beri watak. Gunakan kata kunci <strong>"0.1% Pakar"</strong> untuk hasil terbaik.</p>
-                    </div>
-                    <div class="bg-white/10 p-5 rounded-xl border border-white/10 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center font-bold">K</div>
-                            <h3 class="font-bold text-amber-300">Konteks</h3>
-                        </div>
-                        <p class="text-sm text-slate-300 leading-relaxed">Ceritakan situasi, masalah, atau data latar belakang.</p>
-                    </div>
-                    <div class="bg-white/10 p-5 rounded-xl border border-white/10 backdrop-blur-sm">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center font-bold">A</div>
-                            <h3 class="font-bold text-green-300">Arahan</h3>
-                        </div>
-                        <p class="text-sm text-slate-300 leading-relaxed">Apa output yang dimahukan? Jadual? Kod? Surat?</p>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2">P - Peranan AI (Persona)</label>
+                        <input type="text" id="inputP" placeholder="Cth: Pakar Psikologi Remaja" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
                     </div>
                 </div>
-
-                <div class="lg:w-2/3 bg-white text-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl shadow-black/20">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">S - Identiti Anda</label>
-                            <input type="text" id="inputS" placeholder="Cth: Pegawai Sektor Perancangan" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">P - Peranan AI</label>
-                            <input type="text" id="inputP" placeholder="Cth: Pakar Data / Guru Cemerlang" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
-                        </div>
-                    </div>
-                    <div class="mb-5">
-                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2">K - Konteks Situasi</label>
-                        <textarea id="inputK" rows="3" placeholder="Terangkan masalah atau latar belakang tugasan..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2">A - Arahan Output</label>
-                        <textarea id="inputA" rows="3" placeholder="Apakah hasil akhir yang anda mahu?" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
-                    </div>
-
-                    <button onclick="generatePrompt()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-lg">
-                        <i class="fa-solid fa-bolt"></i> Jana Prompt
-                    </button>
-
-                    <div id="resultArea" class="hidden mt-8 animate-fade-in">
-                        <div class="flex justify-between items-center mb-2 px-1">
-                            <span class="text-xs font-bold text-green-600 uppercase tracking-wide"><i class="fa-solid fa-check-circle mr-1"></i> Siap Disalin</span>
-                            <button onclick="copyToClipboard('finalPrompt')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg font-semibold transition">
-                                <i class="fa-regular fa-copy"></i> Salin Teks
-                            </button>
-                        </div>
-                        <textarea id="finalPrompt" readonly class="w-full p-5 bg-brand-50 border border-brand-100 rounded-xl text-slate-700 font-mono text-sm leading-relaxed h-64 focus:outline-none resize-none shadow-inner"></textarea>
-                    </div>
+                <div class="mb-5">
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">K - Konteks (Latar Belakang)</label>
+                    <textarea id="inputK" rows="3" placeholder="Terangkan masalah dengan jelas. Cth: Murid bosan dengan ceramah motivasi..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="quiz-section" class="py-20 bg-white border-b border-slate-100">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <div class="text-center mb-10">
-                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-50 px-3 py-1 rounded-full">Cabaran Minda</span>
-                <h2 class="text-3xl font-bold text-slate-900 mt-3">Ujian Kefahaman AI SirSM</h2>
-                <p class="text-slate-500 mt-2">Buktikan anda bukan sekadar pengguna biasa. Sasarkan 10/10!</p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden relative min-h-[400px]">
-                <div class="w-full bg-slate-100 h-2">
-                    <div id="progressBar" class="bg-brand-500 h-2 transition-all duration-500" style="width: 0%"></div>
+                <div class="mb-8">
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-2">A - Arahan Spesifik (Output)</label>
+                    <textarea id="inputA" rows="3" placeholder="Apa hasil akhir? Cth: Modul gamifikasi dalam bentuk jadual..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
                 </div>
 
-                <div id="quizContent" class="p-8 md:p-10">
-                    <div class="flex justify-between items-center mb-6">
-                        <span id="questionCounter" class="text-sm font-bold text-slate-400">Soalan 1/10</span>
-                        <span id="scoreDisplay" class="text-sm font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full">Markah: 0</span>
-                    </div>
+                <button onclick="generatePrompt()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-lg transform hover:-translate-y-1">
+                    <i class="fa-solid fa-bolt"></i> Jana Prompt Ajaib
+                </button>
 
-                    <h3 id="questionText" class="text-xl md:text-2xl font-bold text-slate-800 mb-8 leading-snug">
-                        Soalan akan muncul di sini...
-                    </h3>
-
-                    <div id="optionsContainer" class="space-y-3">
-                        </div>
-
-                    <div id="feedbackArea" class="hidden mt-6 p-4 rounded-xl text-sm font-medium animate-pulse">
-                        </div>
-
-                    <div class="mt-8 flex justify-end">
-                        <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-slate-900 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-800 transition">
-                            Seterusnya <i class="fa-solid fa-arrow-right ml-2"></i>
+                <!-- Result -->
+                <div id="resultArea" class="hidden mt-8 animate-fade-in pt-8 border-t border-slate-100">
+                    <div class="flex justify-between items-center mb-3 px-1">
+                        <span class="text-xs font-bold text-green-600 uppercase tracking-wide"><i class="fa-solid fa-check-circle mr-1"></i> Siap Disalin</span>
+                        <button onclick="copyToClipboard('finalPrompt')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-2">
+                            <i class="fa-regular fa-copy"></i> Salin Teks
                         </button>
                     </div>
-                </div>
-
-                <div id="resultScreen" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-8 text-center z-10">
-                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4 shadow-lg">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Kuiz Tamat!</h3>
-                    <p class="text-slate-500 mb-6">Berikut adalah pencapaian anda:</p>
-                    
-                    <div class="text-5xl font-black text-brand-600 mb-2" id="finalScore">0/10</div>
-                    <p id="finalMessage" class="text-lg font-medium text-slate-700 mb-8">Hebat!</p>
-
-                    <button onclick="restartQuiz()" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg">
-                        <i class="fa-solid fa-rotate-right mr-2"></i> Cuba Lagi
-                    </button>
+                    <textarea id="finalPrompt" readonly class="w-full p-5 bg-brand-50 border border-brand-100 rounded-xl text-slate-700 font-mono text-sm leading-relaxed h-64 focus:outline-none resize-none shadow-inner"></textarea>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-20 bg-slate-50">
+    <!-- Sector Examples -->
+    <section id="examples" class="py-20 bg-slate-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-10 text-slate-900">Bank Prompt Mengikut Sektor</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-slate-900">Bank Prompt Mengikut Sektor</h2>
+            <p class="text-center text-slate-500 mb-10">Pilih sektor anda dan salin prompt yang telah dioptimumkan.</p>
             
-            <div class="flex flex-wrap justify-center gap-3 mb-10">
-                <button onclick="switchTab('perancangan')" class="tab-btn tab-active px-6 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Perancangan</button>
-                <button onclick="switchTab('pembelajaran')" class="tab-btn tab-inactive px-6 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pembelajaran</button>
-                <button onclick="switchTab('sekolah')" class="tab-btn tab-inactive px-6 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pengurusan Sekolah</button>
-                <button onclick="switchTab('akp')" class="tab-btn tab-inactive px-6 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">AKP (Pejabat)</button>
+            <!-- Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10 max-w-4xl mx-auto">
+                <button onclick="switchTab('perancangan')" class="tab-btn tab-active px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Perancangan</button>
+                <button onclick="switchTab('pembelajaran')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pembelajaran</button>
+                <button onclick="switchTab('murid')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pembangunan Murid</button>
+                <button onclick="switchTab('sekolah')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">Pengurusan Sekolah</button>
+                <button onclick="switchTab('akp')" class="tab-btn tab-inactive px-5 py-2.5 rounded-full border text-sm font-bold transition shadow-sm">AKP (Pejabat)</button>
             </div>
 
+            <!-- Content Area -->
             <div class="max-w-4xl mx-auto">
+                <!-- Sektor Perancangan -->
                 <div id="perancangan" class="sector-content block animate-fade-in">
                     <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative group">
                         <button onclick="copyContent('promptPlan')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
@@ -279,7 +262,7 @@ Saya Pegawai Sektor Perancangan PPD.
 Bertindak sebagai 0.1% pakar dalam Perancangan Strategik Pendidikan dan Analisis Data (Data Scientist).
 
 [KONTEKS]
-Saya sedang merangka OPPM (One Page Project Manager) untuk meningkatkan pencapaian STEM daerah.
+Saya sedang merangka OPPM (One Page Project Manager) untuk meningkatkan pencapaian STEM daerah. Data menunjukkan murid luar bandar kurang berminat.
 
 [ARAHAN]
 Sediakan rangka strategi intervensi berdasarkan model PDCA.
@@ -291,6 +274,8 @@ Hasilkan output profesional sedia untuk slaid.
                         </div>
                     </div>
                 </div>
+
+                <!-- Sektor Pembelajaran -->
                 <div id="pembelajaran" class="sector-content hidden">
                     <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative">
                         <button onclick="copyContent('promptLearn')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
@@ -303,7 +288,7 @@ Saya Pegawai SISC+ Sektor Pembelajaran.
 Bertindak sebagai 0.1% Pakar Pedagogi Abad Ke-21.
 
 [KONTEKS]
-Murid tahun 4 pasif dalam subjek Sains (Topik: Tenaga).
+Murid tahun 4 pasif dalam subjek Sains (Topik: Tenaga). Mereka cepat bosan dengan kaedah 'chalk and talk'.
 
 [ARAHAN]
 Berikan 3 idea aktiviti PBL mini (1 jam).
@@ -314,7 +299,34 @@ Sediakan rubrik PBD ringkas dalam bentuk jadual.
                         </div>
                     </div>
                 </div>
+
+                <!-- NEW: Sektor Pembangunan Murid -->
+                <div id="murid" class="sector-content hidden">
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative">
+                        <button onclick="copyContent('promptMurid')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
+                        <h3 class="font-bold text-xl mb-3 text-brand-600"><i class="fa-solid fa-user-graduate mr-2"></i>Modul Motivasi & Sahsiah</h3>
+                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 font-mono text-sm text-slate-600 whitespace-pre-line leading-relaxed" id="promptMurid">
+[SIAPA SAYA]
+Saya Pegawai Sektor Pembangunan Murid (HEM).
+
+[PERANAN AI]
+Bertindak sebagai 0.1% Pakar Psikologi Remaja dan Kaunseling Pendidikan.
+
+[KONTEKS]
+Kami menghadapi isu kehadiran merosot pasca-cuti sekolah. Kami ingin anjurkan Program "Jom Sekolah" tapi murid bosan dengan ceramah biasa. Sasaran: Murid Tingkatan 3 (Gen Z).
+
+[ARAHAN]
+Rangkakan modul program 2 jam yang berkonsepkan "Gamifikasi & Team Bonding".
+1. Berikan tajuk program yang 'Catchy' dan muda.
+2. Senaraikan 3 Checkpoint aktiviti yang membina jati diri tanpa rasa seperti kuliah.
+3. Sediakan skrip pembukaan yang bertenaga untuk fasilitator.
+
+Hasilkan idea yang segar dan tidak klise.
+                        </div>
+                    </div>
+                </div>
                 
+                <!-- Sektor Sekolah -->
                 <div id="sekolah" class="sector-content hidden">
                      <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative">
                         <button onclick="copyContent('promptSchool')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
@@ -338,6 +350,7 @@ Drafkan memo rasmi kerajaan.
                     </div>
                 </div>
 
+                <!-- Sektor AKP -->
                 <div id="akp" class="sector-content hidden">
                      <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative">
                         <button onclick="copyContent('promptAKP')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
@@ -355,7 +368,7 @@ Nota ringkas mesyuarat aset: Pengerusi marah aset tak daftar, laporan perlu hant
 [ARAHAN]
 Tukar nota kepada Minit Mesyuarat rasmi.
 1. Format minit kerajaan.
-2. Ayat pasif gramatis.
+2. Ayat pasif gramatis (Mesyuarat mengambil maklum...).
 3. Hasilkan draf penuh.
                         </div>
                     </div>
@@ -365,26 +378,64 @@ Tukar nota kepada Minit Mesyuarat rasmi.
         </div>
     </section>
 
-    <section class="py-20 bg-white">
+    <!-- Interactive Quiz Section -->
+    <section id="quiz-section" class="py-20 bg-white border-t border-slate-100">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-10">
+                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-50 px-3 py-1 rounded-full">Cabaran Minda</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-3">Ujian Kefahaman AI SirSM</h2>
+                <p class="text-slate-500 mt-2">Buktikan anda bukan sekadar pengguna biasa. Sasarkan 10/10!</p>
+            </div>
+
+            <!-- Quiz Card -->
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden relative min-h-[400px]">
+                <div class="w-full bg-slate-100 h-2">
+                    <div id="progressBar" class="bg-brand-500 h-2 transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div id="quizContent" class="p-8 md:p-10">
+                    <div class="flex justify-between items-center mb-6">
+                        <span id="questionCounter" class="text-sm font-bold text-slate-400">Soalan 1/10</span>
+                        <span id="scoreDisplay" class="text-sm font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full">Markah: 0</span>
+                    </div>
+                    <h3 id="questionText" class="text-xl md:text-2xl font-bold text-slate-800 mb-8 leading-snug">Soalan...</h3>
+                    <div id="optionsContainer" class="space-y-3"></div>
+                    <div id="feedbackArea" class="hidden mt-6 p-4 rounded-xl text-sm font-medium animate-pulse"></div>
+                    <div class="mt-8 flex justify-end">
+                        <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-slate-900 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-800 transition">Seterusnya <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+                <div id="resultScreen" class="hidden absolute inset-0 bg-white flex flex-col items-center justify-center p-8 text-center z-10">
+                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mb-4 shadow-lg"><i class="fa-solid fa-trophy"></i></div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Kuiz Tamat!</h3>
+                    <div class="text-5xl font-black text-brand-600 mb-2" id="finalScore">0/10</div>
+                    <p id="finalMessage" class="text-lg font-medium text-slate-700 mb-8">Hebat!</p>
+                    <button onclick="restartQuiz()" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg"><i class="fa-solid fa-rotate-right mr-2"></i> Cuba Lagi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keywords Section -->
+    <section class="py-20 bg-slate-50 border-t border-slate-200">
          <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-10 text-slate-900">Kata Kunci <span class="text-brand-600">"Power"</span> (Dwibahasa)</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div onclick="copyText('Jelaskan langkah demi langkah (Think step-by-step)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-slate-50 hover:bg-white">
+                <div onclick="copyText('Jelaskan langkah demi langkah (Think step-by-step)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
                     <div class="font-bold text-brand-600 mb-1">Step-by-step</div>
                     <div class="text-xs text-slate-400 italic mb-2">"Langkah demi langkah"</div>
                     <p class="text-xs text-slate-600">Untuk matematik & logik.</p>
                 </div>
-                <div onclick="copyText('Jelaskan seperti saya berumur 5 tahun (Explain Like I\'m 5)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-slate-50 hover:bg-white">
+                <div onclick="copyText('Jelaskan seperti saya berumur 5 tahun (Explain Like I\'m 5)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
                     <div class="font-bold text-brand-600 mb-1">ELI5</div>
                     <div class="text-xs text-slate-400 italic mb-2">"Macam budak 5 tahun"</div>
                     <p class="text-xs text-slate-600">Permudahkan topik susah.</p>
                 </div>
-                <div onclick="copyText('Sediakan dalam format Jadual (Table format)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-slate-50 hover:bg-white">
+                <div onclick="copyText('Sediakan dalam format Jadual (Table format)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
                     <div class="font-bold text-brand-600 mb-1">Format Jadual</div>
                     <div class="text-xs text-slate-400 italic mb-2">"Table format"</div>
                     <p class="text-xs text-slate-600">Banding data dengan kemas.</p>
                 </div>
-                <div onclick="copyText('Hasilkan kod penuh siap tampal (Full runnable code)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-slate-50 hover:bg-white">
+                <div onclick="copyText('Hasilkan kod penuh siap tampal (Full runnable code)')" class="p-5 border border-slate-200 rounded-xl hover:border-brand-500 hover:shadow-lg transition cursor-pointer group bg-white">
                     <div class="font-bold text-brand-600 mb-1">Kod Siap Tampal</div>
                     <div class="text-xs text-slate-400 italic mb-2">"Full runnable code"</div>
                     <p class="text-xs text-slate-600">Untuk HTML/Excel/Python.</p>
@@ -393,6 +444,7 @@ Tukar nota kepada Minit Mesyuarat rasmi.
          </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-10 text-center border-t border-slate-800">
         <div class="container mx-auto px-4">
             <div class="mb-4 text-2xl text-slate-600"><i class="fa-solid fa-robot"></i></div>
@@ -402,92 +454,32 @@ Tukar nota kepada Minit Mesyuarat rasmi.
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        // --- QUIZ DATA & LOGIC ---
+        // --- QUIZ DATA ---
         const questions = [
-            {
-                q: "Apakah maksud huruf 'S' dalam formula S.P.K.A?",
-                options: ["Situasi", "Siapa Saya", "Subjek", "Solusi"],
-                correct: 1,
-                explanation: "S = Siapa Saya. Anda perlu kenalkan diri supaya AI tahu laras bahasa yang sesuai."
-            },
-            {
-                q: "Untuk mendapatkan jawapan paling berkualiti, peranan (P) apakah yang paling sesuai diberi kepada AI?",
-                options: ["Kawan baik", "Pakar biasa", "0.1% Pakar dalam bidang", "Penolong Kanan"],
-                correct: 2,
-                explanation: "'0.1% Pakar' memaksa AI mengakses pangkalan data pengetahuan yang paling mendalam."
-            },
-            {
-                q: "Mengapakah kita perlu memberi Konteks (K) kepada AI?",
-                options: ["Supaya AI tidak bosan", "AI boleh baca hati kita", "AI tiada pengalaman hidup/situasi sebenar", "Syarat wajib Google"],
-                correct: 2,
-                explanation: "AI umpama anak genius tanpa pengalaman. Tanpa konteks, ia akan 'meneka' dan mungkin salah."
-            },
-            {
-                q: "Jika anda membuka 'New Chat', adakah Gemini ingat perbualan semalam?",
-                options: ["Ya, ingat sepenuhnya", "Tidak, ia bermula kosong (Amnesia)", "Ingat sikit-sikit", "Hanya jika bayar"],
-                correct: 1,
-                explanation: "Setiap 'New Chat' adalah sesi baru. AI tiada memori jangka panjang antara sesi."
-            },
-            {
-                q: "Apakah analogi terbaik untuk menggambarkan AI seperti Gemini?",
-                options: ["Robot pemusnah", "Kamus bergerak", "Anak genius 5 tahun", "Mesin taip"],
-                correct: 2,
-                explanation: "Ia sangat pandai (genius) tapi perlukan arahan spesifik macam budak 5 tahun."
-            },
-            {
-                q: "Maklumat apakah yang DILARANG sama sekali dimasukkan ke dalam prompt AI awam?",
-                options: ["Nama sekolah", "Tarikh program", "Maklumat sulit (No.KP / Nama Murid)", "Subjek diajar"],
-                correct: 2,
-                explanation: "Demi keselamatan data, jangan sesekali masukkan data peribadi atau sulit kerajaan."
-            },
-            {
-                q: "Kata kunci 'ELI5' bermaksud?",
-                options: ["Explain Like I'm 5", "English Lesson Is 5", "Extra Large Input 5", "Error Level 5"],
-                correct: 0,
-                explanation: "Ia meminta AI menerangkan topik susah dengan bahasa yang sangat mudah."
-            },
-            {
-                q: "Jika jawapan AI terlalu panjang dan meleret, arahan apa perlu ditambah?",
-                options: ["Buat lagi", "Ringkaskan / Point form", "Tukar topik", "Diam"],
-                correct: 1,
-                explanation: "Arahkan spesifik format output seperti 'Ringkaskan dalam 3 poin'."
-            },
-            {
-                q: "Untuk soalan Matematik atau Logik, kata kunci apa yang terbaik?",
-                options: ["Kira cepat", "Fikir langkah demi langkah (Step-by-step)", "Teka jawapan", "Guna kalkulator"],
-                correct: 1,
-                explanation: "Teknik 'Chain of Thought' ini mengurangkan kesilapan pengiraan AI."
-            },
-            {
-                q: "Apakah maksud 'Hasilkan kod penuh siap tampal'?",
-                options: ["AI buat separuh jalan", "AI bagi link website", "AI beri kod lengkap tanpa perlu edit", "AI suruh kita buat sendiri"],
-                correct: 2,
-                explanation: "Ini menjimatkan masa supaya anda boleh terus guna hasil kerja (Copy-Paste)."
-            }
+            { q: "Apakah maksud huruf 'S' dalam formula S.P.K.A?", options: ["Situasi", "Siapa Saya", "Subjek", "Solusi"], correct: 1, explanation: "S = Siapa Saya. Anda perlu kenalkan diri supaya AI tahu laras bahasa yang sesuai." },
+            { q: "Untuk mendapatkan jawapan paling berkualiti, peranan (P) apakah yang paling sesuai?", options: ["Kawan baik", "Pakar biasa", "0.1% Pakar dalam bidang", "Penolong Kanan"], correct: 2, explanation: "'0.1% Pakar' memaksa AI mengakses pangkalan data pengetahuan yang paling mendalam." },
+            { q: "Mengapakah kita perlu memberi Konteks (K) kepada AI?", options: ["Supaya AI tidak bosan", "AI boleh baca hati kita", "AI tiada pengalaman hidup", "Syarat wajib Google"], correct: 2, explanation: "AI umpama anak genius tanpa pengalaman. Tanpa konteks, ia akan 'meneka' dan mungkin salah." },
+            { q: "Jika anda membuka 'New Chat', adakah Gemini ingat perbualan semalam?", options: ["Ya, ingat sepenuhnya", "Tidak, ia bermula kosong (Amnesia)", "Ingat sikit-sikit", "Hanya jika bayar"], correct: 1, explanation: "Setiap 'New Chat' adalah sesi baru. AI tiada memori jangka panjang antara sesi." },
+            { q: "Apakah analogi terbaik untuk menggambarkan AI seperti Gemini?", options: ["Robot pemusnah", "Kamus bergerak", "Anak genius 5 tahun", "Mesin taip"], correct: 2, explanation: "Ia sangat pandai (genius) tapi perlukan arahan spesifik macam budak 5 tahun." },
+            { q: "Maklumat apakah yang DILARANG sama sekali dimasukkan ke dalam prompt AI awam?", options: ["Nama sekolah", "Tarikh program", "Maklumat sulit (No.KP / Nama Murid)", "Subjek diajar"], correct: 2, explanation: "Demi keselamatan data, jangan sesekali masukkan data peribadi atau sulit kerajaan." },
+            { q: "Kata kunci 'ELI5' bermaksud?", options: ["Explain Like I'm 5", "English Lesson Is 5", "Extra Large Input 5", "Error Level 5"], correct: 0, explanation: "Ia meminta AI menerangkan topik susah dengan bahasa yang sangat mudah." },
+            { q: "Jika jawapan AI terlalu panjang, apa perlu buat?", options: ["Buat lagi", "Ringkaskan / Point form", "Tukar topik", "Diam"], correct: 1, explanation: "Arahkan spesifik format output seperti 'Ringkaskan dalam 3 poin'." },
+            { q: "Untuk Matematik, kata kunci apa terbaik?", options: ["Kira cepat", "Fikir langkah demi langkah", "Teka jawapan", "Guna kalkulator"], correct: 1, explanation: "Teknik 'Chain of Thought' ini mengurangkan kesilapan pengiraan AI." },
+            { q: "Apakah maksud 'Hasilkan kod penuh siap tampal'?", options: ["AI buat separuh jalan", "AI bagi link website", "AI beri kod lengkap tanpa perlu edit", "AI suruh kita buat sendiri"], correct: 2, explanation: "Ini menjimatkan masa supaya anda boleh terus guna hasil kerja." }
         ];
 
-        let currentQuestion = 0;
-        let score = 0;
-        let answered = false;
+        let currentQuestion = 0, score = 0, answered = false;
 
         function loadQuiz() {
-            if(currentQuestion >= questions.length) {
-                showResults();
-                return;
-            }
-
+            if(currentQuestion >= questions.length) { showResults(); return; }
             const q = questions[currentQuestion];
             document.getElementById('questionText').innerText = q.q;
             document.getElementById('questionCounter').innerText = `Soalan ${currentQuestion + 1}/${questions.length}`;
-            
-            // Update Progress Bar
-            const progress = ((currentQuestion) / questions.length) * 100;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-
+            document.getElementById('progressBar').style.width = `${((currentQuestion) / questions.length) * 100}%`;
             const optsDiv = document.getElementById('optionsContainer');
             optsDiv.innerHTML = '';
-            
             q.options.forEach((opt, index) => {
                 const btn = document.createElement('div');
                 btn.className = 'quiz-option p-4 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 flex items-center gap-3 bg-white';
@@ -495,71 +487,45 @@ Tukar nota kepada Minit Mesyuarat rasmi.
                 btn.onclick = () => checkAnswer(index, btn);
                 optsDiv.appendChild(btn);
             });
-
             document.getElementById('feedbackArea').className = 'hidden mt-6 p-4 rounded-xl text-sm font-medium';
             document.getElementById('nextBtn').classList.add('hidden');
             answered = false;
         }
 
-        function checkAnswer(selectedIndex, btnElement) {
-            if(answered) return;
-            answered = true;
-
+        function checkAnswer(idx, btn) {
+            if(answered) return; answered = true;
             const q = questions[currentQuestion];
             const feedback = document.getElementById('feedbackArea');
-            const options = document.querySelectorAll('.quiz-option');
-
-            if(selectedIndex === q.correct) {
-                score++;
-                document.getElementById('scoreDisplay').innerText = `Markah: ${score}`;
-                btnElement.classList.add('quiz-correct');
-                feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-2"></i><strong>Tepat Sekali!</strong> ${q.explanation}`;
-                feedback.classList.remove('hidden', 'bg-red-50', 'text-red-700');
-                feedback.classList.add('bg-green-50', 'text-green-700');
+            if(idx === q.correct) {
+                score++; document.getElementById('scoreDisplay').innerText = `Markah: ${score}`;
+                btn.classList.add('quiz-correct');
+                feedback.innerHTML = `<i class="fa-solid fa-check-circle mr-2"></i><strong>Tepat!</strong> ${q.explanation}`;
+                feedback.classList.remove('hidden', 'bg-red-50', 'text-red-700'); feedback.classList.add('bg-green-50', 'text-green-700');
             } else {
-                btnElement.classList.add('quiz-wrong');
-                // Highlight correct answer
-                options[q.correct].classList.add('quiz-correct');
+                btn.classList.add('quiz-wrong');
+                document.querySelectorAll('.quiz-option')[q.correct].classList.add('quiz-correct');
                 feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2"></i><strong>Kurang Tepat.</strong> ${q.explanation}`;
-                feedback.classList.remove('hidden', 'bg-green-50', 'text-green-700');
-                feedback.classList.add('bg-red-50', 'text-red-700');
+                feedback.classList.remove('hidden', 'bg-green-50', 'text-green-700'); feedback.classList.add('bg-red-50', 'text-red-700');
             }
-
             document.getElementById('nextBtn').classList.remove('hidden');
         }
 
-        function nextQuestion() {
-            currentQuestion++;
-            loadQuiz();
-        }
-
+        function nextQuestion() { currentQuestion++; loadQuiz(); }
         function showResults() {
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('quizContent').classList.add('hidden');
             document.getElementById('resultScreen').classList.remove('hidden');
-            
-            const finalScoreEl = document.getElementById('finalScore');
-            finalScoreEl.innerText = `${score}/10`;
-            
-            let msg = "";
-            if(score === 10) msg = "Sempurna! Anda memang 0.1% Pakar!";
-            else if(score >= 8) msg = "Tahniah! Anda sudah faham konsep AI.";
-            else if(score >= 5) msg = "Boleh tahan. Cuba praktis lagi teknik S.P.K.A.";
-            else msg = "Jangan putus asa. Baca semula nota di atas ya!";
-            
-            document.getElementById('finalMessage').innerText = msg;
+            document.getElementById('finalScore').innerText = `${score}/10`;
+            document.getElementById('finalMessage').innerText = score===10?"Sempurna! Anda 0.1% Pakar!":score>=8?"Tahniah! Sangat baik.":"Cuba lagi ya!";
         }
-
         function restartQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            document.getElementById('scoreDisplay').innerText = `Markah: 0`;
+            currentQuestion=0; score=0; document.getElementById('scoreDisplay').innerText=`Markah: 0`;
             document.getElementById('quizContent').classList.remove('hidden');
             document.getElementById('resultScreen').classList.add('hidden');
             loadQuiz();
         }
 
-        // --- GENERAL LOGIC ---
+        // --- GENERATOR & OTHER LOGIC ---
         document.getElementById('currentYear').innerText = new Date().getFullYear();
 
         function generatePrompt() {
@@ -567,14 +533,8 @@ Tukar nota kepada Minit Mesyuarat rasmi.
             const p = document.getElementById('inputP').value.trim();
             const k = document.getElementById('inputK').value.trim();
             const a = document.getElementById('inputA').value.trim();
-
-            if (!s || !p || !k || !a) {
-                alert("Sila isi kesemua ruangan S.P.K.A!");
-                return;
-            }
-
+            if (!s || !p || !k || !a) { alert("Sila isi kesemua ruangan S.P.K.A!"); return; }
             const prompt = `[SIAPA SAYA]\nSaya adalah ${s}.\n\n[PERANAN AI]\nBertindak sebagai 0.1% pakar dalam bidang ${p} yang mempunyai pengalaman luas dan pemikiran kritikal.\n\n[KONTEKS]\n${k}\n\n[ARAHAN]\n${a}\n\nSila pastikan jawapan anda terperinci, tepat, profesional, dan jika melibatkan kod/format, hasilkan output penuh yang siap untuk disalin dan digunakan (ready-to-use).`;
-
             const finalArea = document.getElementById('finalPrompt');
             finalArea.value = prompt;
             document.getElementById('resultArea').classList.remove('hidden');
@@ -582,35 +542,21 @@ Tukar nota kepada Minit Mesyuarat rasmi.
         }
 
         function copyToClipboard(id) {
-            const el = document.getElementById(id);
-            el.select();
-            el.setSelectionRange(0, 99999);
+            const el = document.getElementById(id); el.select(); el.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(el.value).then(() => alert("Teks berjaya disalin!"));
         }
 
         function switchTab(id) {
             document.querySelectorAll('.sector-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('tab-active');
-                btn.classList.add('tab-inactive');
-            });
-            event.target.classList.remove('tab-inactive');
-            event.target.classList.add('tab-active');
+            document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); });
+            event.target.classList.remove('tab-inactive'); event.target.classList.add('tab-active');
         }
 
-        function copyContent(id) {
-             const text = document.getElementById(id).innerText;
-             navigator.clipboard.writeText(text).then(() => alert("Prompt contoh disalin!"));
-        }
+        function copyContent(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("Prompt contoh disalin!")); }
+        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert("Kata kunci disalin!")); }
 
-        function copyText(text) {
-             navigator.clipboard.writeText(text).then(() => alert("Kata kunci disalin: " + text));
-        }
-
-        // Initialize Quiz
         loadQuiz();
-
     </script>
 </body>
 </html>
