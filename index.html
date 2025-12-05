@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Lengkap</title>
+    <title>Belajar AI bersama SirSM - Modul Pintar</title>
+    
+    <!-- Kod Favicon Ditambah Di Sini -->
+    <link rel="icon" type="image/png" href="SirSM.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Markdown Parser untuk paparan cantik respons AI -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -27,6 +33,7 @@
                     },
                     animation: {
                         'bounce-slow': 'bounce 3s infinite',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -64,9 +71,37 @@
         .tab-active { background-color: #2563eb; color: white; border-color: #2563eb; }
         .tab-inactive { background-color: white; color: #475569; border-color: #e2e8f0; }
         .tab-inactive:hover { background-color: #f8fafc; color: #2563eb; }
+
+        /* AI Output Styles */
+        .prose h1 { font-size: 1.5em; font-weight: bold; margin-bottom: 0.5em; color: #1e3a8a; }
+        .prose h2 { font-size: 1.25em; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; color: #2563eb; }
+        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .prose ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; }
+        .prose p { margin-bottom: 1em; line-height: 1.6; }
+        .prose strong { color: #1e293b; font-weight: 700; }
+        .prose pre { background: #1e293b; color: #e2e8f0; padding: 1em; border-radius: 0.5em; overflow-x: auto; font-family: monospace; font-size: 0.9em; margin-bottom: 1em; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
+
+    <!-- API Key Modal (Hidden by default, shown if key needed) -->
+    <div id="apiKeyModal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-slate-700">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Kunci API Diperlukan</h3>
+                <p class="text-sm text-slate-500 mt-2">Untuk menggunakan ciri pintar AI (Auto-Isi & Simulasi), sila masukkan Google Gemini API Key anda. Ia percuma.</p>
+            </div>
+            <input type="password" id="userApiKey" placeholder="Tampal API Key di sini (AIza...)" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none mb-4 text-sm font-mono">
+            <button onclick="saveApiKey()" class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition">Simpan & Teruskan</button>
+            <p class="text-xs text-center mt-4 text-slate-400">
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="underline hover:text-brand-500">Dapatkan API Key di sini</a>
+            </p>
+            <button onclick="closeApiModal()" class="w-full mt-2 text-slate-400 text-xs hover:text-slate-600">Batal (Guna mod manual)</button>
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="bg-white/90 backdrop-blur-md fixed w-full z-50 border-b border-slate-200 shadow-sm">
@@ -79,12 +114,17 @@
             </div>
             <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
                 <a href="#concept" class="hover:text-brand-600 transition">Konsep S.P.K.A</a>
-                <a href="#generator" class="hover:text-brand-600 transition">Generator</a>
+                <a href="#generator" class="hover:text-brand-600 transition">Mesin AI</a>
                 <a href="#examples" class="hover:text-brand-600 transition">Contoh</a>
             </div>
-            <a href="#generator" class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 group">
-                Mula <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
-            </a>
+            <div class="flex items-center gap-3">
+                <button onclick="openApiModal()" class="text-slate-400 hover:text-brand-600 transition" title="Tetapan API Key">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <a href="#generator" class="inline-flex items-center gap-2 bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition shadow-lg shadow-slate-900/20 group">
+                    Mula <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -96,38 +136,37 @@
         <div class="container mx-auto text-center max-w-4xl relative z-10">
             <div class="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm mb-6 animate-bounce-slow">
                 <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Modul Digital USTP Alor Gajah</span>
+                <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Dikuasakan oleh Google Gemini</span>
             </div>
             <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">
                 Kuasai AI Seperti <br><span class="gradient-text">0.1% Pakar</span>
             </h1>
             <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Panduan interaktif membina <em>prompt</em> berkualiti tinggi menggunakan formula S.P.K.A. Elakkan halusinasi AI, dapatkan hasil kerja yang tepat.
+                Panduan interaktif PPD Alor Gajah. Kini dengan <strong>Integrasi AI Pintar</strong> untuk mengautomasikan kerja anda.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#concept" class="bg-white text-slate-700 border border-slate-200 px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
                     <i class="fa-solid fa-book-open"></i> Faham Konsep
                 </a>
                 <a href="#generator" class="bg-brand-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-brand-700 transition shadow-xl shadow-brand-600/30 flex items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Cuba Generator
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Cuba Mesin AI
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- NEW: Konsep S.P.K.A Section -->
+    <!-- Konsep S.P.K.A Section -->
     <section id="concept" class="py-20 bg-white border-y border-slate-100">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-50 px-3 py-1 rounded-full">Teori Asas</span>
                 <h2 class="text-3xl font-bold text-slate-900 mt-3">Kenapa Perlu Guna S.P.K.A?</h2>
                 <p class="text-slate-500 mt-4 max-w-3xl mx-auto text-lg">
-                    AI seperti Gemini umpama <strong>"Anak Genius 5 Tahun"</strong>. Dia sangat pandai (ada semua maklumat), tetapi dia tiada pengalaman hidup (common sense).
+                    AI seperti Gemini umpama <strong>"Anak Genius 5 Tahun"</strong>. Dia sangat pandai, tetapi tiada pengalaman hidup (common sense).
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-                <!-- Analogy -->
                 <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
                     <h3 class="font-bold text-xl mb-4"><i class="fa-solid fa-utensils text-brand-600 mr-2"></i>Analogi Memesan Makanan</h3>
                     <p class="text-slate-600 leading-relaxed mb-4">
@@ -135,25 +174,21 @@
                         <span class="italic text-red-500">"Masakkan saya nasi."</span> (Arahan Lemah)
                     </p>
                     <p class="text-slate-600 leading-relaxed">
-                        Hasilnya mungkin nasi putih kosong, nasi goreng, atau nasi mentah. <strong>Tukang masak terpaksa meneka.</strong>
+                        Hasilnya mungkin nasi putih kosong atau nasi mentah. <strong>Tukang masak terpaksa meneka.</strong>
                     </p>
                     <div class="my-4 border-t border-slate-200"></div>
-                    <p class="text-slate-600 leading-relaxed mb-2">
-                        Tapi jika anda guna <strong>S.P.K.A</strong>:
-                    </p>
                     <p class="font-medium text-green-700 bg-green-50 p-3 rounded-lg border border-green-200">
-                        "Saya pelanggan lapar (S). Anda Chef Hotel 5 Bintang (P). Saya mahu makan tengah hari yang pedas (K). Masakkan Nasi Goreng Kampung ada ikan bilis garing (A)."
+                        "Saya pelanggan lapar (S). Anda Chef 5 Bintang (P). Saya mahu pedas (K). Masakkan Nasi Goreng Kampung (A)."
                     </p>
-                    <p class="text-slate-600 mt-3 text-sm">Hasilnya pasti tepat dan menyelerakan!</p>
+                    <p class="text-slate-600 mt-3 text-sm">Hasilnya pasti tepat!</p>
                 </div>
 
-                <!-- Breakdown Cards -->
                 <div class="space-y-4">
                     <div class="flex gap-4 p-4 border border-slate-100 rounded-xl shadow-sm hover:shadow-md transition bg-white">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">S</div>
                         <div>
-                            <h4 class="font-bold text-slate-800">Siapa Saya (Who Am I)</h4>
-                            <p class="text-sm text-slate-500 mt-1">Menentukan <strong>laras bahasa</strong>. Jika anda murid, AI cakap mudah. Jika anda Pegawai PPD, AI cakap formal.</p>
+                            <h4 class="font-bold text-slate-800">Siapa Saya (Identity)</h4>
+                            <p class="text-sm text-slate-500 mt-1">Menentukan <strong>laras bahasa</strong>. (Murid vs Pegawai PPD).</p>
                         </div>
                     </div>
                     
@@ -161,7 +196,7 @@
                         <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">P</div>
                         <div>
                             <h4 class="font-bold text-slate-800">Peranan AI (Persona)</h4>
-                            <p class="text-sm text-slate-500 mt-1">Kunci <strong>kualiti</strong>. "Bertindak sebagai 0.1% Pakar" memaksa AI akses data tahap tinggi, bukan data umum.</p>
+                            <p class="text-sm text-slate-500 mt-1">Kunci <strong>kualiti</strong>. "Bertindak sebagai 0.1% Pakar".</p>
                         </div>
                     </div>
 
@@ -169,7 +204,7 @@
                         <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">K</div>
                         <div>
                             <h4 class="font-bold text-slate-800">Konteks (Context)</h4>
-                            <p class="text-sm text-slate-500 mt-1">Elak <strong>halusinasi</strong>. Beri latar belakang masalah supaya AI tidak mereka-reka cerita yang salah.</p>
+                            <p class="text-sm text-slate-500 mt-1">Elak <strong>halusinasi</strong>. Beri latar belakang masalah.</p>
                         </div>
                     </div>
 
@@ -177,7 +212,7 @@
                         <div class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0">A</div>
                         <div>
                             <h4 class="font-bold text-slate-800">Arahan (Action)</h4>
-                            <p class="text-sm text-slate-500 mt-1">Tentukan <strong>format</strong>. Nak jadual? Kod? Surat? Nyatakan dengan jelas apa hasil akhir.</p>
+                            <p class="text-sm text-slate-500 mt-1">Tentukan <strong>format</strong>. (Jadual, Kod, Surat).</p>
                         </div>
                     </div>
                 </div>
@@ -185,20 +220,35 @@
         </div>
     </section>
 
-    <!-- Generator Section -->
+    <!-- Generator Section (AI INTEGRATED) -->
     <section id="generator" class="py-20 bg-slate-900 text-white relative">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-3">Mesin Prompt S.P.K.A</h2>
-                <p class="text-slate-400">Isi borang ini untuk menjana arahan AI bertaraf profesional.</p>
+                <h2 class="text-3xl font-bold mb-3 flex justify-center items-center gap-3">
+                    Mesin Prompt S.P.K.A <span class="bg-brand-600 text-xs px-2 py-1 rounded-md animate-pulse">AI-Powered ✨</span>
+                </h2>
+                <p class="text-slate-400">Isi manual atau minta AI isikan untuk anda.</p>
             </div>
 
-            <div class="max-w-4xl mx-auto bg-white text-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl shadow-black/20">
+            <div class="max-w-4xl mx-auto bg-white text-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl shadow-black/20 relative overflow-hidden">
+                
+                <!-- AI Auto-Fill Feature -->
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border border-purple-100 mb-8">
+                    <label class="block text-sm font-bold text-purple-700 mb-2">✨ Malas menaip? Guna 'Magic Fill' Gemini</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="magicInput" placeholder="Cth: Saya nak buat kertas kerja sukan sekolah..." class="w-full p-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none text-sm">
+                        <button onclick="runMagicFill()" id="magicBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 whitespace-nowrap">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hidden sm:inline">Auto-Isi</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-purple-400 mt-2 italic">*AI akan berfikir dan mengisi borang S.P.K.A di bawah untuk anda.</p>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-2">S - Siapa Anda (Identity)</label>
-                        <input type="text" id="inputS" placeholder="Cth: Pegawai Kaunseling / Guru Data" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
+                        <input type="text" id="inputS" placeholder="Cth: Pegawai Kaunseling" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-2">P - Peranan AI (Persona)</label>
@@ -207,26 +257,48 @@
                 </div>
                 <div class="mb-5">
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-2">K - Konteks (Latar Belakang)</label>
-                    <textarea id="inputK" rows="3" placeholder="Terangkan masalah dengan jelas. Cth: Murid bosan dengan ceramah motivasi..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
+                    <textarea id="inputK" rows="3" placeholder="Terangkan masalah..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
                 </div>
                 <div class="mb-8">
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-2">A - Arahan Spesifik (Output)</label>
-                    <textarea id="inputA" rows="3" placeholder="Apa hasil akhir? Cth: Modul gamifikasi dalam bentuk jadual..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
+                    <textarea id="inputA" rows="3" placeholder="Apa hasil akhir?..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition font-medium"></textarea>
                 </div>
 
                 <button onclick="generatePrompt()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 text-lg transform hover:-translate-y-1">
-                    <i class="fa-solid fa-bolt"></i> Jana Prompt Ajaib
+                    <i class="fa-solid fa-bolt"></i> Gabung & Jana Prompt
                 </button>
 
-                <!-- Result -->
+                <!-- Result Area -->
                 <div id="resultArea" class="hidden mt-8 animate-fade-in pt-8 border-t border-slate-100">
-                    <div class="flex justify-between items-center mb-3 px-1">
-                        <span class="text-xs font-bold text-green-600 uppercase tracking-wide"><i class="fa-solid fa-check-circle mr-1"></i> Siap Disalin</span>
-                        <button onclick="copyToClipboard('finalPrompt')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-2">
-                            <i class="fa-regular fa-copy"></i> Salin Teks
-                        </button>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 px-1 gap-3">
+                        <span class="text-xs font-bold text-green-600 uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle"></i> Prompt Sedia Ada
+                        </span>
+                        <div class="flex gap-2 w-full md:w-auto">
+                             <button onclick="copyToClipboard('finalPrompt')" class="flex-1 md:flex-none text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-lg font-bold transition flex items-center justify-center gap-2">
+                                <i class="fa-regular fa-copy"></i> Salin
+                            </button>
+                            <!-- NEW AI FEATURE: Test Run -->
+                            <button onclick="runSimulation()" id="simBtn" class="flex-1 md:flex-none text-xs bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold hover:shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-play"></i> Uji Lari (Live)
+                            </button>
+                        </div>
                     </div>
-                    <textarea id="finalPrompt" readonly class="w-full p-5 bg-brand-50 border border-brand-100 rounded-xl text-slate-700 font-mono text-sm leading-relaxed h-64 focus:outline-none resize-none shadow-inner"></textarea>
+                    
+                    <textarea id="finalPrompt" readonly class="w-full p-5 bg-brand-50 border border-brand-100 rounded-xl text-slate-700 font-mono text-sm leading-relaxed h-48 focus:outline-none resize-none shadow-inner mb-4"></textarea>
+
+                    <!-- Simulation Result Container -->
+                    <div id="simulationArea" class="hidden rounded-xl border border-indigo-100 overflow-hidden shadow-lg">
+                        <div class="bg-indigo-50 px-4 py-2 border-b border-indigo-100 flex justify-between items-center">
+                            <span class="text-xs font-bold text-indigo-700 flex items-center gap-2">
+                                <i class="fa-solid fa-robot"></i> Respons Gemini
+                            </span>
+                            <span class="text-[10px] text-indigo-400">Model: Gemini 2.5 Flash</span>
+                        </div>
+                        <div id="simulationOutput" class="p-6 bg-white prose prose-sm max-w-none text-slate-600 h-64 overflow-y-auto">
+                            <!-- AI Response will appear here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -300,7 +372,7 @@ Sediakan rubrik PBD ringkas dalam bentuk jadual.
                     </div>
                 </div>
 
-                <!-- NEW: Sektor Pembangunan Murid -->
+                <!-- Sektor Pembangunan Murid -->
                 <div id="murid" class="sector-content hidden">
                     <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative">
                         <button onclick="copyContent('promptMurid')" class="absolute top-6 right-6 text-slate-300 hover:text-brand-600 transition"><i class="fa-regular fa-copy fa-xl"></i></button>
@@ -451,11 +523,153 @@ Tukar nota kepada Minit Mesyuarat rasmi.
             <p class="mb-2 font-medium">Dibangunkan khas oleh <strong>SirSM</strong></p>
             <p class="text-sm">Unit Sumber Teknologi Pendidikan (USTP) PPD Alor Gajah</p>
             <p class="mt-6 text-xs text-slate-600">&copy; <span id="currentYear"></span>. Hak Cipta Terpelihara.</p>
+            <p class="mt-2 text-xs text-slate-700 cursor-pointer hover:text-slate-500" onclick="openApiModal()">Tetapan API</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script>
+        // --- API & AI LOGIC ---
+        // In the preview environment, this is empty.
+        // But if user exports file, they need to supply key.
+        let apiKey = ""; 
+
+        function openApiModal() {
+            document.getElementById('apiKeyModal').classList.remove('hidden');
+            const savedKey = localStorage.getItem('gemini_api_key');
+            if(savedKey) document.getElementById('userApiKey').value = savedKey;
+        }
+
+        function closeApiModal() {
+            document.getElementById('apiKeyModal').classList.add('hidden');
+        }
+
+        function saveApiKey() {
+            const input = document.getElementById('userApiKey').value.trim();
+            if(input) {
+                apiKey = input;
+                localStorage.setItem('gemini_api_key', input);
+                alert("API Key berjaya disimpan!");
+                closeApiModal();
+            } else {
+                alert("Sila masukkan API Key yang sah.");
+            }
+        }
+
+        // Check for saved key on load
+        window.onload = function() {
+             const savedKey = localStorage.getItem('gemini_api_key');
+             if(savedKey) apiKey = savedKey;
+             loadQuiz();
+        };
+
+        async function callGemini(promptText, systemInstruction = "") {
+            // Check if we have a key (either from env or user input)
+            // Note: In some environments, __env_api_key might be injected, handled below securely if existing
+            let currentKey = apiKey; 
+            
+            // Fallback for demo environment if const is empty string (will be filled by runtime if applicable)
+            // If completely empty, prompt user
+            if (!currentKey) {
+                openApiModal();
+                throw new Error("API Key Missing");
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${currentKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                // Add system instruction if provided (model dependent support)
+                // For simplicity in flash-preview, we prepend to prompt if system instruction structure fails, 
+                // but let's try standard structure first.
+            };
+
+            if (systemInstruction) {
+                payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Gagal menghubungi Gemini: " + response.statusText);
+                
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+
+            } catch (error) {
+                console.error(error);
+                alert("Ralat AI: " + error.message + ". Pastikan API Key anda sah.");
+                return null;
+            }
+        }
+
+        // 1. Magic Fill Logic
+        async function runMagicFill() {
+            const topic = document.getElementById('magicInput').value.trim();
+            if(!topic) { alert("Sila masukkan topik dahulu!"); return; }
+
+            const btn = document.getElementById('magicBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Berfikir...`;
+            btn.disabled = true;
+
+            const systemPrompt = "Anda adalah Pakar Prompt Engineering. Tugas anda adalah menukar permintaan ringkas pengguna menjadi 4 elemen S.P.K.A (Siapa, Peranan, Konteks, Arahan). Berikan output dalam format JSON sahaja: { \"s\": \"...\", \"p\": \"...\", \"k\": \"...\", \"a\": \"...\" } dalam Bahasa Melayu.";
+            
+            const aiResponse = await callGemini(`Tukarkan topik ini kepada S.P.K.A: "${topic}"`, systemPrompt);
+
+            if(aiResponse) {
+                try {
+                    // Clean code fences if AI adds them
+                    const jsonStr = aiResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+                    const data = JSON.parse(jsonStr);
+                    
+                    document.getElementById('inputS').value = data.s || "";
+                    document.getElementById('inputP').value = data.p || "";
+                    document.getElementById('inputK').value = data.k || "";
+                    document.getElementById('inputA').value = data.a || "";
+                    
+                    // Smooth scroll to form
+                    document.getElementById('inputS').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                } catch (e) {
+                    alert("Gagal memproses respons AI. Sila cuba lagi.");
+                }
+            }
+
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+
+        // 2. Simulation Logic
+        async function runSimulation() {
+            const prompt = document.getElementById('finalPrompt').value;
+            if(!prompt) { alert("Sila jana prompt dahulu!"); return; }
+
+            const area = document.getElementById('simulationArea');
+            const output = document.getElementById('simulationOutput');
+            const btn = document.getElementById('simBtn');
+            
+            area.classList.remove('hidden');
+            output.innerHTML = `<div class="flex items-center gap-2 text-slate-400"><i class="fa-solid fa-circle-notch fa-spin"></i> Gemini sedang menulis jawapan...</div>`;
+            btn.disabled = true;
+
+            const aiResponse = await callGemini(prompt);
+
+            if(aiResponse) {
+                // Parse Markdown using marked.js
+                output.innerHTML = marked.parse(aiResponse);
+            } else {
+                output.innerHTML = `<span class="text-red-500">Ralat simulasi.</span>`;
+            }
+
+            btn.disabled = false;
+        }
+
+
         // --- QUIZ DATA ---
         const questions = [
             { q: "Apakah maksud huruf 'S' dalam formula S.P.K.A?", options: ["Situasi", "Siapa Saya", "Subjek", "Solusi"], correct: 1, explanation: "S = Siapa Saya. Anda perlu kenalkan diri supaya AI tahu laras bahasa yang sesuai." },
@@ -525,7 +739,7 @@ Tukar nota kepada Minit Mesyuarat rasmi.
             loadQuiz();
         }
 
-        // --- GENERATOR & OTHER LOGIC ---
+        // --- GENERATOR LOGIC ---
         document.getElementById('currentYear').innerText = new Date().getFullYear();
 
         function generatePrompt() {
@@ -556,7 +770,6 @@ Tukar nota kepada Minit Mesyuarat rasmi.
         function copyContent(id) { navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => alert("Prompt contoh disalin!")); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert("Kata kunci disalin!")); }
 
-        loadQuiz();
     </script>
 </body>
 </html>
