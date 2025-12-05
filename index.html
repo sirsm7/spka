@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Lengkap</title>
+    <title>Belajar AI bersama SirSM - Modul Lengkap (V2.0)</title>
     
     <link rel="icon" type="image/png" href="SirSM.png">
 
+    <!-- Dependencies Asal -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- NEW: Library untuk efek Confetti (Ringan) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -22,7 +26,18 @@
                             50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' 
                         } 
                     },
-                    animation: { 'bounce-slow': 'bounce 3s infinite' }
+                    animation: { 
+                        'bounce-slow': 'bounce 3s infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both' 
+                    },
+                    keyframes: {
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
+                    }
                 }
             }
         }
@@ -42,15 +57,15 @@
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Quiz Styles Enhanced */
-        .option-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* --- QUIZ STYLES V2 (DIPERBAIKI) --- */
+        .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .option-btn:hover:not(:disabled) { transform: translateX(8px); background-color: #f8fafc; border-color: #3b82f6; }
         
         .correct-answer { 
             background-color: #dcfce7 !important; 
             border-color: #22c55e !important; 
             color: #14532d !important; 
-            transform: scale(1.02);
+            transform: scale(1.01);
             box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.2);
             font-weight: 700;
         }
@@ -59,17 +74,17 @@
             background-color: #fee2e2 !important; 
             border-color: #ef4444 !important; 
             color: #7f1d1d !important; 
-            opacity: 0.7;
+            opacity: 0.8;
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
 
-        .explanation-box {
-            animation: slideDown 0.4s ease-out forwards;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .explanation-box { animation: slideDown 0.4s ease-out forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* New Timer Bar */
+        .timer-track { width: 100%; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+        .timer-fill { height: 100%; background: #3b82f6; transition: width 0.1s linear, background-color 0.3s; width: 100%; }
+        .timer-critical { background: #ef4444 !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
@@ -167,7 +182,8 @@
                 </div>
 
                 <div id="spka-list-container" class="space-y-5">
-                    </div>
+                    <!-- SPKA Items will be injected here -->
+                </div>
             </div>
         </div>
     </section>
@@ -279,10 +295,12 @@
             </div>
             
             <div id="tabs-container" class="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
-                </div>
+                <!-- Tabs will be injected here -->
+            </div>
 
             <div id="content-container" class="max-w-7xl mx-auto min-h-[400px]">
-                </div>
+                <!-- Content will be injected here -->
+            </div>
         </div>
     </section>
 
@@ -295,72 +313,85 @@
                 </p>
             </div>
             <div id="keywords-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                </div>
+                <!-- Keywords will be injected here -->
+            </div>
          </div>
     </section>
 
+    <!-- BAHAGIAN KUIZ YANG DITAMBAH BAIK (VERSI 2.0) -->
     <section id="quiz" class="py-24 bg-slate-100 border-t border-slate-200 scroll-mt-20">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="text-center mb-12">
-                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-100 px-3 py-1 rounded-full">Cabar Diri</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Kuiz Kefahaman S.P.K.A</h2>
-                <p class="text-slate-500 text-lg">Adakah anda sudah bersedia menjadi 0.1% Pakar Prompt? Jawab 10 soalan ini.</p>
+                <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-100 px-3 py-1 rounded-full">Mod Cabaran</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Ujian Kecekapan S.P.K.A</h2>
+                <p class="text-slate-500 text-lg">Soalan akan diberi secara rawak. Anda ada 20 saat untuk setiap soalan. Buktikan anda adalah 0.1% Pakar.</p>
             </div>
 
-            <div id="quiz-container" class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 relative min-h-[500px] flex flex-col">
+            <div id="quiz-container" class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 relative min-h-[550px] flex flex-col transition-all duration-300">
                 
-                <div id="quiz-start" class="p-10 text-center flex flex-col items-center justify-center flex-grow space-y-6">
-                    <div class="w-24 h-24 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center text-4xl mb-4 animate-bounce-slow shadow-inner">
-                        <i class="fa-solid fa-graduation-cap"></i>
+                <!-- START SCREEN -->
+                <div id="quiz-start" class="p-10 text-center flex flex-col items-center justify-center flex-grow space-y-6 z-10 bg-white">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-brand-500 to-purple-600 text-white rounded-full flex items-center justify-center text-4xl mb-4 shadow-xl animate-pulse">
+                        <i class="fa-solid fa-brain"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-800">10 Soalan Pantas</h3>
-                    <p class="text-slate-500 max-w-md mx-auto leading-relaxed">
-                        Uji pengetahuan anda tentang elemen S.P.K.A, peranan 'Persona', dan kata kunci 'Power'. Tiada had masa.
-                    </p>
-                    <button onclick="startQuiz()" class="bg-brand-600 text-white px-10 py-4 rounded-full font-bold hover:bg-brand-700 transition shadow-lg shadow-brand-500/30 transform hover:-translate-y-1">
-                        Mula Kuiz Sekarang
+                    <h3 class="text-2xl font-bold text-slate-800">Adakah Anda Bersedia?</h3>
+                    <ul class="text-left text-slate-500 text-sm space-y-2 bg-slate-50 p-6 rounded-xl border border-slate-100 inline-block mx-auto">
+                        <li><i class="fa-solid fa-shuffle text-brand-500 mr-2"></i> Soalan & Jawapan diberi secara rawak (Randomized)</li>
+                        <li><i class="fa-solid fa-stopwatch text-red-500 mr-2"></i> 20 Saat setiap soalan</li>
+                        <li><i class="fa-solid fa-certificate text-yellow-500 mr-2"></i> Perlu skor 80% ke atas untuk lulus</li>
+                    </ul>
+                    <button onclick="quizManager.start()" class="bg-slate-900 text-white px-12 py-4 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/30 transform hover:-translate-y-1 hover:scale-105">
+                        Mula Cabaran Sekarang
                     </button>
                 </div>
 
-                <div id="quiz-question" class="hidden p-8 md:p-12 flex-grow flex flex-col">
-                    <div class="flex justify-between items-center mb-8">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 px-3 py-1 rounded-full">Soalan <span id="q-current" class="text-brand-600">1</span> / 10</span>
-                        <div class="h-2 w-32 md:w-48 bg-slate-100 rounded-full overflow-hidden">
-                            <div id="q-progress" class="h-full bg-brand-500 w-0 transition-all duration-500 ease-out"></div>
-                        </div>
+                <!-- QUESTION SCREEN -->
+                <div id="quiz-question" class="hidden p-8 md:p-12 flex-grow flex flex-col relative">
+                    
+                    <!-- Timer Bar -->
+                    <div class="timer-track">
+                        <div id="timer-bar" class="timer-fill"></div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-100 px-3 py-1 rounded-full">Soalan <span id="q-current" class="text-brand-600 text-base">1</span> / <span id="q-total">10</span></span>
+                        <div class="text-xs font-mono text-slate-400" id="timer-text">20s</div>
                     </div>
                     
-                    <h3 id="q-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-6 leading-relaxed">
-                        </h3>
+                    <h3 id="q-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-8 leading-relaxed min-h-[80px]">
+                        <!-- Question Text Here -->
+                    </h3>
 
-                    <div id="q-options" class="space-y-3 mb-6">
-                        </div>
+                    <div id="q-options" class="space-y-3 mb-6 flex-grow">
+                        <!-- Options injected here -->
+                    </div>
 
-                    <div id="q-explanation" class="hidden mb-6">
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl explanation-box">
+                    <div id="q-explanation" class="hidden mb-4">
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl explanation-box shadow-sm">
                             <div class="flex items-start gap-3">
-                                <i class="fa-solid fa-lightbulb text-blue-500 mt-1"></i>
+                                <i class="fa-solid fa-lightbulb text-blue-600 mt-1 text-lg"></i>
                                 <div>
-                                    <h4 class="font-bold text-blue-900 text-sm uppercase mb-1">Penjelasan Pakar:</h4>
+                                    <h4 class="font-bold text-blue-900 text-sm uppercase mb-1">Analisis Pakar:</h4>
                                     <p id="q-explanation-text" class="text-slate-700 text-sm leading-relaxed"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-auto flex justify-end">
-                        <button id="btn-next-q" onclick="nextQuestion()" class="hidden bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg flex items-center gap-2 animate-fade-in">
-                            Soalan Seterusnya <i class="fa-solid fa-arrow-right"></i>
+                    <div class="mt-auto flex justify-end h-14">
+                        <button id="btn-next-q" onclick="quizManager.next()" class="hidden bg-brand-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-700 transition shadow-lg flex items-center gap-2 animate-fade-in hover:shadow-brand-500/30">
+                            Terus <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
 
-                <div id="quiz-result" class="hidden p-10 text-center flex flex-col items-center justify-center flex-grow animate-fade-in">
-                    </div>
+                <!-- RESULT SCREEN -->
+                <div id="quiz-result" class="hidden p-10 text-center flex flex-col items-center justify-center flex-grow animate-fade-in bg-white z-20">
+                    <!-- Results injected via JS -->
+                </div>
             </div>
         </div>
     </section>
-
 
     <footer class="bg-slate-900 text-slate-400 py-16 text-center border-t border-slate-800">
         <div class="container mx-auto px-4">
@@ -379,7 +410,7 @@
            DATA STORE: SUMBER KONTEN LENGKAP
         ------------------------------------------------------ */
 
-        // 1. DATA PENERANGAN SPKA (LENGKAP)
+        // 1. DATA PENERANGAN SPKA (KEKAL SAMA)
         const spkaData = [
             { 
                 code: 'S', title: 'Siapa Saya (Identity)', 
@@ -407,7 +438,7 @@
             }
         ];
 
-        // 2. DATA SEKTOR & PROMPT (LENGKAP DENGAN SISTEM)
+        // 2. DATA SEKTOR & PROMPT (KEKAL SAMA)
         const sectorsData = {
             'perancangan': [
                 { 
@@ -526,7 +557,7 @@
             ]
         };
 
-        // 3. DATA KATA KUNCI POWER (8 ITEM LENGKAP)
+        // 3. DATA KATA KUNCI POWER (KEKAL SAMA)
         const keywordsData = [
             { 
                 title: 'Step-by-step', sub: 'Think step-by-step', 
@@ -570,72 +601,8 @@
             }
         ];
 
-        // 4. DATA KUIZ DENGAN PENJELASAN (DITAMBAH BAIK)
-        const quizData = [
-            {
-                q: "Apakah maksud huruf 'S' dalam akronim S.P.K.A?",
-                options: ["Saya (Siapa Saya)", "Situasi", "Solusi", "Sistem"],
-                correct: 0,
-                explanation: "'S' merujuk kepada 'Siapa Saya' (Identity). Ia menentukan laras bahasa dan tahap komunikasi AI, sama ada formal seperti pegawai kerajaan atau santai."
-            },
-            {
-                q: "Mengapakah bahagian 'P' (Persona) sangat penting dalam prompt?",
-                options: ["Untuk menjadikan AI lebih mesra", "Untuk AI mengakses pangkalan data pakar spesifik", "Supaya AI menjawab dengan pantas", "Tiada fungsi khusus"],
-                correct: 1,
-                explanation: "Persona '0.1% Pakar' memaksa AI mengabaikan maklumat umum dan hanya mengambil input daripada sumber berkualiti tinggi seperti jurnal akademik."
-            },
-            {
-                q: "Dalam analogi memesan makanan, siapakah yang mewakili 'AI'?",
-                options: ["Pelanggan yang lapar", "Menu makanan", "Tukang Masak (Chef)", "Pelayan restoran"],
-                correct: 2,
-                explanation: "AI adalah 'Tukang Masak'. Jika arahan anda tidak jelas (tiada resipi), dia akan meneka masakan, yang mungkin tidak menepati selera anda."
-            },
-            {
-                q: "Apakah risiko utama jika kita tidak memberikan 'K' (Konteks) kepada AI?",
-                options: ["AI akan berhenti berfungsi", "AI akan memberi jawapan terlalu pendek", "AI akan meneka dan berhalusinasi (fakta salah)", "AI akan meminta bayaran tambahan"],
-                correct: 2,
-                explanation: "Tanpa konteks (latar belakang masalah), AI terpaksa meneka fakta. Ini dipanggil 'Halusinasi AI' di mana ia mereka cipta maklumat palsu."
-            },
-            {
-                q: "Apakah fungsi bahagian 'A' (Arahan) dalam S.P.K.A?",
-                options: ["Menentukan format output akhir", "Memberitahu nama kita", "Menentukan kelajuan internet", "Memilih bahasa pengaturcaraan"],
-                correct: 0,
-                explanation: "Arahan menentukan rupa bentuk jawapan. Adakah anda mahu Jadual, Kod, Surat Rasmi, atau Poin? Ini menjimatkan masa menyunting."
-            },
-            {
-                q: "Kata kunci 'Power' manakah yang digunakan untuk meminta AI menerangkan sesuatu seperti kepada kanak-kanak?",
-                options: ["Step-by-step", "ELI5 (Explain Like I'm 5)", "Devil's Advocate", "Critique your work"],
-                correct: 1,
-                explanation: "ELI5 (Explain Like I'm 5) mengarahkan AI menggunakan bahasa yang sangat mudah dan analogi ringkas untuk menerangkan konsep yang rumit."
-            },
-            {
-                q: "Jika anda mahu AI menyemak kesilapan dalam jawapannya sendiri, apakah arahan yang sesuai?",
-                options: ["Please hurry up", "Critique your own work", "Write more details", "Use analogy"],
-                correct: 1,
-                explanation: "Teknik 'Critique your own work' atau 'Semak semula' memaksa AI melalui proses berfikir kali kedua untuk mengurangkan ralat."
-            },
-            {
-                q: "Mengapakah kita disarankan menggunakan frasa '0.1% Pakar' dalam Persona?",
-                options: ["Supaya AI berasa bangga", "Untuk memaksa AI menggunakan standard kualiti tertinggi", "Kerana ia kod rahsia Google", "Untuk menjimatkan token AI"],
-                correct: 1,
-                explanation: "Frasa ini adalah teknik psikologi prompt (priming) untuk menetapkan 'standard' bahawa jawapan biasa tidak boleh diterima, hanya yang terbaik."
-            },
-            {
-                q: "Manakah antara berikut BUKAN sebahagian daripada S.P.K.A?",
-                options: ["Siapa Saya", "Peranan", "Konteks", "Analisis"],
-                correct: 3,
-                explanation: "Akronim yang betul ialah S (Siapa), P (Peranan), K (Konteks), dan A (Arahan). Analisis bukanlah sebahagian daripada struktur asas prompt ini."
-            },
-            {
-                q: "Untuk tugasan Matematik atau Coding, kata kunci manakah yang paling kritikal untuk mengelakkan kesilapan logik?",
-                options: ["Think step-by-step", "Be creative", "Act as a poet", "Summarize this"],
-                correct: 0,
-                explanation: "'Think step-by-step' (Chain of Thought) menghalang AI daripada melompat terus ke jawapan. Ia memaksa pengiraan satu persatu untuk ketepatan."
-            }
-        ];
-
         /* -----------------------------------------------------
-           RENDERING LOGIC
+           RENDERING LOGIC (UI) - KEKAL SAMA
         ------------------------------------------------------ */
 
         // Render SPKA List
@@ -679,57 +646,48 @@
             const tabsContainer = document.getElementById('tabs-container');
             const contentContainer = document.getElementById('content-container');
             
-            // Generate Tabs
             Object.keys(sectorsData).forEach((key, index) => {
                 const label = key === 'akp' ? 'AKP (Sokongan)' : key.charAt(0).toUpperCase() + key.slice(1).replace('murid', 'Pembangunan Murid').replace('sekolah', 'Pengurusan Sekolah');
                 const activeClass = index === 0 ? 'tab-active ring-2 ring-offset-2 ring-brand-500' : 'tab-inactive hover:bg-slate-50';
                 tabsContainer.innerHTML += `<button onclick="switchTab('${key}')" class="tab-btn ${activeClass} px-6 py-3 rounded-full border text-sm font-bold transition shadow-sm capitalize tracking-wide" id="btn-${key}">${label}</button>`;
             });
 
-            // Generate Content Blocks
             Object.entries(sectorsData).forEach(([key, prompts], index) => {
                 const hiddenClass = index === 0 ? '' : 'hidden';
                 let cardsHtml = '';
                 
                 prompts.forEach(p => {
                     if (p.type === 'system') {
-                        // System Card Design (Dark Theme)
                         cardsHtml += `
                         <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-xl border border-slate-700 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden group">
                             <div class="absolute top-0 right-0 bg-gradient-to-l from-red-600 to-orange-600 text-xs font-bold px-4 py-1.5 rounded-bl-2xl shadow-lg z-10">SISTEM KHAS</div>
                             <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition"></div>
-                            
                             <div class="bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-6 border border-white/10 shadow-inner"><i class="fa-solid ${p.icon} text-2xl"></i></div>
-                            
                             <h4 class="font-bold text-xl mb-2 text-white group-hover:text-brand-300 transition">${p.title}</h4>
                             <p class="text-sm text-slate-400 mb-6 leading-relaxed min-h-[60px]">${p.desc}</p>
-                            
                             <button onclick="showPrompt('${encodeURIComponent(p.content)}')" class="w-full bg-white text-slate-900 hover:bg-brand-500 hover:text-white py-3.5 rounded-xl text-sm font-bold transition shadow-lg flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-code"></i> Jana Kod Sistem
                             </button>
                         </div>`;
                     } else {
-                        // Normal Card Design (Light Theme)
                         cardsHtml += `
                         <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:shadow-xl hover:border-brand-200 transition duration-300 group flex flex-col h-full">
                             <div class="bg-brand-50 w-14 h-14 rounded-2xl flex items-center justify-center text-brand-600 mb-6 border border-brand-100 group-hover:scale-110 transition"><i class="fa-solid ${p.icon} text-2xl"></i></div>
-                            
                             <h4 class="font-bold text-xl mb-2 text-slate-800 group-hover:text-brand-600 transition">${p.title}</h4>
                             <p class="text-sm text-slate-500 mb-6 leading-relaxed flex-grow">${p.desc}</p>
-                            
                             <button onclick="showPrompt('${encodeURIComponent(p.content)}')" class="w-full border-2 border-brand-100 text-brand-600 hover:bg-brand-600 hover:text-white hover:border-brand-600 py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2">
                                 <i class="fa-regular fa-eye"></i> Lihat & Salin
                             </button>
                         </div>`;
                     }
                 });
-
                 contentContainer.innerHTML += `<div id="${key}" class="sector-content grid grid-cols-1 md:grid-cols-3 gap-8 animate-fade-in ${hiddenClass}">${cardsHtml}</div>`;
             });
         }
 
-        // --- INTERACTION LOGIC ---
-
+        /* -----------------------------------------------------
+           INTERACTION LOGIC - KEKAL SAMA
+        ------------------------------------------------------ */
         function generatePrompt() {
             const s = document.getElementById('inputS').value.trim();
             const p = document.getElementById('inputP').value.trim();
@@ -767,25 +725,13 @@
             el.select(); 
             el.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(el.value).then(() => {
-                Swal.fire({ 
-                    icon: 'success', 
-                    title: 'Berjaya Disalin!', 
-                    text: 'Anda kini boleh menampal teks ini.', 
-                    timer: 1500, 
-                    showConfirmButton: false 
-                });
+                Swal.fire({ icon: 'success', title: 'Berjaya Disalin!', text: 'Anda kini boleh menampal teks ini.', timer: 1500, showConfirmButton: false });
             });
         }
 
         function copyText(text) { 
             navigator.clipboard.writeText(text).then(() => {
-                Swal.fire({ 
-                    icon: 'success', 
-                    title: 'Kata Kunci Disalin!', 
-                    html: `<span class="text-brand-600 font-mono text-sm">${text}</span>`, 
-                    timer: 1500, 
-                    showConfirmButton: false 
-                });
+                Swal.fire({ icon: 'success', title: 'Kata Kunci Disalin!', html: `<span class="text-brand-600 font-mono text-sm">${text}</span>`, timer: 1500, showConfirmButton: false });
             }); 
         }
 
@@ -793,18 +739,12 @@
             document.querySelectorAll('.sector-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             document.querySelectorAll('.tab-btn').forEach(btn => { 
-                btn.classList.remove('tab-active'); 
-                btn.classList.remove('ring-2');
-                btn.classList.remove('ring-offset-2');
-                btn.classList.remove('ring-brand-500');
+                btn.classList.remove('tab-active', 'ring-2', 'ring-offset-2', 'ring-brand-500'); 
                 btn.classList.add('tab-inactive'); 
             });
             const activeBtn = document.getElementById('btn-' + id);
             activeBtn.classList.remove('tab-inactive');
-            activeBtn.classList.add('tab-active');
-            activeBtn.classList.add('ring-2');
-            activeBtn.classList.add('ring-offset-2');
-            activeBtn.classList.add('ring-brand-500');
+            activeBtn.classList.add('tab-active', 'ring-2', 'ring-offset-2', 'ring-brand-500');
         }
 
         function showPrompt(encodedContent) {
@@ -819,148 +759,326 @@
                 cancelButtonColor: '#94a3b8',
                 width: '600px',
                 padding: '2em',
-                customClass: {
-                    popup: 'rounded-3xl'
-                }
+                customClass: { popup: 'rounded-3xl' }
             }).then((result) => {
                 if (result.isConfirmed) {
                     navigator.clipboard.writeText(content).then(() => {
-                        Swal.fire({ 
-                            icon: 'success', 
-                            title: 'Disalin!', 
-                            text: 'Sedia untuk digunakan.', 
-                            timer: 1000, 
-                            showConfirmButton: false 
-                        });
+                        Swal.fire({ icon: 'success', title: 'Disalin!', text: 'Sedia untuk digunakan.', timer: 1000, showConfirmButton: false });
                     });
                 }
             });
         }
 
-        // --- QUIZ LOGIC (IMPROVED) ---
-        let currentQ = 0;
-        let score = 0;
+        /* -----------------------------------------------------
+           QUIZ ENGINE V2.0 (REFACTORED & OPTIMIZED)
+           Fitur: Random Order, Shuffle Options, Timer, OOP
+        ------------------------------------------------------ */
+        
+        const rawQuizData = [
+            {
+                q: "Apakah maksud huruf 'S' dalam akronim S.P.K.A?",
+                options: ["Saya (Siapa Saya)", "Situasi", "Solusi", "Sistem"],
+                correct: "Saya (Siapa Saya)",
+                explanation: "'S' merujuk kepada 'Siapa Saya' (Identity). Ia menentukan laras bahasa dan tahap komunikasi AI."
+            },
+            {
+                q: "Mengapakah bahagian 'P' (Persona) sangat penting dalam prompt?",
+                options: ["Untuk AI mengakses pangkalan data pakar spesifik", "Untuk menjadikan AI lebih mesra", "Supaya AI menjawab dengan pantas", "Tiada fungsi khusus"],
+                correct: "Untuk AI mengakses pangkalan data pakar spesifik",
+                explanation: "Persona '0.1% Pakar' memaksa AI mengabaikan maklumat umum dan hanya mengambil input daripada sumber berkualiti tinggi."
+            },
+            {
+                q: "Dalam analogi memesan makanan, siapakah yang mewakili 'AI'?",
+                options: ["Tukang Masak (Chef)", "Pelanggan yang lapar", "Menu makanan", "Pelayan restoran"],
+                correct: "Tukang Masak (Chef)",
+                explanation: "AI adalah 'Tukang Masak'. Jika arahan anda tidak jelas (tiada resipi), dia akan meneka masakan."
+            },
+            {
+                q: "Apakah risiko utama jika kita tidak memberikan 'K' (Konteks) kepada AI?",
+                options: ["AI akan meneka dan berhalusinasi (fakta salah)", "AI akan berhenti berfungsi", "AI akan memberi jawapan terlalu pendek", "AI akan meminta bayaran tambahan"],
+                correct: "AI akan meneka dan berhalusinasi (fakta salah)",
+                explanation: "Tanpa konteks (latar belakang masalah), AI terpaksa meneka fakta. Ini dipanggil 'Halusinasi AI'."
+            },
+            {
+                q: "Apakah fungsi bahagian 'A' (Arahan) dalam S.P.K.A?",
+                options: ["Menentukan format output akhir", "Memberitahu nama kita", "Menentukan kelajuan internet", "Memilih bahasa pengaturcaraan"],
+                correct: "Menentukan format output akhir",
+                explanation: "Arahan menentukan rupa bentuk jawapan. Adakah anda mahu Jadual, Kod, Surat Rasmi, atau Poin?"
+            },
+            {
+                q: "Kata kunci 'Power' manakah yang digunakan untuk meminta AI menerangkan sesuatu seperti kepada kanak-kanak?",
+                options: ["ELI5 (Explain Like I'm 5)", "Step-by-step", "Devil's Advocate", "Critique your work"],
+                correct: "ELI5 (Explain Like I'm 5)",
+                explanation: "ELI5 mengarahkan AI menggunakan bahasa yang sangat mudah dan analogi ringkas untuk menerangkan konsep rumit."
+            },
+            {
+                q: "Jika anda mahu AI menyemak kesilapan dalam jawapannya sendiri, apakah arahan yang sesuai?",
+                options: ["Critique your own work", "Please hurry up", "Write more details", "Use analogy"],
+                correct: "Critique your own work",
+                explanation: "Teknik 'Critique your own work' memaksa AI melalui proses berfikir kali kedua untuk mengurangkan ralat."
+            },
+            {
+                q: "Mengapakah kita disarankan menggunakan frasa '0.1% Pakar' dalam Persona?",
+                options: ["Untuk memaksa AI menggunakan standard kualiti tertinggi", "Supaya AI berasa bangga", "Kerana ia kod rahsia Google", "Untuk menjimatkan token AI"],
+                correct: "Untuk memaksa AI menggunakan standard kualiti tertinggi",
+                explanation: "Frasa ini adalah teknik psikologi prompt (priming) untuk menetapkan 'standard' bahawa jawapan biasa tidak diterima."
+            },
+            {
+                q: "Manakah antara berikut BUKAN sebahagian daripada S.P.K.A?",
+                options: ["Analisis", "Siapa Saya", "Peranan", "Konteks"],
+                correct: "Analisis",
+                explanation: "Akronim yang betul ialah S (Siapa), P (Peranan), K (Konteks), dan A (Arahan). Analisis bukan sebahagian daripada struktur asas."
+            },
+            {
+                q: "Untuk tugasan Matematik atau Coding, kata kunci manakah yang paling kritikal?",
+                options: ["Think step-by-step", "Be creative", "Act as a poet", "Summarize this"],
+                correct: "Think step-by-step",
+                explanation: "'Think step-by-step' (Chain of Thought) menghalang AI daripada melompat terus ke jawapan. Ia memaksa pengiraan satu persatu."
+            }
+        ];
 
-        function startQuiz() {
-            currentQ = 0;
-            score = 0;
-            document.getElementById('quiz-start').classList.add('hidden');
-            document.getElementById('quiz-result').classList.add('hidden');
-            document.getElementById('quiz-question').classList.remove('hidden');
-            loadQuestion();
-        }
+        class QuizManager {
+            constructor(data) {
+                this.originalData = data;
+                this.questions = [];
+                this.currentIdx = 0;
+                this.score = 0;
+                this.timer = null;
+                this.timeLeft = 20; // Seconds per question
+                this.maxTime = 20;
+                this.isAnswering = false;
 
-        function loadQuestion() {
-            const q = quizData[currentQ];
-            document.getElementById('q-current').innerText = currentQ + 1;
-            document.getElementById('q-text').innerText = q.q;
-            
-            // Hide previous explanations and button
-            document.getElementById('q-explanation').classList.add('hidden');
-            document.getElementById('btn-next-q').classList.add('hidden');
-            
-            // Progress Bar
-            const progress = ((currentQ) / quizData.length) * 100;
-            document.getElementById('q-progress').style.width = `${progress}%`;
-
-            const optionsContainer = document.getElementById('q-options');
-            optionsContainer.innerHTML = '';
-
-            q.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn w-full text-left p-5 border-2 border-slate-100 rounded-xl font-medium text-slate-600 mb-2 flex items-center justify-between group bg-white';
-                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle text-slate-300 group-hover:text-brand-400"></i>`;
-                btn.onclick = () => checkAnswer(index, btn);
-                optionsContainer.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selected, btnElement) {
-            // Disable all buttons immediately
-            const allBtns = document.querySelectorAll('.option-btn');
-            allBtns.forEach(btn => btn.disabled = true);
-
-            const correct = quizData[currentQ].correct;
-            const explanationText = quizData[currentQ].explanation;
-            
-            // 1. Highlight Answers
-            if (selected === correct) {
-                score++;
-                btnElement.classList.add('correct-answer');
-                btnElement.innerHTML = `<span>${quizData[currentQ].options[selected]}</span> <i class="fa-solid fa-check-circle text-green-700 text-xl animate-bounce"></i>`;
-            } else {
-                btnElement.classList.add('wrong-answer');
-                btnElement.innerHTML = `<span>${quizData[currentQ].options[selected]}</span> <i class="fa-solid fa-times-circle text-red-600 text-xl"></i>`;
-                
-                // Show correct one also
-                allBtns[correct].classList.add('correct-answer');
-                allBtns[correct].innerHTML = `<span>${quizData[currentQ].options[correct]}</span> <i class="fa-solid fa-check-circle text-green-700 text-xl"></i>`;
+                // Bind UI Elements
+                this.ui = {
+                    start: document.getElementById('quiz-start'),
+                    question: document.getElementById('quiz-question'),
+                    result: document.getElementById('quiz-result'),
+                    currentNum: document.getElementById('q-current'),
+                    totalNum: document.getElementById('q-total'),
+                    text: document.getElementById('q-text'),
+                    options: document.getElementById('q-options'),
+                    explanation: document.getElementById('q-explanation'),
+                    expText: document.getElementById('q-explanation-text'),
+                    nextBtn: document.getElementById('btn-next-q'),
+                    timerBar: document.getElementById('timer-bar'),
+                    timerText: document.getElementById('timer-text')
+                };
             }
 
-            // 2. Show Explanation (Expert Insight)
-            const expContainer = document.getElementById('q-explanation');
-            document.getElementById('q-explanation-text').innerText = explanationText;
-            expContainer.classList.remove('hidden');
+            // Fisher-Yates Shuffle Algorithm (Sangat Penting untuk Randomization)
+            shuffle(array) {
+                let currentIndex = array.length, randomIndex;
+                while (currentIndex != 0) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex--;
+                    [array[currentIndex], array[randomIndex]] = [array[currentIndex], array[randomIndex]];
+                }
+                return array;
+            }
 
-            // 3. Show Next Button (Manual Navigation)
-            document.getElementById('btn-next-q').classList.remove('hidden');
-        }
+            start() {
+                // Clone and shuffle questions
+                // Kita guna spread operator [...] supaya data asal tak terjejas
+                this.questions = this.shuffle([...this.originalData]);
+                this.currentIdx = 0;
+                this.score = 0;
+                
+                // Reset UI
+                this.ui.start.classList.add('hidden');
+                this.ui.result.classList.add('hidden');
+                this.ui.question.classList.remove('hidden');
+                this.ui.totalNum.innerText = this.questions.length;
+                
+                this.loadQuestion();
+            }
 
-        function nextQuestion() {
-            currentQ++;
-            if (currentQ < quizData.length) {
-                loadQuestion();
-            } else {
-                showResult();
+            loadQuestion() {
+                const q = this.questions[this.currentIdx];
+                this.ui.currentNum.innerText = this.currentIdx + 1;
+                this.ui.text.innerText = q.q;
+                
+                // Hide old explanation
+                this.ui.explanation.classList.add('hidden');
+                this.ui.nextBtn.classList.add('hidden');
+                this.ui.options.innerHTML = '';
+                this.isAnswering = true;
+
+                // Shuffle Options Logic
+                // We create objects { text: "Option A", isCorrect: true/false }
+                let optionObjects = q.options.map(opt => ({
+                    text: opt,
+                    isCorrect: opt === q.correct
+                }));
+                optionObjects = this.shuffle(optionObjects);
+
+                // Render Options
+                optionObjects.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn w-full text-left p-5 border-2 border-slate-100 rounded-xl font-medium text-slate-600 mb-2 flex items-center justify-between group bg-white';
+                    btn.innerHTML = `<span>${opt.text}</span> <i class="fa-regular fa-circle text-slate-300 group-hover:text-brand-400"></i>`;
+                    btn.onclick = () => this.handleAnswer(btn, opt.isCorrect, optionObjects);
+                    this.ui.options.appendChild(btn);
+                });
+
+                // Start Timer
+                this.startTimer();
+            }
+
+            startTimer() {
+                clearInterval(this.timer);
+                this.timeLeft = this.maxTime;
+                this.ui.timerBar.style.width = '100%';
+                this.ui.timerBar.classList.remove('timer-critical');
+                this.ui.timerText.innerText = this.timeLeft + 's';
+
+                this.timer = setInterval(() => {
+                    this.timeLeft -= 0.1;
+                    const percent = (this.timeLeft / this.maxTime) * 100;
+                    this.ui.timerBar.style.width = `${percent}%`;
+                    
+                    if (this.timeLeft <= 5) {
+                        this.ui.timerBar.classList.add('timer-critical');
+                    }
+                    
+                    if (this.timeLeft % 1 < 0.1) {
+                        this.ui.timerText.innerText = Math.ceil(this.timeLeft) + 's';
+                    }
+
+                    if (this.timeLeft <= 0) {
+                        this.timeIsUp();
+                    }
+                }, 100);
+            }
+
+            timeIsUp() {
+                clearInterval(this.timer);
+                if (!this.isAnswering) return;
+                
+                // Disable all buttons and show correct answer
+                const buttons = this.ui.options.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
+                        btn.classList.add('correct-answer');
+                    }
+                });
+                
+                this.showExplanation("Masa Tamat!");
+            }
+
+            handleAnswer(selectedBtn, isCorrect, allOptions) {
+                if (!this.isAnswering) return;
+                this.isAnswering = false;
+                clearInterval(this.timer);
+
+                const buttons = this.ui.options.querySelectorAll('button');
+                buttons.forEach(btn => btn.disabled = true);
+
+                if (isCorrect) {
+                    this.score++;
+                    selectedBtn.classList.add('correct-answer');
+                    selectedBtn.innerHTML = `<span>${selectedBtn.innerText}</span> <i class="fa-solid fa-check-circle text-green-700 text-xl animate-bounce"></i>`;
+                } else {
+                    selectedBtn.classList.add('wrong-answer');
+                    selectedBtn.innerHTML = `<span>${selectedBtn.innerText}</span> <i class="fa-solid fa-times-circle text-red-600 text-xl"></i>`;
+                    
+                    // Show correct answer
+                    buttons.forEach(btn => {
+                        if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
+                            btn.classList.add('correct-answer');
+                            btn.innerHTML = `<span>${btn.innerText}</span> <i class="fa-solid fa-check-circle text-green-700 text-xl"></i>`;
+                        }
+                    });
+                }
+
+                this.showExplanation();
+            }
+
+            showExplanation(customHeader = null) {
+                this.ui.expText.innerText = this.questions[this.currentIdx].explanation;
+                this.ui.explanation.classList.remove('hidden');
+                this.ui.nextBtn.classList.remove('hidden');
+            }
+
+            next() {
+                this.currentIdx++;
+                if (this.currentIdx < this.questions.length) {
+                    this.loadQuestion();
+                } else {
+                    this.finish();
+                }
+            }
+
+            finish() {
+                this.ui.question.classList.add('hidden');
+                this.ui.result.classList.remove('hidden');
+                
+                const percentage = Math.round((this.score / this.questions.length) * 100);
+                let message, icon, color;
+
+                if (percentage >= 80) {
+                    message = "TAHNIAH! Anda Adalah 0.1% Pakar!";
+                    icon = "fa-trophy";
+                    color = "text-yellow-500";
+                    this.fireConfetti();
+                } else if (percentage >= 50) {
+                    message = "Usaha Bagus! Teruskan Latihan.";
+                    icon = "fa-star-half-stroke";
+                    color = "text-blue-500";
+                } else {
+                    message = "Jangan Putus Asa. Cuba Ulangkaji Konsep S.P.K.A.";
+                    icon = "fa-book-reader";
+                    color = "text-slate-400";
+                }
+
+                this.ui.result.innerHTML = `
+                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center text-5xl mb-6 shadow-xl ${color} mx-auto">
+                        <i class="fa-solid ${icon}"></i>
+                    </div>
+                    <h3 class="text-4xl font-bold text-slate-800 mb-2">${this.score} / ${this.questions.length}</h3>
+                    <p class="text-brand-600 font-bold tracking-wider uppercase mb-6">Skor Akhir Anda (${percentage}%)</p>
+                    
+                    <h4 class="text-xl font-medium text-slate-600 mb-10 max-w-md mx-auto">${message}</h4>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="quizManager.start()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-900 transition shadow-lg">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Cuba Lagi
+                        </button>
+                        <a href="#concept" class="bg-white border-2 border-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:border-brand-500 hover:text-brand-600 transition">
+                            Ulang Kaji Nota
+                        </a>
+                    </div>
+                `;
+            }
+
+            fireConfetti() {
+                const duration = 3000;
+                const end = Date.now() + duration;
+
+                (function frame() {
+                    confetti({
+                        particleCount: 5,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 }
+                    });
+                    confetti({
+                        particleCount: 5,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 }
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
             }
         }
 
-        function showResult() {
-            document.getElementById('quiz-question').classList.add('hidden');
-            const resultDiv = document.getElementById('quiz-result');
-            resultDiv.classList.remove('hidden');
-
-            const percentage = (score / quizData.length) * 100;
-            let message = '';
-            let icon = '';
-            let color = '';
-
-            if (percentage === 100) {
-                message = "TAHNIAH! Anda Adalah 0.1% Pakar!";
-                icon = "fa-trophy";
-                color = "text-yellow-500";
-            } else if (percentage >= 80) {
-                message = "Hebat! Anda Hampir Menguasai Sepenuhnya.";
-                icon = "fa-star";
-                color = "text-blue-500";
-            } else {
-                message = "Usaha Bagus! Cuba Semak Semula Nota S.P.K.A.";
-                icon = "fa-book-reader";
-                color = "text-slate-500";
-            }
-
-            resultDiv.innerHTML = `
-                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center text-5xl mb-6 shadow-xl ${color}">
-                    <i class="fa-solid ${icon}"></i>
-                </div>
-                <h3 class="text-4xl font-bold text-slate-800 mb-2">${score} / ${quizData.length}</h3>
-                <p class="text-brand-600 font-bold tracking-wider uppercase mb-6">Skor Akhir Anda</p>
-                
-                <h4 class="text-xl font-medium text-slate-600 mb-10 max-w-md">${message}</h4>
-                
-                <div class="flex gap-4">
-                    <button onclick="startQuiz()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-900 transition shadow-lg">
-                        <i class="fa-solid fa-rotate-right mr-2"></i> Cuba Lagi
-                    </button>
-                    <a href="#concept" class="bg-white border-2 border-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:border-brand-500 hover:text-brand-600 transition">
-                        Ulang Kaji
-                    </a>
-                </div>
-            `;
-        }
-
-        // Initialize Data Driven Content
+        // Initialize Everything
         initSectors();
+        const quizManager = new QuizManager(rawQuizData);
 
     </script>
 </body>
