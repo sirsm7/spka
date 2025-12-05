@@ -92,7 +92,7 @@
                     <i class="fa-solid fa-key"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900">Kunci API Diperlukan</h3>
-                <p class="text-sm text-slate-500 mt-2">Untuk menggunakan ciri pintar AI (Auto-Isi & Simulasi), sila masukkan Google Gemini API Key anda. Ia percuma.</p>
+                <p class="text-sm text-slate-500 mt-2">Untuk menggunakan ciri Uji Lari (Simulasi AI), sila masukkan Google Gemini API Key anda. Ia percuma.</p>
             </div>
             <input type="password" id="userApiKey" placeholder="Tampal API Key di sini (AIza...)" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none mb-4 text-sm font-mono">
             <button onclick="saveApiKey()" class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition">Simpan & Teruskan</button>
@@ -142,7 +142,7 @@
                 Kuasai AI Seperti <br><span class="gradient-text">0.1% Pakar</span>
             </h1>
             <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Panduan interaktif PPD Alor Gajah. Kini dengan <strong>Integrasi AI Pintar</strong> untuk mengautomasikan kerja anda.
+                Panduan interaktif PPD Alor Gajah. Kini dengan <strong>Integrasi AI Pintar</strong> untuk menguji keberkesanan prompt anda.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#concept" class="bg-white text-slate-700 border border-slate-200 px-8 py-3.5 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm flex items-center gap-2">
@@ -226,23 +226,37 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-3 flex justify-center items-center gap-3">
-                    Mesin Prompt S.P.K.A <span class="bg-brand-600 text-xs px-2 py-1 rounded-md animate-pulse">AI-Powered ✨</span>
+                    Mesin Prompt S.P.K.A
                 </h2>
-                <p class="text-slate-400">Isi manual atau minta AI isikan untuk anda.</p>
+                <p class="text-slate-400">Jana arahan (prompt) yang lengkap dan profesional secara manual.</p>
             </div>
 
             <div class="max-w-4xl mx-auto bg-white text-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl shadow-black/20 relative overflow-hidden">
                 
-                <!-- AI Auto-Fill Feature -->
-                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border border-purple-100 mb-8">
-                    <label class="block text-sm font-bold text-purple-700 mb-2">✨ Malas menaip? Guna 'Magic Fill' Gemini</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="magicInput" placeholder="Cth: Saya nak buat kertas kerja sukan sekolah..." class="w-full p-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 outline-none text-sm">
-                        <button onclick="runMagicFill()" id="magicBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold transition flex items-center gap-2 whitespace-nowrap">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hidden sm:inline">Auto-Isi</span>
-                        </button>
+                <!-- GUIDE SECTION REPLACING MAGIC FILL -->
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-8">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+                        <h3 class="font-bold text-slate-800 text-sm md:text-base">Panduan Pantas: Apa Nak Tulis?</h3>
                     </div>
-                    <p class="text-xs text-purple-400 mt-2 italic">*AI akan berfikir dan mengisi borang S.P.K.A di bawah untuk anda.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                        <div class="bg-white p-3 rounded border border-blue-100">
+                            <span class="font-bold text-blue-600 block mb-1">S (Siapa Saya)</span>
+                            <span class="text-slate-500">Contoh: "Guru Besar", "Pegawai PPD", "Setiausaha PIBG", "Guru Data".</span>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-purple-100">
+                            <span class="font-bold text-purple-600 block mb-1">P (Peranan AI)</span>
+                            <span class="text-slate-500">Contoh: "0.1% Pakar Analisis Data", "Pakar Pedagogi", "Pakar Motivasi Remaja".</span>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-amber-100">
+                            <span class="font-bold text-amber-600 block mb-1">K (Konteks)</span>
+                            <span class="text-slate-500">Contoh: "Data kehadiran merosot 10%", "Murid bosan belajar Sejarah", "Perlu dana RM5k".</span>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-green-100">
+                            <span class="font-bold text-green-600 block mb-1">A (Arahan)</span>
+                            <span class="text-slate-500">Contoh: "Senaraikan 5 idea gamifikasi", "Buat jadual intervensi", "Draf surat rasmi".</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
@@ -278,7 +292,7 @@
                              <button onclick="copyToClipboard('finalPrompt')" class="flex-1 md:flex-none text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-lg font-bold transition flex items-center justify-center gap-2">
                                 <i class="fa-regular fa-copy"></i> Salin
                             </button>
-                            <!-- NEW AI FEATURE: Test Run -->
+                            <!-- AI FEATURE: Test Run -->
                             <button onclick="runSimulation()" id="simBtn" class="flex-1 md:flex-none text-xs bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold hover:shadow-lg transition flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-play"></i> Uji Lari (Live)
                             </button>
@@ -565,7 +579,6 @@ Tukar nota kepada Minit Mesyuarat rasmi.
 
         async function callGemini(promptText, systemInstruction = "") {
             // Check if we have a key (either from env or user input)
-            // Note: In some environments, __env_api_key might be injected, handled below securely if existing
             let currentKey = apiKey; 
             
             // Fallback for demo environment if const is empty string (will be filled by runtime if applicable)
@@ -579,9 +592,6 @@ Tukar nota kepada Minit Mesyuarat rasmi.
             
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }],
-                // Add system instruction if provided (model dependent support)
-                // For simplicity in flash-preview, we prepend to prompt if system instruction structure fails, 
-                // but let's try standard structure first.
             };
 
             if (systemInstruction) {
@@ -605,43 +615,6 @@ Tukar nota kepada Minit Mesyuarat rasmi.
                 alert("Ralat AI: " + error.message + ". Pastikan API Key anda sah.");
                 return null;
             }
-        }
-
-        // 1. Magic Fill Logic
-        async function runMagicFill() {
-            const topic = document.getElementById('magicInput').value.trim();
-            if(!topic) { alert("Sila masukkan topik dahulu!"); return; }
-
-            const btn = document.getElementById('magicBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Berfikir...`;
-            btn.disabled = true;
-
-            const systemPrompt = "Anda adalah Pakar Prompt Engineering. Tugas anda adalah menukar permintaan ringkas pengguna menjadi 4 elemen S.P.K.A (Siapa, Peranan, Konteks, Arahan). Berikan output dalam format JSON sahaja: { \"s\": \"...\", \"p\": \"...\", \"k\": \"...\", \"a\": \"...\" } dalam Bahasa Melayu.";
-            
-            const aiResponse = await callGemini(`Tukarkan topik ini kepada S.P.K.A: "${topic}"`, systemPrompt);
-
-            if(aiResponse) {
-                try {
-                    // Clean code fences if AI adds them
-                    const jsonStr = aiResponse.replace(/```json/g, '').replace(/```/g, '').trim();
-                    const data = JSON.parse(jsonStr);
-                    
-                    document.getElementById('inputS').value = data.s || "";
-                    document.getElementById('inputP').value = data.p || "";
-                    document.getElementById('inputK').value = data.k || "";
-                    document.getElementById('inputA').value = data.a || "";
-                    
-                    // Smooth scroll to form
-                    document.getElementById('inputS').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    
-                } catch (e) {
-                    alert("Gagal memproses respons AI. Sila cuba lagi.");
-                }
-            }
-
-            btn.innerHTML = originalText;
-            btn.disabled = false;
         }
 
         // 2. Simulation Logic
