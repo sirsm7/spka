@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Lengkap (V2.0)</title>
+    <title>Belajar AI bersama SirSM - Modul Lengkap (V2.1)</title>
     
     <link rel="icon" type="image/png" href="SirSM.png">
 
-    <!-- Dependencies Asal -->
+    <!-- Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- NEW: Library untuk efek Confetti (Ringan) -->
+    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
@@ -28,7 +27,7 @@
                     },
                     animation: { 
                         'bounce-slow': 'bounce 3s infinite',
-                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both' 
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both'
                     },
                     keyframes: {
                         shake: {
@@ -57,7 +56,7 @@
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- QUIZ STYLES V2 (DIPERBAIKI) --- */
+        /* Quiz Styles Enhanced V2.1 */
         .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .option-btn:hover:not(:disabled) { transform: translateX(8px); background-color: #f8fafc; border-color: #3b82f6; }
         
@@ -81,7 +80,7 @@
         .explanation-box { animation: slideDown 0.4s ease-out forwards; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* New Timer Bar */
+        /* Timer Bar */
         .timer-track { width: 100%; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
         .timer-fill { height: 100%; background: #3b82f6; transition: width 0.1s linear, background-color 0.3s; width: 100%; }
         .timer-critical { background: #ef4444 !important; }
@@ -318,13 +317,13 @@
          </div>
     </section>
 
-    <!-- BAHAGIAN KUIZ YANG DITAMBAH BAIK (VERSI 2.0) -->
+    <!-- BAHAGIAN KUIZ YANG DITAMBAH BAIK (VERSI 2.1 - Double Shuffle + OOP) -->
     <section id="quiz" class="py-24 bg-slate-100 border-t border-slate-200 scroll-mt-20">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="text-center mb-12">
                 <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-100 px-3 py-1 rounded-full">Mod Cabaran</span>
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Ujian Kecekapan S.P.K.A</h2>
-                <p class="text-slate-500 text-lg">Soalan akan diberi secara rawak. Anda ada 20 saat untuk setiap soalan. Buktikan anda adalah 0.1% Pakar.</p>
+                <p class="text-slate-500 text-lg">Soalan akan diacak secara rawak. Anda ada 20 saat untuk setiap soalan. Buktikan anda adalah 0.1% Pakar.</p>
             </div>
 
             <div id="quiz-container" class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 relative min-h-[550px] flex flex-col transition-all duration-300">
@@ -336,7 +335,7 @@
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800">Adakah Anda Bersedia?</h3>
                     <ul class="text-left text-slate-500 text-sm space-y-2 bg-slate-50 p-6 rounded-xl border border-slate-100 inline-block mx-auto">
-                        <li><i class="fa-solid fa-shuffle text-brand-500 mr-2"></i> Soalan & Jawapan diberi secara rawak (Randomized)</li>
+                        <li><i class="fa-solid fa-shuffle text-brand-500 mr-2"></i> Soalan & Jawapan diacak (Randomized)</li>
                         <li><i class="fa-solid fa-stopwatch text-red-500 mr-2"></i> 20 Saat setiap soalan</li>
                         <li><i class="fa-solid fa-certificate text-yellow-500 mr-2"></i> Perlu skor 80% ke atas untuk lulus</li>
                     </ul>
@@ -602,7 +601,7 @@
         ];
 
         /* -----------------------------------------------------
-           RENDERING LOGIC (UI) - KEKAL SAMA
+           RENDERING LOGIC (UI)
         ------------------------------------------------------ */
 
         // Render SPKA List
@@ -641,13 +640,22 @@
             `;
         });
 
-        // Render Sector Tabs & Content
+        // Render Sector Tabs & Content (UPDATED NAMES)
         function initSectors() {
             const tabsContainer = document.getElementById('tabs-container');
             const contentContainer = document.getElementById('content-container');
             
+            // Mapping nama sektor yang diminta
+            const sectorNames = {
+                'perancangan': 'Sektor Perancangan',
+                'pembelajaran': 'Sektor Pembelajaran',
+                'sekolah': 'Sektor Pengurusan Sekolah',
+                'murid': 'Sektor Pembangunan Murid',
+                'akp': 'Sektor Pengurusan (AKP)'
+            };
+
             Object.keys(sectorsData).forEach((key, index) => {
-                const label = key === 'akp' ? 'AKP (Sokongan)' : key.charAt(0).toUpperCase() + key.slice(1).replace('murid', 'Pembangunan Murid').replace('sekolah', 'Pengurusan Sekolah');
+                const label = sectorNames[key] || key.charAt(0).toUpperCase() + key.slice(1);
                 const activeClass = index === 0 ? 'tab-active ring-2 ring-offset-2 ring-brand-500' : 'tab-inactive hover:bg-slate-50';
                 tabsContainer.innerHTML += `<button onclick="switchTab('${key}')" class="tab-btn ${activeClass} px-6 py-3 rounded-full border text-sm font-bold transition shadow-sm capitalize tracking-wide" id="btn-${key}">${label}</button>`;
             });
@@ -686,7 +694,7 @@
         }
 
         /* -----------------------------------------------------
-           INTERACTION LOGIC - KEKAL SAMA
+           INTERACTION LOGIC
         ------------------------------------------------------ */
         function generatePrompt() {
             const s = document.getElementById('inputS').value.trim();
@@ -770,8 +778,10 @@
         }
 
         /* -----------------------------------------------------
-           QUIZ ENGINE V2.0 (REFACTORED & OPTIMIZED)
-           Fitur: Random Order, Shuffle Options, Timer, OOP
+           QUIZ ENGINE V2.1 (FIXED RANDOMIZATION)
+           - Fisher Yates Shuffle implemented
+           - Shuffles on every Start/Restart
+           - Options also shuffled
         ------------------------------------------------------ */
         
         const rawQuizData = [
@@ -865,7 +875,7 @@
                 };
             }
 
-            // Fisher-Yates Shuffle Algorithm (Sangat Penting untuk Randomization)
+            // Fisher-Yates Shuffle Algorithm (Essential for Randomization)
             shuffle(array) {
                 let currentIndex = array.length, randomIndex;
                 while (currentIndex != 0) {
@@ -877,8 +887,8 @@
             }
 
             start() {
-                // Clone and shuffle questions
-                // Kita guna spread operator [...] supaya data asal tak terjejas
+                // Clone and shuffle questions every time start is called
+                // Using spread operator [...] to create a fresh copy of originalData
                 this.questions = this.shuffle([...this.originalData]);
                 this.currentIdx = 0;
                 this.score = 0;
@@ -897,14 +907,15 @@
                 this.ui.currentNum.innerText = this.currentIdx + 1;
                 this.ui.text.innerText = q.q;
                 
-                // Hide old explanation
+                // Hide old explanation and reset state
                 this.ui.explanation.classList.add('hidden');
                 this.ui.nextBtn.classList.add('hidden');
                 this.ui.options.innerHTML = '';
                 this.isAnswering = true;
 
                 // Shuffle Options Logic
-                // We create objects { text: "Option A", isCorrect: true/false }
+                // 1. Map options to objects to preserve the 'isCorrect' logic
+                // 2. Shuffle the objects
                 let optionObjects = q.options.map(opt => ({
                     text: opt,
                     isCorrect: opt === q.correct
@@ -916,7 +927,7 @@
                     const btn = document.createElement('button');
                     btn.className = 'option-btn w-full text-left p-5 border-2 border-slate-100 rounded-xl font-medium text-slate-600 mb-2 flex items-center justify-between group bg-white';
                     btn.innerHTML = `<span>${opt.text}</span> <i class="fa-regular fa-circle text-slate-300 group-hover:text-brand-400"></i>`;
-                    btn.onclick = () => this.handleAnswer(btn, opt.isCorrect, optionObjects);
+                    btn.onclick = () => this.handleAnswer(btn, opt.isCorrect);
                     this.ui.options.appendChild(btn);
                 });
 
@@ -940,6 +951,7 @@
                         this.ui.timerBar.classList.add('timer-critical');
                     }
                     
+                    // Show whole number for seconds
                     if (this.timeLeft % 1 < 0.1) {
                         this.ui.timerText.innerText = Math.ceil(this.timeLeft) + 's';
                     }
@@ -958,15 +970,16 @@
                 const buttons = this.ui.options.querySelectorAll('button');
                 buttons.forEach(btn => {
                     btn.disabled = true;
+                    // Check against the current correct answer string
                     if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
                         btn.classList.add('correct-answer');
                     }
                 });
                 
-                this.showExplanation("Masa Tamat!");
+                this.showExplanation();
             }
 
-            handleAnswer(selectedBtn, isCorrect, allOptions) {
+            handleAnswer(selectedBtn, isCorrect) {
                 if (!this.isAnswering) return;
                 this.isAnswering = false;
                 clearInterval(this.timer);
@@ -982,7 +995,7 @@
                     selectedBtn.classList.add('wrong-answer');
                     selectedBtn.innerHTML = `<span>${selectedBtn.innerText}</span> <i class="fa-solid fa-times-circle text-red-600 text-xl"></i>`;
                     
-                    // Show correct answer
+                    // Highlight the correct answer
                     buttons.forEach(btn => {
                         if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
                             btn.classList.add('correct-answer');
@@ -994,7 +1007,7 @@
                 this.showExplanation();
             }
 
-            showExplanation(customHeader = null) {
+            showExplanation() {
                 this.ui.expText.innerText = this.questions[this.currentIdx].explanation;
                 this.ui.explanation.classList.remove('hidden');
                 this.ui.nextBtn.classList.remove('hidden');
