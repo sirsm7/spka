@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar AI bersama SirSM - Modul Lengkap (V2.1)</title>
+    <title>Belajar AI bersama SirSM - Modul Lengkap (V3.0 Final)</title>
     
     <link rel="icon" type="image/png" href="SirSM.png">
 
@@ -56,7 +56,7 @@
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Quiz Styles Enhanced V2.1 */
+        /* Quiz Styles V3 */
         .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .option-btn:hover:not(:disabled) { transform: translateX(8px); background-color: #f8fafc; border-color: #3b82f6; }
         
@@ -112,9 +112,6 @@
     </nav>
 
     <header class="pt-36 pb-24 px-4 relative overflow-hidden bg-white">
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60 animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-purple-50 rounded-full blur-3xl opacity-60"></div>
-        
         <div class="container mx-auto text-center max-w-4xl relative z-10">
             <div class="inline-flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full px-4 py-1.5 shadow-sm mb-8 animate-bounce-slow cursor-default">
                 <span class="w-2 h-2 rounded-full bg-green-500"></span>
@@ -188,7 +185,6 @@
     </section>
 
     <section id="generator" class="py-24 bg-slate-900 text-white relative scroll-mt-20">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
                 <span class="bg-slate-800 text-blue-400 font-bold tracking-wider text-xs uppercase px-3 py-1 rounded-full border border-slate-700">Alat Bantuan</span>
@@ -317,12 +313,14 @@
          </div>
     </section>
 
-    <!-- BAHAGIAN KUIZ YANG DITAMBAH BAIK (VERSI 2.1 - Double Shuffle + OOP) -->
+    <!-- BAHAGIAN KUIZ V3 (FINALIZED LOGIC) -->
     <section id="quiz" class="py-24 bg-slate-100 border-t border-slate-200 scroll-mt-20">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="text-center mb-12">
                 <span class="text-brand-600 font-bold tracking-wider text-xs uppercase bg-brand-100 px-3 py-1 rounded-full">Mod Cabaran</span>
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 mb-4">Ujian Kecekapan S.P.K.A</h2>
+                <!-- VISUAL DEBUGGER V3 -->
+                <p class="text-xs text-red-500 font-mono mb-2 tracking-widest">[ V3: SISTEM KOCAKAN AKTIF ]</p>
                 <p class="text-slate-500 text-lg">Soalan akan diacak secara rawak. Anda ada 20 saat untuk setiap soalan. Buktikan anda adalah 0.1% Pakar.</p>
             </div>
 
@@ -339,7 +337,7 @@
                         <li><i class="fa-solid fa-stopwatch text-red-500 mr-2"></i> 20 Saat setiap soalan</li>
                         <li><i class="fa-solid fa-certificate text-yellow-500 mr-2"></i> Perlu skor 80% ke atas untuk lulus</li>
                     </ul>
-                    <button onclick="quizManager.start()" class="bg-slate-900 text-white px-12 py-4 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/30 transform hover:-translate-y-1 hover:scale-105">
+                    <button onclick="quizEnginePro.start()" class="bg-slate-900 text-white px-12 py-4 rounded-full font-bold hover:bg-slate-800 transition shadow-lg shadow-slate-900/30 transform hover:-translate-y-1 hover:scale-105">
                         Mula Cabaran Sekarang
                     </button>
                 </div>
@@ -378,7 +376,7 @@
                     </div>
 
                     <div class="mt-auto flex justify-end h-14">
-                        <button id="btn-next-q" onclick="quizManager.next()" class="hidden bg-brand-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-700 transition shadow-lg flex items-center gap-2 animate-fade-in hover:shadow-brand-500/30">
+                        <button id="btn-next-q" onclick="quizEnginePro.next()" class="hidden bg-brand-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-brand-700 transition shadow-lg flex items-center gap-2 animate-fade-in hover:shadow-brand-500/30">
                             Terus <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -408,202 +406,56 @@
         /* -----------------------------------------------------
            DATA STORE: SUMBER KONTEN LENGKAP
         ------------------------------------------------------ */
-
-        // 1. DATA PENERANGAN SPKA (KEKAL SAMA)
+        // DATA KEKAL SAMA (SPKA, Sectors, Keywords)
         const spkaData = [
-            { 
-                code: 'S', title: 'Siapa Saya (Identity)', 
-                desc: 'Fungsi: Menetapkan Laras Bahasa & Tahap Komunikasi.', 
-                detail: 'Bahagian ini penting supaya AI tahu dengan siapa ia bercakap. Jika anda menulis "Saya seorang Murid Tahun 1", AI akan menggunakan ayat tunggal yang mudah. Jika anda menulis "Saya seorang Pegawai PPD", AI akan menggunakan laras bahasa rasmi kerajaan, istilah pentadbiran, dan struktur ayat yang kompleks. Tanpa "S", AI akan menggunakan nada "default" yang mungkin terlalu umum.', 
-                color: 'blue', icon: 'S' 
-            },
-            { 
-                code: 'P', title: 'Peranan AI (Persona)', 
-                desc: 'Fungsi: Mengaktifkan Pangkalan Data Spesifik.', 
-                detail: 'Ini adalah kunci kualiti. Apabila anda menetapkan "Bertindak sebagai 0.1% Pakar Psikologi", AI akan mengabaikan maklumat umum dan hanya mengambil maklumat daripada jurnal akademik, teori psikologi, dan amalan terbaik industri. Tanpa "P", AI akan memberi jawapan seperti carian Google biasa. Sentiasa gunakan "0.1% Pakar" untuk memaksa standard tertinggi.', 
-                color: 'purple', icon: 'P' 
-            },
-            { 
-                code: 'K', title: 'Konteks (Context)', 
-                desc: 'Fungsi: Membataskan Halusinasi & Memberi Fokus.', 
-                detail: 'AI tidak boleh membaca fikiran anda. Tanpa konteks, ia akan "menggoreng" atau mereka cerita. Anda wajib berikan latar belakang: Apakah masalahnya? Siapa sasaran audiens? Berapa bajet? Data apa yang ada? Semakin banyak konteks yang diberi, semakin mustahil untuk AI membuat kesilapan fakta.', 
-                color: 'amber', icon: 'K' 
-            },
-            { 
-                code: 'A', title: 'Arahan (Action)', 
-                desc: 'Fungsi: Menentukan Format Output Akhir.', 
-                detail: 'Jangan biarkan AI menentukan format. Anda yang perlu kawal. Adakah anda mahu jawapan dalam bentuk Jadual? Surat Rasmi dengan format kerajaan? Kod HTML yang boleh disalin? Atau senarai poin ringkas? Arahan yang spesifik akan menjimatkan masa anda daripada perlu mengedit semula hasil kerja AI.', 
-                color: 'green', icon: 'A' 
-            }
+            { code: 'S', title: 'Siapa Saya (Identity)', desc: 'Fungsi: Menetapkan Laras Bahasa & Tahap Komunikasi.', detail: 'Bahagian ini penting supaya AI tahu dengan siapa ia bercakap. Jika anda menulis "Saya seorang Murid Tahun 1", AI akan menggunakan ayat tunggal yang mudah. Jika anda menulis "Saya seorang Pegawai PPD", AI akan menggunakan laras bahasa rasmi kerajaan, istilah pentadbiran, dan struktur ayat yang kompleks. Tanpa "S", AI akan menggunakan nada "default" yang mungkin terlalu umum.', color: 'blue', icon: 'S' },
+            { code: 'P', title: 'Peranan AI (Persona)', desc: 'Fungsi: Mengaktifkan Pangkalan Data Spesifik.', detail: 'Ini adalah kunci kualiti. Apabila anda menetapkan "Bertindak sebagai 0.1% Pakar Psikologi", AI akan mengabaikan maklumat umum dan hanya mengambil maklumat daripada jurnal akademik, teori psikologi, dan amalan terbaik industri. Tanpa "P", AI akan memberi jawapan seperti carian Google biasa. Sentiasa gunakan "0.1% Pakar" untuk memaksa standard tertinggi.', color: 'purple', icon: 'P' },
+            { code: 'K', title: 'Konteks (Context)', desc: 'Fungsi: Membataskan Halusinasi & Memberi Fokus.', detail: 'AI tidak boleh membaca fikiran anda. Tanpa konteks, ia akan "menggoreng" atau mereka cerita. Anda wajib berikan latar belakang: Apakah masalahnya? Siapa sasaran audiens? Berapa bajet? Data apa yang ada? Semakin banyak konteks yang diberi, semakin mustahil untuk AI membuat kesilapan fakta.', color: 'amber', icon: 'K' },
+            { code: 'A', title: 'Arahan (Action)', desc: 'Fungsi: Menentukan Format Output Akhir.', detail: 'Jangan biarkan AI menentukan format. Anda yang perlu kawal. Adakah anda mahu jawapan dalam bentuk Jadual? Surat Rasmi dengan format kerajaan? Kod HTML yang boleh disalin? Atau senarai poin ringkas? Arahan yang spesifik akan menjimatkan masa anda daripada perlu mengedit semula hasil kerja AI.', color: 'green', icon: 'A' }
         ];
 
-        // 2. DATA SEKTOR & PROMPT (KEKAL SAMA)
         const sectorsData = {
             'perancangan': [
-                { 
-                    title: 'Analisis Strategik (Data)', 
-                    icon: 'fa-chart-line', 
-                    desc: 'Menganalisis data mentah untuk mencari punca isu dan cadangan intervensi taktikal.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai Sektor Perancangan PPD yang menguruskan data prestasi sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Data Scientist Pendidikan dan Perancang Strategik.\n\n[KONTEKS]\nSaya mempunyai data kehadiran murid sekolah luar bandar yang merosot sebanyak 15% khususnya pada hari Khamis (Hari Kokurikulum). Data juga menunjukkan 40% murid ini datang dari keluarga B40.\n\n[ARAHAN]\nSila buat analisis punca kemungkinan (Root Cause Analysis) dan cadangkan 3 program intervensi yang kos rendah tetapi berimpak tinggi. Bentangkan jawapan dalam format: Isu, Punca, dan Cadangan Penyelesaian.' 
-                },
-                { 
-                    title: 'Bina OPPM Projek', 
-                    icon: 'fa-table', 
-                    desc: 'Menghasilkan rangka kandungan lengkap untuk One Page Project Manager.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai Perancangan yang mengetuai projek khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pengurusan Projek (PMP Certified).\n\n[KONTEKS]\nProgram "STEM Untuk Semua" akan dijalankan di peringkat daerah selama 6 bulan bermula Januari hingga Jun. Objektif utama adalah meningkatkan minat murid dalam Sains.\n\n[ARAHAN]\nBina kandungan teks lengkap untuk dimasukkan ke dalam OPPM. Sila senaraikan: 1. Objektif Projek, 2. Senarai 10 Tugasan Utama (Milestones), 3. Tarikh Sasaran bagi setiap tugas, 4. Anggaran Kos, dan 5. Pegawai Bertanggungjawab.' 
-                },
-                { 
-                    title: 'Sistem Dashboard KPI', 
-                    icon: 'fa-code', 
-                    desc: 'Menjana kod HTML untuk kalkulator unjuran pencapaian sekolah (TOV/ETR).', 
-                    type: 'system', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mahukan alat digital mudah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Senior Web Developer & UI/UX Designer.\n\n[KONTEKS]\nSaya perlukan satu alat mudah untuk sekolah mengira unjuran KPI mereka tanpa perlu membuka Excel yang berat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal yang mengandungi "Dashboard Unjuran KPI".\nCiri-ciri sistem:\n1. Input untuk TOV (Take Off Value) dan ETR (Expected Target Result).\n2. Butang "Kira Lonjakan".\n3. Paparan graf bar mudah menggunakan CSS (tanpa library berat) yang membandingkan TOV dan ETR.\n4. Kiraan automatik peratus peningkatan.\n5. Reka bentuk mestilah moden, bersih, dan profesional.' 
-                }
+                { title: 'Analisis Strategik (Data)', icon: 'fa-chart-line', desc: 'Menganalisis data mentah untuk mencari punca isu dan cadangan intervensi taktikal.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai Sektor Perancangan PPD yang menguruskan data prestasi sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Data Scientist Pendidikan dan Perancang Strategik.\n\n[KONTEKS]\nSaya mempunyai data kehadiran murid sekolah luar bandar yang merosot sebanyak 15% khususnya pada hari Khamis (Hari Kokurikulum). Data juga menunjukkan 40% murid ini datang dari keluarga B40.\n\n[ARAHAN]\nSila buat analisis punca kemungkinan (Root Cause Analysis) dan cadangkan 3 program intervensi yang kos rendah tetapi berimpak tinggi. Bentangkan jawapan dalam format: Isu, Punca, dan Cadangan Penyelesaian.' },
+                { title: 'Bina OPPM Projek', icon: 'fa-table', desc: 'Menghasilkan rangka kandungan lengkap untuk One Page Project Manager.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai Perancangan yang mengetuai projek khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pengurusan Projek (PMP Certified).\n\n[KONTEKS]\nProgram "STEM Untuk Semua" akan dijalankan di peringkat daerah selama 6 bulan bermula Januari hingga Jun. Objektif utama adalah meningkatkan minat murid dalam Sains.\n\n[ARAHAN]\nBina kandungan teks lengkap untuk dimasukkan ke dalam OPPM. Sila senaraikan: 1. Objektif Projek, 2. Senarai 10 Tugasan Utama (Milestones), 3. Tarikh Sasaran bagi setiap tugas, 4. Anggaran Kos, dan 5. Pegawai Bertanggungjawab.' },
+                { title: 'Sistem Dashboard KPI', icon: 'fa-code', desc: 'Menjana kod HTML untuk kalkulator unjuran pencapaian sekolah (TOV/ETR).', type: 'system', content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mahukan alat digital mudah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Senior Web Developer & UI/UX Designer.\n\n[KONTEKS]\nSaya perlukan satu alat mudah untuk sekolah mengira unjuran KPI mereka tanpa perlu membuka Excel yang berat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal yang mengandungi "Dashboard Unjuran KPI".\nCiri-ciri sistem:\n1. Input untuk TOV (Take Off Value) dan ETR (Expected Target Result).\n2. Butang "Kira Lonjakan".\n3. Paparan graf bar mudah menggunakan CSS (tanpa library berat) yang membandingkan TOV dan ETR.\n4. Kiraan automatik peratus peningkatan.\n5. Reka bentuk mestilah moden, bersih, dan profesional.' }
             ],
             'pembelajaran': [
-                { 
-                    title: 'Inovasi RPH PAK-21', 
-                    icon: 'fa-book-open', 
-                    desc: 'Mencipta set induksi dan aktiviti pembelajaran yang kreatif.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai SISC+ yang membimbing guru di sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pedagogi Abad Ke-21 dan Psikologi Kanak-kanak.\n\n[KONTEKS]\nTopik pengajaran adalah Sains Tahun 4 (Proses Fotosintesis). Masalah utama ialah murid berasa bosan dengan kaedah syarahan guru.\n\n[ARAHAN]\nCadangkan 3 aktiviti pembelajaran "Hands-on" yang menggunakan bahan kitar semula. Setiap aktiviti mesti mempunyai elemen kolaboratif (kerja kumpulan) dan pergerakan fizikal. Sediakan juga satu idea set induksi "Wow Factor" untuk memulakan kelas.' 
-                },
-                { 
-                    title: 'Modul Intervensi TP1-TP2', 
-                    icon: 'fa-user-check', 
-                    desc: 'Strategi memulihkan murid lemah dengan pendekatan terbeza.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Guru Pemulihan Khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pendidikan Khas dan Psikologi Pendidikan.\n\n[KONTEKS]\nSaya ada 5 orang murid yang masih tidak menghafal sifir 6 hingga 9 walaupun sudah Tahun 5. Mereka mempunyai gaya pembelajaran kinestetik (suka bergerak).\n\n[ARAHAN]\nRangkakan satu modul intervensi intensif selama 4 minggu. Modul ini mesti menggunakan teknik "Gamifikasi Fizikal" (permainan sebenar, bukan digital). Berikan jadual aktiviti minggu demi minggu berserta cara penilaian kejayaan.' 
-                },
-                { 
-                    title: 'Web Kuiz Interaktif', 
-                    icon: 'fa-gamepad', 
-                    desc: 'Menjana kod HTML untuk kuiz latihan tubi murid yang menyeronokkan.', 
-                    type: 'system', 
-                    content: '[SIAPA SAYA]\nSaya Guru ICT dan Matematik.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Game Developer dan Web Designer.\n\n[KONTEKS]\nSaya mahu murid Tahap 1 berlatih mencongak (tambah dan tolak) dengan cara yang seronok di makmal komputer.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Kuiz Matematik Angkasa".\nCiri-ciri:\n1. Latar belakang bertema angkasa lepas.\n2. Soalan matematik mudah (tambah/tolak) yang dijana secara rawak.\n3. Sistem markah: +10 jika betul, -5 jika salah.\n4. Bunyi efek (gunakan URL audio percuma) apabila menjawab.\n5. Paparan "Game Over" dan markah akhir selepas 10 soalan.' 
-                }
+                { title: 'Inovasi RPH PAK-21', icon: 'fa-book-open', desc: 'Mencipta set induksi dan aktiviti pembelajaran yang kreatif.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai SISC+ yang membimbing guru di sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pedagogi Abad Ke-21 dan Psikologi Kanak-kanak.\n\n[KONTEKS]\nTopik pengajaran adalah Sains Tahun 4 (Proses Fotosintesis). Masalah utama ialah murid berasa bosan dengan kaedah syarahan guru.\n\n[ARAHAN]\nCadangkan 3 aktiviti pembelajaran "Hands-on" yang menggunakan bahan kitar semula. Setiap aktiviti mesti mempunyai elemen kolaboratif (kerja kumpulan) dan pergerakan fizikal. Sediakan juga satu idea set induksi "Wow Factor" untuk memulakan kelas.' },
+                { title: 'Modul Intervensi TP1-TP2', icon: 'fa-user-check', desc: 'Strategi memulihkan murid lemah dengan pendekatan terbeza.', type: 'normal', content: '[SIAPA SAYA]\nSaya Guru Pemulihan Khas.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Pendidikan Khas dan Psikologi Pendidikan.\n\n[KONTEKS]\nSaya ada 5 orang murid yang masih tidak menghafal sifir 6 hingga 9 walaupun sudah Tahun 5. Mereka mempunyai gaya pembelajaran kinestetik (suka bergerak).\n\n[ARAHAN]\nRangkakan satu modul intervensi intensif selama 4 minggu. Modul ini mesti menggunakan teknik "Gamifikasi Fizikal" (permainan sebenar, bukan digital). Berikan jadual aktiviti minggu demi minggu berserta cara penilaian kejayaan.' },
+                { title: 'Web Kuiz Interaktif', icon: 'fa-gamepad', desc: 'Menjana kod HTML untuk kuiz latihan tubi murid yang menyeronokkan.', type: 'system', content: '[SIAPA SAYA]\nSaya Guru ICT dan Matematik.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Game Developer dan Web Designer.\n\n[KONTEKS]\nSaya mahu murid Tahap 1 berlatih mencongak (tambah dan tolak) dengan cara yang seronok di makmal komputer.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Kuiz Matematik Angkasa".\nCiri-ciri:\n1. Latar belakang bertema angkasa lepas.\n2. Soalan matematik mudah (tambah/tolak) yang dijana secara rawak.\n3. Sistem markah: +10 jika betul, -5 jika salah.\n4. Bunyi efek (gunakan URL audio percuma) apabila menjawab.\n5. Paparan "Game Over" dan markah akhir selepas 10 soalan.' }
             ],
             'murid': [
-                { 
-                    title: 'Program Motivasi Gen-Z', 
-                    icon: 'fa-fire', 
-                    desc: 'Modul sahsiah yang segar dan tidak membosankan untuk remaja.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai Hal Ehwal Murid (HEM).\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Motivasi Remaja dan Pembangunan Modal Insan.\n\n[KONTEKS]\nSekolah ingin mengadakan program "Jom Sekolah" untuk menangani isu ponteng tegar. Sasaran adalah murid Tingkatan 3 & 4 (Gen Z) yang anti-ceramah dan cepat bosan.\n\n[ARAHAN]\nBerikan tentatif program setengah hari yang berkonsepkan "Explorace" dan "Team Bonding". Senaraikan 5 stesen aktiviti yang memerlukan penyelesaian masalah berkumpulan. Berikan nama aktiviti yang "Catchy" dan relevan dengan jiwa muda.' 
-                },
-                { 
-                    title: 'Skrip Kaunseling Empati', 
-                    icon: 'fa-comments', 
-                    desc: 'Skrip perbualan profesional untuk menangani isu sensitif.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Guru Bimbingan dan Kaunseling.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Terapi Keluarga dan Komunikasi Krisis.\n\n[KONTEKS]\nSeorang ibu bapa datang ke sekolah dalam keadaan marah kerana anaknya didenda (rotan) oleh guru disiplin. Situasi tegang.\n\n[ARAHAN]\nSediakan skrip dialog langkah demi langkah untuk saya (Kaunselor) bagi menenangkan ibu bapa tersebut. Gunakan teknik "Active Listening" dan "Empathy validation". Skrip mesti sopan, profesional, tetapi tegas dalam mempertahankan prosedur sekolah.' 
-                },
-                { 
-                    title: 'Ujian Personaliti Web', 
-                    icon: 'fa-heart', 
-                    desc: 'Sistem HTML untuk murid menyemak kecenderungan minat kerjaya.', 
-                    type: 'system', 
-                    content: '[SIAPA SAYA]\nSaya Kaunselor Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nMurid Tingkatan 3 sering keliru untuk memilih aliran (Sains/Sastera/TVET). Saya perlukan alat saringan awal yang pantas.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Ujian Minat Kerjaya Mini".\nCiri-ciri:\n1. Mengandungi 10 soalan Ya/Tidak mengenai minat (Cth: Suka baiki barang? Suka melukis?).\n2. Logik mudah di belakang tabir untuk mengira skor.\n3. Paparan keputusan akhir yang mencadangkan aliran (Sains / Akaun / TVET) berdasarkan jawapan terbanyak.\n4. Reka bentuk yang mesra pengguna.' 
-                }
+                { title: 'Program Motivasi Gen-Z', icon: 'fa-fire', desc: 'Modul sahsiah yang segar dan tidak membosankan untuk remaja.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai Hal Ehwal Murid (HEM).\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Motivasi Remaja dan Pembangunan Modal Insan.\n\n[KONTEKS]\nSekolah ingin mengadakan program "Jom Sekolah" untuk menangani isu ponteng tegar. Sasaran adalah murid Tingkatan 3 & 4 (Gen Z) yang anti-ceramah dan cepat bosan.\n\n[ARAHAN]\nBerikan tentatif program setengah hari yang berkonsepkan "Explorace" dan "Team Bonding". Senaraikan 5 stesen aktiviti yang memerlukan penyelesaian masalah berkumpulan. Berikan nama aktiviti yang "Catchy" dan relevan dengan jiwa muda.' },
+                { title: 'Skrip Kaunseling Empati', icon: 'fa-comments', desc: 'Skrip perbualan profesional untuk menangani isu sensitif.', type: 'normal', content: '[SIAPA SAYA]\nSaya Guru Bimbingan dan Kaunseling.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Terapi Keluarga dan Komunikasi Krisis.\n\n[KONTEKS]\nSeorang ibu bapa datang ke sekolah dalam keadaan marah kerana anaknya didenda (rotan) oleh guru disiplin. Situasi tegang.\n\n[ARAHAN]\nSediakan skrip dialog langkah demi langkah untuk saya (Kaunselor) bagi menenangkan ibu bapa tersebut. Gunakan teknik "Active Listening" dan "Empathy validation". Skrip mesti sopan, profesional, tetapi tegas dalam mempertahankan prosedur sekolah.' },
+                { title: 'Ujian Personaliti Web', icon: 'fa-heart', desc: 'Sistem HTML untuk murid menyemak kecenderungan minat kerjaya.', type: 'system', content: '[SIAPA SAYA]\nSaya Kaunselor Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nMurid Tingkatan 3 sering keliru untuk memilih aliran (Sains/Sastera/TVET). Saya perlukan alat saringan awal yang pantas.\n\n[ARAHAN]\nHasilkan kod HTML tunggal yang lengkap untuk "Ujian Minat Kerjaya Mini".\nCiri-ciri:\n1. Mengandungi 10 soalan Ya/Tidak mengenai minat (Cth: Suka baiki barang? Suka melukis?).\n2. Logik mudah di belakang tabir untuk mengira skor.\n3. Paparan keputusan akhir yang mencadangkan aliran (Sains / Akaun / TVET) berdasarkan jawapan terbanyak.\n4. Reka bentuk yang mesra pengguna.' }
             ],
             'sekolah': [
-                { 
-                    title: 'Penulisan Memo Rasmi', 
-                    icon: 'fa-file-signature', 
-                    desc: 'Menghasilkan surat pentadbiran yang gramatis, tegas dan berhemah.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai Sektor Pengurusan Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Bahasa Melayu Tinggi dan Pentadbiran Awam.\n\n[KONTEKS]\nTerdapat aduan mengenai segelintir guru yang tidak mematuhi etika pemakaian penjawat awam semasa bertugas. PPD perlu mengeluarkan peringatan.\n\n[ARAHAN]\nDrafkan satu memo dalaman rasmi yang bertajuk "PERINGATAN PEMATUHAN ETIKA BERPAKAIAN". Nada memo mestilah tegas tetapi menyantuni. Sila petik rujukan pekeliling ikhtisas yang berkaitan sebagai sandaran kuasa.' 
-                },
-                { 
-                    title: 'Teks Ucapan Protokol', 
-                    icon: 'fa-microphone', 
-                    desc: 'Teks ucapan perasmi yang lengkap dengan pantun dan protokol.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mewakili Tuan PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Ucapan Profesional Diraja/Kerajaan.\n\n[KONTEKS]\nMajlis Perasmian Mesyuarat Agung PIBG di sebuah sekolah luar bandar. Audiens terdiri daripada ibu bapa kampung dan guru-guru.\n\n[ARAHAN]\nSediakan teks ucapan perasmian sepanjang 5 minit bacaan. Struktur ucapan:\n1. Kata aluan protokol.\n2. Pantun pembuka yang indah.\n3. Isi utama: Pentingnya kerjasama ibu bapa dalam era pendidikan digital.\n4. Penutup dengan harapan dan pantun akhir.' 
-                },
-                { 
-                    title: 'Kalkulator Cuti (CRK)', 
-                    icon: 'fa-calendar-check', 
-                    desc: 'Sistem HTML untuk menyemak baki kelayakan Cuti Rehat Khas.', 
-                    type: 'system', 
-                    content: '[SIAPA SAYA]\nSaya Pembantu Tadbir (Kerani) Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nGuru-guru sering bertanya baki Cuti Rehat Khas (CRK) mereka dan saya sukar untuk mengira setiap kali.\n\n[ARAHAN]\nHasilkan satu fail HTML mudah bertajuk "Kalkulator CRK Guru".\nFungsi:\n1. Paparkan kelayakan tahunan tetap (Contoh: 15 hari).\n2. Ruang input untuk guru masukkan jumlah cuti yang telah diambil.\n3. Butang "Semak Baki".\n4. Paparan baki terkini.\n5. Jika baki bawah 3 hari, keluarkan amaran teks berwarna merah "Baki Kritikal!".' 
-                }
+                { title: 'Penulisan Memo Rasmi', icon: 'fa-file-signature', desc: 'Menghasilkan surat pentadbiran yang gramatis, tegas dan berhemah.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai Sektor Pengurusan Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Bahasa Melayu Tinggi dan Pentadbiran Awam.\n\n[KONTEKS]\nTerdapat aduan mengenai segelintir guru yang tidak mematuhi etika pemakaian penjawat awam semasa bertugas. PPD perlu mengeluarkan peringatan.\n\n[ARAHAN]\nDrafkan satu memo dalaman rasmi yang bertajuk "PERINGATAN PEMATUHAN ETIKA BERPAKAIAN". Nada memo mestilah tegas tetapi menyantuni. Sila petik rujukan pekeliling ikhtisas yang berkaitan sebagai sandaran kuasa.' },
+                { title: 'Teks Ucapan Protokol', icon: 'fa-microphone', desc: 'Teks ucapan perasmi yang lengkap dengan pantun dan protokol.', type: 'normal', content: '[SIAPA SAYA]\nSaya Pegawai PPD yang mewakili Tuan PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Ucapan Profesional Diraja/Kerajaan.\n\n[KONTEKS]\nMajlis Perasmian Mesyuarat Agung PIBG di sebuah sekolah luar bandar. Audiens terdiri daripada ibu bapa kampung dan guru-guru.\n\n[ARAHAN]\nSediakan teks ucapan perasmian sepanjang 5 minit bacaan. Struktur ucapan:\n1. Kata aluan protokol.\n2. Pantun pembuka yang indah.\n3. Isi utama: Pentingnya kerjasama ibu bapa dalam era pendidikan digital.\n4. Penutup dengan harapan dan pantun akhir.' },
+                { title: 'Kalkulator Cuti (CRK)', icon: 'fa-calendar-check', desc: 'Sistem HTML untuk menyemak baki kelayakan Cuti Rehat Khas.', type: 'system', content: '[SIAPA SAYA]\nSaya Pembantu Tadbir (Kerani) Sekolah.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Web Developer.\n\n[KONTEKS]\nGuru-guru sering bertanya baki Cuti Rehat Khas (CRK) mereka dan saya sukar untuk mengira setiap kali.\n\n[ARAHAN]\nHasilkan satu fail HTML mudah bertajuk "Kalkulator CRK Guru".\nFungsi:\n1. Paparkan kelayakan tahunan tetap (Contoh: 15 hari).\n2. Ruang input untuk guru masukkan jumlah cuti yang telah diambil.\n3. Butang "Semak Baki".\n4. Paparan baki terkini.\n5. Jika baki bawah 3 hari, keluarkan amaran teks berwarna merah "Baki Kritikal!".' }
             ],
             'akp': [
-                { 
-                    title: 'Minit Mesyuarat', 
-                    icon: 'fa-file-contract', 
-                    desc: 'Format minit mesyuarat kerajaan yang standard dan tepat.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya Setiausaha Pejabat di PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Dokumentasi Rasmi Kerajaan.\n\n[KONTEKS]\nSaya ada nota ringkas dari mesyuarat pagi tadi:\n- Pengerusi marah sebab aset lama belum lupus.\n- Kewangan baki tinggal RM200 sahaja.\n- Program lawatan 15hb ditunda ke bulan depan.\n\n[ARAHAN]\nTukarkan nota ringkas ini menjadi Minit Mesyuarat penuh yang profesional. Gunakan format: Perutusan Pengerusi, Perkara Berbangkit, Pembentangan Kertas Kerja, dan Hal-hal Lain. Pastikan ayat adalah ayat pasif dan gramatis (Contoh: "Mesyuarat mengambil maklum...").' 
-                },
-                { 
-                    title: 'Surat Panggilan Rasmi', 
-                    icon: 'fa-envelope', 
-                    desc: 'Menjana surat jemputan mesyuarat dengan butiran lengkap.', 
-                    type: 'normal', 
-                    content: '[SIAPA SAYA]\nSaya AKP Unit Pentadbiran.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Surat Rasmi.\n\n[KONTEKS]\nSatu mesyuarat tergempar Jawatankuasa Kewangan Bil 1/2025 perlu diadakan. Tarikh: 20 Februari, Masa: 9.00 pagi, Tempat: Bilik Wawasan.\n\n[ARAHAN]\nSediakan surat panggilan mesyuarat rasmi kepada semua Ketua Unit. Surat mesti mengandungi agenda tentatif mesyuarat dan arahan supaya membawa laporan perbelanjaan terkini.' 
-                },
-                { 
-                    title: 'Sistem Stok Pejabat', 
-                    icon: 'fa-box-open', 
-                    desc: 'Sistem HTML mudah untuk merekod keluar masuk barang stor.', 
-                    type: 'system', 
-                    content: '[SIAPA SAYA]\nSaya Pegawai Aset & Stor.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Software Engineer.\n\n[KONTEKS]\nSaya perlukan sistem sangat mudah untuk rekod stok kertas A4 di pejabat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal "Sistem e-Stok Pejabat".\nFungsi:\n1. Paparan jumlah baki stok semasa.\n2. Butang "Stok Masuk (IN)" untuk tambah jumlah.\n3. Butang "Stok Keluar (OUT)" untuk tolak jumlah.\n4. Senarai log sejarah transaksi di bahagian bawah (Masa & Jumlah).\n5. Gunakan LocalStorage supaya data tidak hilang apabila browser ditutup.' 
-                }
+                { title: 'Minit Mesyuarat', icon: 'fa-file-contract', desc: 'Format minit mesyuarat kerajaan yang standard dan tepat.', type: 'normal', content: '[SIAPA SAYA]\nSaya Setiausaha Pejabat di PPD.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Pakar Dokumentasi Rasmi Kerajaan.\n\n[KONTEKS]\nSaya ada nota ringkas dari mesyuarat pagi tadi:\n- Pengerusi marah sebab aset lama belum lupus.\n- Kewangan baki tinggal RM200 sahaja.\n- Program lawatan 15hb ditunda ke bulan depan.\n\n[ARAHAN]\nTukarkan nota ringkas ini menjadi Minit Mesyuarat penuh yang profesional. Gunakan format: Perutusan Pengerusi, Perkara Berbangkit, Pembentangan Kertas Kerja, dan Hal-hal Lain. Pastikan ayat adalah ayat pasif dan gramatis (Contoh: "Mesyuarat mengambil maklum...").' },
+                { title: 'Surat Panggilan Rasmi', icon: 'fa-envelope', desc: 'Menjana surat jemputan mesyuarat dengan butiran lengkap.', type: 'normal', content: '[SIAPA SAYA]\nSaya AKP Unit Pentadbiran.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Penulis Surat Rasmi.\n\n[KONTEKS]\nSatu mesyuarat tergempar Jawatankuasa Kewangan Bil 1/2025 perlu diadakan. Tarikh: 20 Februari, Masa: 9.00 pagi, Tempat: Bilik Wawasan.\n\n[ARAHAN]\nSediakan surat panggilan mesyuarat rasmi kepada semua Ketua Unit. Surat mesti mengandungi agenda tentatif mesyuarat dan arahan supaya membawa laporan perbelanjaan terkini.' },
+                { title: 'Sistem Stok Pejabat', icon: 'fa-box-open', desc: 'Sistem HTML mudah untuk merekod keluar masuk barang stor.', type: 'system', content: '[SIAPA SAYA]\nSaya Pegawai Aset & Stor.\n\n[PERANAN AI]\nBertindak sebagai 0.1% Software Engineer.\n\n[KONTEKS]\nSaya perlukan sistem sangat mudah untuk rekod stok kertas A4 di pejabat.\n\n[ARAHAN]\nHasilkan satu fail HTML tunggal "Sistem e-Stok Pejabat".\nFungsi:\n1. Paparan jumlah baki stok semasa.\n2. Butang "Stok Masuk (IN)" untuk tambah jumlah.\n3. Butang "Stok Keluar (OUT)" untuk tolak jumlah.\n4. Senarai log sejarah transaksi di bahagian bawah (Masa & Jumlah).\n5. Gunakan LocalStorage supaya data tidak hilang apabila browser ditutup.' }
             ]
         };
 
-        // 3. DATA KATA KUNCI POWER (KEKAL SAMA)
         const keywordsData = [
-            { 
-                title: 'Step-by-step', sub: 'Think step-by-step', 
-                desc: 'Memaksa AI berfikir secara urutan logik. Sangat penting untuk soalan Matematik, Coding, atau perancangan strategi.', 
-                example: 'Kira implikasi kewangan projek ini langkah demi langkah supaya tiada kesilapan pengiraan.' 
-            },
-            { 
-                title: 'ELI5', sub: 'Explain Like I\'m 5', 
-                desc: 'Minta AI terangkan topik yang sangat kompleks (seperti Blockchain atau AI) menggunakan bahasa budak tadika.', 
-                example: 'Terangkan teknologi Cloud Computing seperti saya berumur 5 tahun.' 
-            },
-            { 
-                title: 'Format Jadual', sub: 'Present in Table format', 
-                desc: 'Menukar perenggan teks yang serabut kepada jadual yang kemas untuk perbandingan data.', 
-                example: 'Bandingkan perbezaan tugas Guru Data dan Guru ICT dalam format jadual.' 
-            },
-            { 
-                title: 'Kod Siap Tampal', sub: 'Full runnable code', 
-                desc: 'Mengelakkan AI memberi kod sekerat-sekerat. Wajib guna untuk tugasan HTML, Excel Formula, atau Python.', 
-                example: 'Bina borang kehadiran HTML. Hasilkan kod penuh siap tampal dan sedia digunakan.' 
-            },
-            { 
-                title: 'Kritik Kendiri', sub: 'Critique your own work', 
-                desc: 'Menyuruh AI menyemak semula jawapannya sendiri sebelum diberikan kepada anda. Mengurangkan risiko fakta salah.', 
-                example: 'Selepas buat draf surat ini, kritik hasil kerja anda sendiri dan cari kesalahan tatabahasa.' 
-            },
-            { 
-                title: 'Guna Analogi', sub: 'Use an analogy', 
-                desc: 'Meminta AI mengaitkan konsep baru dengan benda yang kita sudah biasa (seperti dapur, kereta, sukan).', 
-                example: 'Terangkan fungsi CPU komputer menggunakan analogi dapur restoran.' 
-            },
-            { 
-                title: 'Pengkritik Tegas', sub: 'Act as Devil\'s Advocate', 
-                desc: 'Meminta AI mencari kelemahan, lubang, atau risiko dalam idea/kertas kerja kita.', 
-                example: 'Bertindak sebagai pengkritik tegas, senaraikan 5 kelemahan dalam kertas kerja cadangan saya ini.' 
-            },
-            { 
-                title: 'Kekalkan Format', sub: 'Maintain original formatting', 
-                desc: 'Penting apabila anda mahu AI meringkaskan teks tetapi jangan ubah struktur (seperti bullet points).', 
-                example: 'Ringkaskan teks laporan ini tetapi kekalkan format bullet points asal.' 
-            }
+            { title: 'Step-by-step', sub: 'Think step-by-step', desc: 'Memaksa AI berfikir secara urutan logik. Sangat penting untuk soalan Matematik, Coding, atau perancangan strategi.', example: 'Kira implikasi kewangan projek ini langkah demi langkah supaya tiada kesilapan pengiraan.' },
+            { title: 'ELI5', sub: 'Explain Like I\'m 5', desc: 'Minta AI terangkan topik yang sangat kompleks (seperti Blockchain atau AI) menggunakan bahasa budak tadika.', example: 'Terangkan teknologi Cloud Computing seperti saya berumur 5 tahun.' },
+            { title: 'Format Jadual', sub: 'Present in Table format', desc: 'Menukar perenggan teks yang serabut kepada jadual yang kemas untuk perbandingan data.', example: 'Bandingkan perbezaan tugas Guru Data dan Guru ICT dalam format jadual.' },
+            { title: 'Kod Siap Tampal', sub: 'Full runnable code', desc: 'Mengelakkan AI memberi kod sekerat-sekerat. Wajib guna untuk tugasan HTML, Excel Formula, atau Python.', example: 'Bina borang kehadiran HTML. Hasilkan kod penuh siap tampal dan sedia digunakan.' },
+            { title: 'Kritik Kendiri', sub: 'Critique your own work', desc: 'Menyuruh AI menyemak semula jawapannya sendiri sebelum diberikan kepada anda. Mengurangkan risiko fakta salah.', example: 'Selepas buat draf surat ini, kritik hasil kerja anda sendiri dan cari kesalahan tatabahasa.' },
+            { title: 'Guna Analogi', sub: 'Use an analogy', desc: 'Meminta AI mengaitkan konsep baru dengan benda yang kita sudah biasa (seperti dapur, kereta, sukan).', example: 'Terangkan fungsi CPU komputer menggunakan analogi dapur restoran.' },
+            { title: 'Pengkritik Tegas', sub: 'Act as Devil\'s Advocate', desc: 'Meminta AI mencari kelemahan, lubang, atau risiko dalam idea/kertas kerja kita.', example: 'Bertindak sebagai pengkritik tegas, senaraikan 5 kelemahan dalam kertas kerja cadangan saya ini.' },
+            { title: 'Kekalkan Format', sub: 'Maintain original formatting', desc: 'Penting apabila anda mahu AI meringkaskan teks tetapi jangan ubah struktur (seperti bullet points).', example: 'Ringkaskan teks laporan ini tetapi kekalkan format bullet points asal.' }
         ];
 
         /* -----------------------------------------------------
-           RENDERING LOGIC (UI)
+           RENDERING LOGIC
         ------------------------------------------------------ */
-
         // Render SPKA List
         const spkaContainer = document.getElementById('spka-list-container');
         spkaData.forEach(item => {
@@ -640,12 +492,12 @@
             `;
         });
 
-        // Render Sector Tabs & Content (UPDATED NAMES)
+        // Render Sectors (NAMES FIXED)
         function initSectors() {
             const tabsContainer = document.getElementById('tabs-container');
             const contentContainer = document.getElementById('content-container');
             
-            // Mapping nama sektor yang diminta
+            // Nama Rasmi Sektor
             const sectorNames = {
                 'perancangan': 'Sektor Perancangan',
                 'pembelajaran': 'Sektor Pembelajaran',
@@ -655,7 +507,7 @@
             };
 
             Object.keys(sectorsData).forEach((key, index) => {
-                const label = sectorNames[key] || key.charAt(0).toUpperCase() + key.slice(1);
+                const label = sectorNames[key];
                 const activeClass = index === 0 ? 'tab-active ring-2 ring-offset-2 ring-brand-500' : 'tab-inactive hover:bg-slate-50';
                 tabsContainer.innerHTML += `<button onclick="switchTab('${key}')" class="tab-btn ${activeClass} px-6 py-3 rounded-full border text-sm font-bold transition shadow-sm capitalize tracking-wide" id="btn-${key}">${label}</button>`;
             });
@@ -693,9 +545,7 @@
             });
         }
 
-        /* -----------------------------------------------------
-           INTERACTION LOGIC
-        ------------------------------------------------------ */
+        // --- COMMON FUNCTIONS ---
         function generatePrompt() {
             const s = document.getElementById('inputS').value.trim();
             const p = document.getElementById('inputP').value.trim();
@@ -719,28 +569,17 @@
             document.getElementById('resultArea').classList.remove('hidden');
             finalArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            Swal.fire({
-                icon: 'success',
-                title: 'Prompt Berjaya Dijana!',
-                text: 'Sila salin prompt di bawah dan tampal ke dalam AI (Gemini/ChatGPT).',
-                timer: 2000,
-                showConfirmButton: false
-            });
+            Swal.fire({ icon: 'success', title: 'Prompt Berjaya Dijana!', text: 'Sila salin prompt di bawah.', timer: 2000, showConfirmButton: false });
         }
 
         function copyToClipboard(id) {
             const el = document.getElementById(id); 
             el.select(); 
-            el.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(el.value).then(() => {
-                Swal.fire({ icon: 'success', title: 'Berjaya Disalin!', text: 'Anda kini boleh menampal teks ini.', timer: 1500, showConfirmButton: false });
-            });
+            navigator.clipboard.writeText(el.value).then(() => Swal.fire({ icon: 'success', title: 'Disalin!', timer: 1500, showConfirmButton: false }));
         }
 
         function copyText(text) { 
-            navigator.clipboard.writeText(text).then(() => {
-                Swal.fire({ icon: 'success', title: 'Kata Kunci Disalin!', html: `<span class="text-brand-600 font-mono text-sm">${text}</span>`, timer: 1500, showConfirmButton: false });
-            }); 
+            navigator.clipboard.writeText(text).then(() => Swal.fire({ icon: 'success', title: 'Disalin!', html: `<span class="text-brand-600 font-mono text-sm">${text}</span>`, timer: 1500, showConfirmButton: false }));
         }
 
         function switchTab(id) {
@@ -770,20 +609,14 @@
                 customClass: { popup: 'rounded-3xl' }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigator.clipboard.writeText(content).then(() => {
-                        Swal.fire({ icon: 'success', title: 'Disalin!', text: 'Sedia untuk digunakan.', timer: 1000, showConfirmButton: false });
-                    });
+                    navigator.clipboard.writeText(content).then(() => Swal.fire({ icon: 'success', title: 'Disalin!', timer: 1000, showConfirmButton: false }));
                 }
             });
         }
 
         /* -----------------------------------------------------
-           QUIZ ENGINE V2.1 (FIXED RANDOMIZATION)
-           - Fisher Yates Shuffle implemented
-           - Shuffles on every Start/Restart
-           - Options also shuffled
+           QUIZ ENGINE V3.0 (FINALIZED SHUFFLE LOGIC)
         ------------------------------------------------------ */
-        
         const rawQuizData = [
             {
                 q: "Apakah maksud huruf 'S' dalam akronim S.P.K.A?",
@@ -847,18 +680,18 @@
             }
         ];
 
-        class QuizManager {
+        class QuizEnginePro {
             constructor(data) {
                 this.originalData = data;
                 this.questions = [];
                 this.currentIdx = 0;
                 this.score = 0;
                 this.timer = null;
-                this.timeLeft = 20; // Seconds per question
+                this.timeLeft = 20;
                 this.maxTime = 20;
                 this.isAnswering = false;
 
-                // Bind UI Elements
+                // UI Elements
                 this.ui = {
                     start: document.getElementById('quiz-start'),
                     question: document.getElementById('quiz-question'),
@@ -875,20 +708,17 @@
                 };
             }
 
-            // Fisher-Yates Shuffle Algorithm (Essential for Randomization)
+            // New Shuffle Algorithm (Durstenfeld shuffle - optimized version of Fisher-Yates)
             shuffle(array) {
-                let currentIndex = array.length, randomIndex;
-                while (currentIndex != 0) {
-                    randomIndex = Math.floor(Math.random() * currentIndex);
-                    currentIndex--;
-                    [array[currentIndex], array[randomIndex]] = [array[currentIndex], array[randomIndex]];
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
                 }
                 return array;
             }
 
             start() {
-                // Clone and shuffle questions every time start is called
-                // Using spread operator [...] to create a fresh copy of originalData
+                // Clone fresh data & shuffle
                 this.questions = this.shuffle([...this.originalData]);
                 this.currentIdx = 0;
                 this.score = 0;
@@ -907,31 +737,31 @@
                 this.ui.currentNum.innerText = this.currentIdx + 1;
                 this.ui.text.innerText = q.q;
                 
-                // Hide old explanation and reset state
+                // Reset State
                 this.ui.explanation.classList.add('hidden');
                 this.ui.nextBtn.classList.add('hidden');
                 this.ui.options.innerHTML = '';
                 this.isAnswering = true;
 
-                // Shuffle Options Logic
-                // 1. Map options to objects to preserve the 'isCorrect' logic
-                // 2. Shuffle the objects
+                // Create Option Objects & Shuffle Them
                 let optionObjects = q.options.map(opt => ({
                     text: opt,
                     isCorrect: opt === q.correct
                 }));
+                
+                // FORCE SHUFFLE
                 optionObjects = this.shuffle(optionObjects);
 
-                // Render Options
+                // Render
                 optionObjects.forEach(opt => {
                     const btn = document.createElement('button');
                     btn.className = 'option-btn w-full text-left p-5 border-2 border-slate-100 rounded-xl font-medium text-slate-600 mb-2 flex items-center justify-between group bg-white';
                     btn.innerHTML = `<span>${opt.text}</span> <i class="fa-regular fa-circle text-slate-300 group-hover:text-brand-400"></i>`;
+                    // Bind correct value immediately
                     btn.onclick = () => this.handleAnswer(btn, opt.isCorrect);
                     this.ui.options.appendChild(btn);
                 });
 
-                // Start Timer
                 this.startTimer();
             }
 
@@ -947,18 +777,10 @@
                     const percent = (this.timeLeft / this.maxTime) * 100;
                     this.ui.timerBar.style.width = `${percent}%`;
                     
-                    if (this.timeLeft <= 5) {
-                        this.ui.timerBar.classList.add('timer-critical');
-                    }
+                    if (this.timeLeft <= 5) this.ui.timerBar.classList.add('timer-critical');
+                    if (this.timeLeft % 1 < 0.1) this.ui.timerText.innerText = Math.ceil(this.timeLeft) + 's';
                     
-                    // Show whole number for seconds
-                    if (this.timeLeft % 1 < 0.1) {
-                        this.ui.timerText.innerText = Math.ceil(this.timeLeft) + 's';
-                    }
-
-                    if (this.timeLeft <= 0) {
-                        this.timeIsUp();
-                    }
+                    if (this.timeLeft <= 0) this.timeIsUp();
                 }, 100);
             }
 
@@ -966,11 +788,10 @@
                 clearInterval(this.timer);
                 if (!this.isAnswering) return;
                 
-                // Disable all buttons and show correct answer
+                // Show Correct Answer
                 const buttons = this.ui.options.querySelectorAll('button');
                 buttons.forEach(btn => {
                     btn.disabled = true;
-                    // Check against the current correct answer string
                     if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
                         btn.classList.add('correct-answer');
                     }
@@ -995,7 +816,6 @@
                     selectedBtn.classList.add('wrong-answer');
                     selectedBtn.innerHTML = `<span>${selectedBtn.innerText}</span> <i class="fa-solid fa-times-circle text-red-600 text-xl"></i>`;
                     
-                    // Highlight the correct answer
                     buttons.forEach(btn => {
                         if (btn.innerText.includes(this.questions[this.currentIdx].correct)) {
                             btn.classList.add('correct-answer');
@@ -1003,7 +823,6 @@
                         }
                     });
                 }
-
                 this.showExplanation();
             }
 
@@ -1050,16 +869,12 @@
                     </div>
                     <h3 class="text-4xl font-bold text-slate-800 mb-2">${this.score} / ${this.questions.length}</h3>
                     <p class="text-brand-600 font-bold tracking-wider uppercase mb-6">Skor Akhir Anda (${percentage}%)</p>
-                    
                     <h4 class="text-xl font-medium text-slate-600 mb-10 max-w-md mx-auto">${message}</h4>
-                    
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="quizManager.start()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-900 transition shadow-lg">
+                        <button onclick="quizEnginePro.start()" class="bg-slate-800 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-900 transition shadow-lg">
                             <i class="fa-solid fa-rotate-right mr-2"></i> Cuba Lagi
                         </button>
-                        <a href="#concept" class="bg-white border-2 border-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:border-brand-500 hover:text-brand-600 transition">
-                            Ulang Kaji Nota
-                        </a>
+                        <a href="#concept" class="bg-white border-2 border-slate-200 text-slate-600 px-8 py-3 rounded-xl font-bold hover:border-brand-500 hover:text-brand-600 transition">Ulang Kaji Nota</a>
                     </div>
                 `;
             }
@@ -1067,32 +882,17 @@
             fireConfetti() {
                 const duration = 3000;
                 const end = Date.now() + duration;
-
                 (function frame() {
-                    confetti({
-                        particleCount: 5,
-                        angle: 60,
-                        spread: 55,
-                        origin: { x: 0 }
-                    });
-                    confetti({
-                        particleCount: 5,
-                        angle: 120,
-                        spread: 55,
-                        origin: { x: 1 }
-                    });
-
-                    if (Date.now() < end) {
-                        requestAnimationFrame(frame);
-                    }
+                    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+                    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+                    if (Date.now() < end) requestAnimationFrame(frame);
                 }());
             }
         }
 
-        // Initialize Everything
+        // INIT
         initSectors();
-        const quizManager = new QuizManager(rawQuizData);
-
+        const quizEnginePro = new QuizEnginePro(rawQuizData);
     </script>
 </body>
 </html>
